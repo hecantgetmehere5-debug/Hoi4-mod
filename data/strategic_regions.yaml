@@ -1,0 +1,17 @@
+# Land strategic regions: id -> name and member states. Order and ids are permanent.
+# Lakes join the region of the land around them; sea regions are generated.
+1: {name: Oslofjord, weather: land, states: [oslo, fredrikstad, halden, moss, indre_ostfold, baerum_asker, follo, romerike, ovre_romerike, hadeland, drammen, lier_eiker, ringerike, kongsberg, kongsvinger, vestfold_north, vestfold_south, grenland, sigdal, flesberg]}
+2: {name: Innlandet, weather: land, states: [hamar, ringsaker, lillehammer, gjovik, land, valdres, midt_gudbrandsdal, nord_gudbrandsdal, nord_osterdal, sor_osterdal, trysil, solor, hallingdal, numedal, vidda, valer_hedmark, alvdal, sel, vestre_slidre]}
+3: {name: Sørlandet, weather: land, states: [kristiansand, vennesla, setesdal, lister, mandal, arendal, lillesand, ostre_agder, kragero, midt_telemark, vest_telemark]}
+4: {name: Rogaland, weather: land, states: [stavanger, sandnes, jaeren, dalane, ryfylke, haugesund, indre_haugaland, hardanger_sor]}
+5: {name: Hordaland, weather: land, states: [bergen, askoy, nordhordland, osteroy, midhordland, sunnhordland, kvinnherad, voss, hardanger, gulen]}
+6: {name: Sogn og Fjordane, weather: land, states: [indre_sogn, ytre_sogn, stryn, nordfjord, sunnfjord]}
+7: {name: Møre og Romsdal, weather: land, states: [romsdal_indre, alesund, sunnmore_sor, sunnmore_indre, molde, kristiansund, nordmore]}
+8: {name: Trøndelag, weather: land, states: [trondheim, trondheim_omland, orkdal, gauldal, oppdal, stjordal, fosen, innherred, steinkjer, namdal, ytre_namdal, rennebu, skaun, meraker]}
+9: {name: Helgeland, weather: land, states: [sor_helgeland, helgeland, rana, helgeland_nord, grane]}
+10: {name: Salten og Lofoten, weather: land, states: [bodo, salten, steigen, lofoten, vesteralen, narvik]}
+11: {name: Troms, weather: land, states: [harstad, tromso, senja, indre_troms, balsfjord, nord_troms]}
+12: {name: Finnmark, weather: land, states: [alta, hammerfest, porsanger, ost_finnmark, varanger, finnmarksvidda, sor_varanger]}
+13: {name: Norrbotten, weather: land, states: [kiruna, lappland]}
+14: {name: Jämtland, weather: land, states: [jamtland, ostersund, harjedalen]}
+15: {name: Värmland, weather: land, states: [dalarna, varmland, karlstad, dalsland]}
