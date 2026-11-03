@@ -1,0 +1,27 @@
+# Every external download, verified by sha256. Elevation tiles are checked by count.
+raw: https://raw.githubusercontent.com
+files:
+  kommuner:
+    url: https://raw.githubusercontent.com/robhop/fylker-og-kommuner/main/Kommuner-L.geojson
+    sha256: cbaa800120130c881c607f8834852b4b9abbea75d767bed795a5781b21cf736f
+  kommuner_m:
+    url: https://raw.githubusercontent.com/robhop/fylker-og-kommuner/main/Kommuner-M.geojson
+    sha256: 28b98b4d91a78ca238ae283c0e75fafb87bdf7378790457e37da74aa70ac397c
+  sweden_kommuner:
+    url: https://raw.githubusercontent.com/okfse/sweden-geojson/master/swedish_municipalities.geojson
+    sha256: 2ec4ad1facf704435e177c32f304cb0b207c42ce1b173e16b33241a18825e2a9
+  rivers:
+    url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_rivers_lake_centerlines.geojson
+    sha256: bb854a900ecbd3b408df46d5e16e3e0f974ba55993f9d8b5c26e855273c0905a
+  rivers_europe:
+    url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_rivers_europe.geojson
+    sha256: 90712202ac46985812e90840df9acd5101599a9c649868d5bc55ee96c2fedd4c
+  lakes:
+    url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_lakes.geojson
+    sha256: 2d036f53dedec578001c5c30c2959ee7d4eebc1306900fa4367c49929ec8f2d9
+  lakes_europe:
+    url: https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_lakes_europe.geojson
+    sha256: b4dd9e7a5edd0d07b54768b5404d1ebe77f80b9d579c85fff65f90cf50369769
+dem:
+  url: https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png
+  zoom: 8

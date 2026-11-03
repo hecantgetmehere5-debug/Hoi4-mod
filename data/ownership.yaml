@@ -1,0 +1,360 @@
+# Starting owner of every Norwegian municipality (2024 kommunenummer).
+# Migrated from reference/make_map.py, the approved faction map.
+
+"0301": JNP  # Oslo
+"1101": SOC  # Eigersund
+"1103": SOC  # Stavanger
+"1106": SOC  # Haugesund
+"1108": SOC  # Sandnes
+"1111": SOC  # Sokndal
+"1112": SOC  # Lund
+"1114": SOC  # Bjerkreim
+"1119": SOC  # Hå
+"1120": SOC  # Klepp
+"1121": SOC  # Time
+"1122": SOC  # Gjesdal
+"1124": SOC  # Sola
+"1127": SOC  # Randaberg
+"1130": SOC  # Strand
+"1133": SOC  # Hjelmeland
+"1134": SOC  # Suldal
+"1135": SOC  # Sauda
+"1144": SOC  # Kvitsøy
+"1145": SOC  # Bokn
+"1146": SOC  # Tysvær
+"1149": SOC  # Karmøy
+"1151": SOC  # Utsira
+"1160": SOC  # Vindafjord
+"1505": NRM  # Kristiansund
+"1506": NRM  # Molde
+"1508": NRM  # Ålesund
+"1511": NRM  # Vanylven
+"1514": NRM  # Sande
+"1515": NRM  # Herøy
+"1516": NRM  # Ulstein
+"1517": NRM  # Hareid
+"1520": NRM  # Ørsta
+"1525": WFR  # Stranda
+"1528": NRM  # Sykkylven
+"1531": NRM  # Sula
+"1532": NRM  # Giske
+"1535": NRM  # Vestnes
+"1539": WFR  # Rauma
+"1547": NRM  # Aukra
+"1554": NRM  # Averøy
+"1557": NRM  # Gjemnes
+"1560": FRP  # Tingvoll
+"1563": FRP  # Sunndal
+"1566": FRP  # Surnadal
+"1573": NRM  # Smøla
+"1576": FRP  # Aure
+"1577": NRM  # Volda
+"1578": NRM  # Fjord
+"1579": NRM  # Hustadvika
+"1580": NRM  # Haram
+"1804": SAM  # Bodø
+"1806": SAM  # Narvik
+"1811": FRP  # Bindal
+"1812": FRP  # Sømna
+"1813": FRP  # Brønnøy
+"1815": FRP  # Vega
+"1816": FRP  # Vevelstad
+"1818": FRP  # Herøy
+"1820": FRP  # Alstahaug
+"1822": FRP  # Leirfjord
+"1824": FRP  # Vefsn
+"1825": ANA  # Grane
+"1826": FRP  # Aarborte - Hattfjelldal
+"1827": FRP  # Dønna
+"1828": SAM  # Nesna
+"1832": SAM  # Hemnes
+"1833": SAM  # Rana
+"1834": SAM  # Lurøy
+"1835": SAM  # Træna
+"1836": SAM  # Rødøy
+"1837": SAM  # Meløy
+"1838": SAM  # Gildeskål
+"1839": SAM  # Beiarn
+"1840": SAM  # Saltdal
+"1841": SAM  # Fauske - Fuossko
+"1845": SAM  # Sørfold
+"1848": SAM  # Steigen
+"1851": SAM  # Lødingen
+"1853": SAM  # Evenes - Evenášši
+"1856": SAM  # Røst
+"1857": SAM  # Værøy
+"1859": SAM  # Flakstad
+"1860": SAM  # Vestvågøy
+"1865": SAM  # Vågan
+"1866": SAM  # Hadsel
+"1867": SAM  # Bø
+"1868": SAM  # Øksnes
+"1870": SAM  # Sortland - Suortá
+"1871": SAM  # Andøy
+"1874": SAM  # Moskenes
+"1875": SAM  # Hábmer - Hamarøy
+"3101": NOR  # Halden
+"3103": NOR  # Moss
+"3105": NOR  # Sarpsborg
+"3107": NOR  # Fredrikstad
+"3110": NOR  # Hvaler
+"3112": NOR  # Råde
+"3114": NOR  # Våler
+"3116": NOR  # Skiptvet
+"3118": NOR  # Indre Østfold
+"3120": NOR  # Rakkestad
+"3122": NOR  # Marker
+"3124": NOR  # Aremark
+"3201": NOR  # Bærum
+"3203": NOR  # Asker
+"3205": NOR  # Lillestrøm
+"3207": NOR  # Nordre Follo
+"3209": NOR  # Ullensaker
+"3212": NOR  # Nesodden
+"3214": NOR  # Frogn
+"3216": NOR  # Vestby
+"3218": NOR  # Ås
+"3220": NOR  # Enebakk
+"3222": NOR  # Lørenskog
+"3224": NOR  # Rælingen
+"3226": NOR  # Aurskog-Høland
+"3228": NOR  # Nes
+"3230": NOR  # Gjerdrum
+"3232": NOR  # Nittedal
+"3234": NOR  # Lunner
+"3236": NOR  # Jevnaker
+"3238": NOR  # Nannestad
+"3240": NOR  # Eidsvoll
+"3242": NOR  # Hurdal
+"3301": NOR  # Drammen
+"3303": NOR  # Kongsberg
+"3305": NOR  # Ringerike
+"3310": NOR  # Hole
+"3312": NOR  # Lier
+"3314": NOR  # Øvre Eiker
+"3316": NOR  # Modum
+"3318": SPM  # Krødsherad
+"3320": SPM  # Flå
+"3322": SPM  # Nesbyen
+"3324": SPM  # Gol
+"3326": SPM  # Hemsedal
+"3328": SPM  # Ål
+"3330": SPM  # Hol
+"3332": ANA  # Sigdal
+"3334": ANA  # Flesberg
+"3336": SPM  # Rollag
+"3338": SPM  # Nore og Uvdal
+"3401": NOR  # Kongsvinger
+"3403": SPM  # Hamar
+"3405": SPM  # Lillehammer
+"3407": SPM  # Gjøvik
+"3411": SPM  # Ringsaker
+"3412": SPM  # Løten
+"3413": SPM  # Stange
+"3414": SPM  # Nord-Odal
+"3415": NOR  # Sør-Odal
+"3416": NOR  # Eidskog
+"3417": SPM  # Grue
+"3418": SPM  # Åsnes
+"3419": ANA  # Våler
+"3420": SPM  # Elverum
+"3421": SPM  # Trysil
+"3422": SPM  # Åmot
+"3423": SPM  # Stor-Elvdal
+"3424": SPM  # Rendalen
+"3425": SPM  # Engerdal
+"3426": SPM  # Tolga
+"3427": SPM  # Tynset
+"3428": ANA  # Alvdal
+"3429": SPM  # Folldal
+"3430": SPM  # Os
+"3431": SPM  # Dovre
+"3432": SPM  # Lesja
+"3433": SPM  # Skjåk
+"3434": SPM  # Lom
+"3435": SPM  # Vågå
+"3436": SPM  # Nord-Fron
+"3437": ANA  # Sel
+"3438": SPM  # Sør-Fron
+"3439": SPM  # Ringebu
+"3440": SPM  # Øyer
+"3441": SPM  # Gausdal
+"3442": SPM  # Østre Toten
+"3443": SPM  # Vestre Toten
+"3446": SPM  # Gran
+"3447": SPM  # Søndre Land
+"3448": SPM  # Nordre Land
+"3449": SPM  # Sør-Aurdal
+"3450": SPM  # Etnedal
+"3451": SPM  # Nord-Aurdal
+"3452": ANA  # Vestre Slidre
+"3453": SPM  # Øystre Slidre
+"3454": SPM  # Vang
+"3901": NOR  # Horten
+"3903": NOR  # Holmestrand
+"3905": NOR  # Tønsberg
+"3907": NOR  # Sandefjord
+"3909": NOR  # Larvik
+"3911": NOR  # Færder
+"4001": NOR  # Porsgrunn
+"4003": NOR  # Skien
+"4005": NOR  # Notodden
+"4010": NOR  # Siljan
+"4012": NOR  # Bamble
+"4014": KRF  # Kragerø
+"4016": KRF  # Drangedal
+"4018": KRF  # Nome
+"4020": KRF  # Midt-Telemark
+"4022": KRF  # Seljord
+"4024": KRF  # Hjartdal
+"4026": SPM  # Tinn
+"4028": KRF  # Kviteseid
+"4030": KRF  # Nissedal
+"4032": KRF  # Fyresdal
+"4034": KRF  # Tokke
+"4036": SPM  # Vinje
+"4201": KRF  # Risør
+"4202": KRF  # Grimstad
+"4203": KRF  # Arendal
+"4204": KRF  # Kristiansand
+"4205": KRF  # Lindesnes
+"4206": KRF  # Farsund
+"4207": KRF  # Flekkefjord
+"4211": KRF  # Gjerstad
+"4212": KRF  # Vegårshei
+"4213": KRF  # Tvedestrand
+"4214": KRF  # Froland
+"4215": KRF  # Lillesand
+"4216": KRF  # Birkenes
+"4217": KRF  # Åmli
+"4218": KRF  # Iveland
+"4219": KRF  # Evje og Hornnes
+"4220": KRF  # Bygland
+"4221": KRF  # Valle
+"4222": KRF  # Bykle
+"4223": KRF  # Vennesla
+"4224": KRF  # Åseral
+"4225": KRF  # Lyngdal
+"4226": KRF  # Hægebostad
+"4227": KRF  # Kvinesdal
+"4228": KRF  # Sirdal
+"4601": BRG  # Bergen
+"4602": NRM  # Kinn
+"4611": SOC  # Etne
+"4612": ABI  # Sveio
+"4613": ABI  # Bømlo
+"4614": ABI  # Stord
+"4615": ABI  # Fitjar
+"4616": ABI  # Tysnes
+"4617": ABI  # Kvinnherad
+"4618": SOC  # Ullensvang
+"4619": WFR  # Eidfjord
+"4620": WFR  # Ulvik
+"4621": WFR  # Voss
+"4622": WFR  # Kvam
+"4623": ABI  # Samnanger
+"4624": ABI  # Bjørnafjorden
+"4625": ABI  # Austevoll
+"4626": ABI  # Øygarden
+"4627": ABI  # Askøy
+"4628": ABI  # Vaksdal
+"4629": ABI  # Modalen
+"4630": ABI  # Osterøy
+"4631": ABI  # Alver
+"4632": ABI  # Austrheim
+"4633": ABI  # Fedje
+"4634": ABI  # Masfjorden
+"4635": ANA  # Gulen
+"4636": NRM  # Solund
+"4637": NRM  # Hyllestad
+"4638": WFR  # Høyanger
+"4639": WFR  # Vik
+"4640": WFR  # Sogndal
+"4641": WFR  # Aurland
+"4642": WFR  # Lærdal
+"4643": WFR  # Årdal
+"4644": WFR  # Luster
+"4645": NRM  # Askvoll
+"4646": NRM  # Fjaler
+"4647": NRM  # Sunnfjord
+"4648": NRM  # Bremanger
+"4649": NRM  # Stad
+"4650": NRM  # Gloppen
+"4651": WFR  # Stryn
+"5001": FRP  # Trondheim - Tråante
+"5006": FRP  # Steinkjer
+"5007": FRP  # Namsos - Nåavmesjenjaelmie
+"5014": FRP  # Frøya
+"5020": FRP  # Osen
+"5021": FRP  # Oppdal
+"5022": ANA  # Rennebu
+"5025": FRP  # Rosse - Røros
+"5026": FRP  # Holtålen
+"5027": FRP  # Midtre Gauldal
+"5028": FRP  # Melhus
+"5029": ANA  # Skaun
+"5031": FRP  # Malvik
+"5032": FRP  # Selbu
+"5033": FRP  # Tydal
+"5034": ANA  # Meråker
+"5035": FRP  # Stjørdal
+"5036": FRP  # Frosta
+"5037": FRP  # Levanger
+"5038": FRP  # Verdal
+"5041": FRP  # Snåase - Snåsa
+"5042": FRP  # Lierne
+"5043": FRP  # Raarvihke - Røyrvik
+"5044": FRP  # Namsskogan
+"5045": FRP  # Grong
+"5046": FRP  # Høylandet
+"5047": FRP  # Overhalla
+"5049": FRP  # Flatanger
+"5052": FRP  # Leka
+"5053": FRP  # Inderøy
+"5054": FRP  # Indre Fosen
+"5055": FRP  # Heim
+"5056": FRP  # Hitra
+"5057": FRP  # Ørland
+"5058": FRP  # Åfjord
+"5059": FRP  # Orkland
+"5060": FRP  # Nærøysund
+"5061": FRP  # Rindal
+"5501": SAM  # Tromsø
+"5503": SAM  # Harstad - Hárstták
+"5510": SAM  # Kvæfjord
+"5512": SAM  # Dielddanuorri - Tjeldsund
+"5514": SAM  # Ibestad
+"5516": SAM  # Gratangen
+"5518": SAM  # Loabák - Lavangen
+"5520": SAM  # Bardu
+"5522": SAM  # Salangen
+"5524": SAM  # Målselv
+"5526": SAM  # Sørreisa
+"5528": SAM  # Dyrøy
+"5530": SAM  # Senja
+"5532": SAM  # Balsfjord
+"5534": SAM  # Karlsøy
+"5536": SAM  # Lyngen
+"5538": SAM  # Storfjord - Omasvuotna - Omasvuono
+"5540": SAM  # Gáivuotna - Kåfjord - Kaivuono
+"5542": SAM  # Skjervøy
+"5544": SAM  # Nordreisa - Ráisa - Raisi
+"5546": SAM  # Kvænangen
+"5601": SAM  # Alta
+"5603": SAM  # Hammerfest - Hámmerfeasta
+"5605": ANA  # Sør-Varanger
+"5607": SAM  # Vadsø
+"5610": SOC  # Kárášjohka - Karasjok
+"5612": SOC  # Guovdageaidnu - Kautokeino
+"5614": SAM  # Loppa
+"5616": SAM  # Hasvik
+"5618": SAM  # Måsøy
+"5620": SAM  # Nordkapp
+"5622": SAM  # Porsanger - Porsáŋgu - Porsanki
+"5624": SAM  # Lebesby
+"5626": SAM  # Gamvik
+"5628": SAM  # Deatnu - Tana
+"5630": SAM  # Berlevåg
+"5632": SAM  # Båtsfjord
+"5634": SAM  # Vardø
+"5636": SAM  # Unjárga - Nesseby

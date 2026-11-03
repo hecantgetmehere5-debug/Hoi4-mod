@@ -1,0 +1,157 @@
+# Each state is a group of municipalities with a single starting owner.
+# kommuner: Norwegian 2024 kommunenummer, or "SE" + SCB code for Sweden.
+# vp: name of the victory point city (placed in the state's most populous municipality, first listed).
+# Keys are permanent: renaming a key creates a new state ID.
+
+# --- Jihadist Nationalist Party ---
+oslo: {name: Oslo, vp: Oslo, kommuner: ["0301"]}
+
+# --- Government ---
+fredrikstad: {name: Fredrikstad-Sarpsborg, vp: Fredrikstad, kommuner: ["3107", "3105"]}
+halden: {name: Halden, vp: Halden, kommuner: ["3101", "3124", "3122", "3120"]}
+moss: {name: Moss, vp: Moss, kommuner: ["3103", "3112", "3114", "3116", "3110"]}
+indre_ostfold: {name: Indre Østfold, vp: Askim, kommuner: ["3118"]}
+baerum_asker: {name: Bærum-Asker, vp: Sandvika, kommuner: ["3201", "3203"]}
+follo: {name: Follo, vp: Ski, kommuner: ["3207", "3212", "3214", "3216", "3218", "3220"]}
+romerike: {name: Nedre Romerike, vp: Lillestrøm, kommuner: ["3205", "3222", "3224", "3230", "3232", "3209", "3238"]}
+ovre_romerike: {name: Øvre Romerike, vp: Eidsvoll, kommuner: ["3240", "3228", "3242", "3226"]}
+hadeland: {name: Hadeland, vp: Jevnaker, kommuner: ["3236", "3234"]}
+drammen: {name: Drammen, vp: Drammen, kommuner: ["3301"]}
+lier_eiker: {name: Lier og Eiker, vp: Hokksund, kommuner: ["3314", "3312", "3316"]}
+ringerike: {name: Ringerike, vp: Hønefoss, kommuner: ["3305", "3310"]}
+kongsberg: {name: Kongsberg, vp: Kongsberg, kommuner: ["3303", "4005"]}
+kongsvinger: {name: Kongsvinger, vp: Kongsvinger, kommuner: ["3401", "3415", "3416"]}
+vestfold_north: {name: Nordre Vestfold, vp: Tønsberg, kommuner: ["3905", "3901", "3903", "3911"]}
+vestfold_south: {name: Søndre Vestfold, vp: Sandefjord, kommuner: ["3907", "3909"]}
+grenland: {name: Grenland, vp: Skien, kommuner: ["4003", "4001", "4010", "4012"]}
+
+# --- Neutral Coalition ---
+hamar: {name: Hamar, vp: Hamar, kommuner: ["3403", "3412", "3413"]}
+ringsaker: {name: Ringsaker, vp: Brumunddal, kommuner: ["3411"]}
+lillehammer: {name: Lillehammer, vp: Lillehammer, kommuner: ["3405", "3440", "3441"]}
+gjovik: {name: Gjøvik og Toten, vp: Gjøvik, kommuner: ["3407", "3442", "3443"]}
+land: {name: Land, vp: Dokka, kommuner: ["3446", "3447", "3448"]}
+valdres: {name: Valdres, vp: Fagernes, kommuner: ["3451", "3449", "3450", "3453", "3454"]}
+midt_gudbrandsdal: {name: Midt-Gudbrandsdal, vp: Vinstra, kommuner: ["3436", "3438", "3439"]}
+nord_gudbrandsdal: {name: Nord-Gudbrandsdal, vp: Vågå, kommuner: ["3435", "3431", "3432", "3433", "3434"]}
+nord_osterdal: {name: Nord-Østerdalen, vp: Tynset, kommuner: ["3427", "3426", "3429", "3430", "3424"]}
+sor_osterdal: {name: Sør-Østerdalen, vp: Elverum, kommuner: ["3420", "3422", "3423"]}
+trysil: {name: Trysil, vp: Trysil, kommuner: ["3421", "3425"]}
+solor: {name: Solør og Odal, vp: Flisa, kommuner: ["3418", "3414", "3417"]}
+hallingdal: {name: Hallingdal, vp: Gol, kommuner: ["3324", "3320", "3322", "3326", "3328", "3330", "3318"]}
+numedal: {name: Numedal, vp: Rødberg, kommuner: ["3338", "3336"]}
+vidda: {name: Hardangervidda, vp: Rjukan, kommuner: ["4026", "4036"]}
+
+# --- KrF ---
+kristiansand: {name: Kristiansand, vp: Kristiansand, kommuner: ["4204"]}
+vennesla: {name: Vennesla, vp: Vennesla, kommuner: ["4223", "4218", "4219"]}
+setesdal: {name: Setesdal, vp: Valle, kommuner: ["4220", "4221", "4222"]}
+lister: {name: Lister, vp: Flekkefjord, kommuner: ["4207", "4206", "4225", "4226", "4227", "4224", "4228"]}
+mandal: {name: Mandal, vp: Mandal, kommuner: ["4205"]}
+arendal: {name: Arendal, vp: Arendal, kommuner: ["4203", "4202", "4214"]}
+lillesand: {name: Lillesand, vp: Lillesand, kommuner: ["4215", "4216"]}
+ostre_agder: {name: Østre Agder, vp: Risør, kommuner: ["4201", "4211", "4212", "4213", "4217"]}
+kragero: {name: Kragerø, vp: Kragerø, kommuner: ["4014", "4016", "4018"]}
+midt_telemark: {name: Midt-Telemark, vp: Bø, kommuner: ["4020", "4022", "4024"]}
+vest_telemark: {name: Vest-Telemark, vp: Kviteseid, kommuner: ["4028", "4030", "4032", "4034"]}
+
+# --- Socialists ---
+stavanger: {name: Stavanger, vp: Stavanger, kommuner: ["1103"]}
+sandnes: {name: Sandnes og Sola, vp: Sandnes, kommuner: ["1108", "1124", "1127", "1144"]}
+jaeren: {name: Jæren, vp: Bryne, kommuner: ["1121", "1119", "1120", "1122"]}
+dalane: {name: Dalane, vp: Egersund, kommuner: ["1101", "1111", "1112", "1114"]}
+ryfylke: {name: Ryfylke, vp: Jørpeland, kommuner: ["1130", "1133", "1134", "1135"]}
+haugesund: {name: Haugesund, vp: Haugesund, kommuner: ["1106", "1149", "1151", "1145", "1146"]}
+indre_haugaland: {name: Indre Haugaland, vp: Ølen, kommuner: ["1160", "4611"]}
+hardanger_sor: {name: Sørhardanger, vp: Odda, kommuner: ["4618"]}
+finnmarksvidda: {name: Finnmarksvidda, vp: Kautokeino, kommuner: ["5612", "5610"]}
+
+# --- Askøy-Bømlo Insurgency ---
+askoy: {name: Askøy og Øygarden, vp: Kleppestø, kommuner: ["4627", "4626", "4633"]}
+nordhordland: {name: Nordhordland, vp: Knarvik, kommuner: ["4631", "4632", "4629", "4634"]}
+osteroy: {name: Osterøy og Vaksdal, vp: Lonevåg, kommuner: ["4630", "4628", "4623"]}
+midhordland: {name: Midhordland, vp: Osøyro, kommuner: ["4624", "4625", "4616"]}
+sunnhordland: {name: Sunnhordland, vp: Leirvik, kommuner: ["4614", "4613", "4615", "4612"]}
+kvinnherad: {name: Kvinnherad, vp: Husnes, kommuner: ["4617"]}
+
+# --- Free City of Bergen ---
+bergen: {name: Bergen, vp: Bergen, kommuner: ["4601"]}
+
+# --- Western Forces ---
+voss: {name: Voss, vp: Voss, kommuner: ["4621"]}
+hardanger: {name: Hardanger, vp: Norheimsund, kommuner: ["4622", "4620", "4619"]}
+indre_sogn: {name: Indre Sogn, vp: Sogndal, kommuner: ["4640", "4644", "4643", "4642", "4641"]}
+ytre_sogn: {name: Midtre Sogn, vp: Høyanger, kommuner: ["4638", "4639"]}
+stryn: {name: Indre Nordfjord, vp: Stryn, kommuner: ["4651"]}
+romsdal_indre: {name: Indre Romsdal, vp: Åndalsnes, kommuner: ["1539", "1525"]}
+
+# --- Nordic Resistance Movement ---
+alesund: {name: Ålesund, vp: Ålesund, kommuner: ["1508", "1531", "1532", "1580"]}
+sunnmore_sor: {name: Søre Sunnmøre, vp: Ulsteinvik, kommuner: ["1516", "1511", "1514", "1515", "1517", "1520", "1577"]}
+sunnmore_indre: {name: Indre Sunnmøre, vp: Sykkylven, kommuner: ["1528", "1578"]}
+molde: {name: Molde, vp: Molde, kommuner: ["1506", "1535", "1547", "1579"]}
+kristiansund: {name: Kristiansund, vp: Kristiansund, kommuner: ["1505", "1554", "1557", "1573"]}
+nordfjord: {name: Nordfjord, vp: Florø, kommuner: ["4602", "4648", "4649", "4650"]}
+sunnfjord: {name: Sunnfjord, vp: Førde, kommuner: ["4647", "4645", "4646", "4636", "4637"]}
+
+# --- FrP ---
+trondheim: {name: Trondheim, vp: Trondheim, kommuner: ["5001"]}
+trondheim_omland: {name: Gauldal og Malvik, vp: Melhus, kommuner: ["5028", "5031"]}
+nordmore: {name: Nordmøre, vp: Sunndalsøra, kommuner: ["1563", "1560", "1566", "1576", "5061"]}
+orkdal: {name: Orkdal og Hitra, vp: Orkanger, kommuner: ["5059", "5056", "5014", "5055"]}
+gauldal: {name: Gauldal og Røros, vp: Røros, kommuner: ["5025", "5027", "5026"]}
+oppdal: {name: Oppdal, vp: Oppdal, kommuner: ["5021"]}
+stjordal: {name: Stjørdal, vp: Stjørdalshalsen, kommuner: ["5035", "5032", "5033", "5036"]}
+fosen: {name: Fosen, vp: Brekstad, kommuner: ["5057", "5054", "5058", "5020"]}
+innherred: {name: Innherred, vp: Levanger, kommuner: ["5037", "5038", "5053"]}
+steinkjer: {name: Steinkjer, vp: Steinkjer, kommuner: ["5006", "5041", "5049"]}
+namdal: {name: Namdalen, vp: Namsos, kommuner: ["5007", "5047", "5046", "5045", "5044", "5043", "5042"]}
+ytre_namdal: {name: Ytre Namdal, vp: Rørvik, kommuner: ["5060", "5052"]}
+sor_helgeland: {name: Sør-Helgeland, vp: Brønnøysund, kommuner: ["1813", "1811", "1812", "1815", "1816"]}
+helgeland: {name: Helgeland, vp: Mosjøen, kommuner: ["1824", "1820", "1822", "1826", "1827", "1818"]}
+
+# --- Sámi ---
+bodo: {name: Bodø, vp: Bodø, kommuner: ["1804"]}
+salten: {name: Salten, vp: Fauske, kommuner: ["1841", "1840", "1845", "1839", "1838"]}
+rana: {name: Rana, vp: Mo i Rana, kommuner: ["1833", "1832"]}
+helgeland_nord: {name: Nordre Helgeland, vp: Ørnes, kommuner: ["1837", "1828", "1834", "1835", "1836"]}
+steigen: {name: Steigen og Hamarøy, vp: Leinesfjord, kommuner: ["1848", "1875"]}
+lofoten: {name: Lofoten, vp: Svolvær, kommuner: ["1865", "1856", "1857", "1859", "1860", "1874"]}
+vesteralen: {name: Vesterålen, vp: Sortland, kommuner: ["1870", "1866", "1867", "1868", "1871"]}
+narvik: {name: Narvik, vp: Narvik, kommuner: ["1806", "1853", "1851", "5512"]}
+harstad: {name: Harstad, vp: Harstad, kommuner: ["5503", "5510", "5514"]}
+tromso: {name: Tromsø, vp: Tromsø, kommuner: ["5501"]}
+senja: {name: Senja, vp: Finnsnes, kommuner: ["5530", "5526", "5528"]}
+indre_troms: {name: Indre Troms, vp: Bardufoss, kommuner: ["5524", "5520", "5522", "5516", "5518"]}
+balsfjord: {name: Lyngen og Balsfjord, vp: Storsteinnes, kommuner: ["5532", "5534", "5536", "5538"]}
+nord_troms: {name: Nord-Troms, vp: Storslett, kommuner: ["5544", "5540", "5542", "5546"]}
+alta: {name: Alta, vp: Alta, kommuner: ["5601", "5614"]}
+hammerfest: {name: Hammerfest, vp: Hammerfest, kommuner: ["5603", "5616", "5618"]}
+porsanger: {name: Porsanger og Nordkapp, vp: Honningsvåg, kommuner: ["5620", "5622"]}
+ost_finnmark: {name: Øst-Finnmark, vp: Tana bru, kommuner: ["5628", "5624", "5626", "5630", "5632"]}
+varanger: {name: Varanger, vp: Vadsø, kommuner: ["5607", "5634", "5636"]}
+
+# --- Anarchist Cells (one municipality each) ---
+grane: {name: Grane, vp: Trofors, kommuner: ["1825"]}
+sigdal: {name: Sigdal, vp: Prestfoss, kommuner: ["3332"]}
+flesberg: {name: Flesberg, vp: Lampeland, kommuner: ["3334"]}
+valer_hedmark: {name: Våler, vp: Våler, kommuner: ["3419"]}
+alvdal: {name: Alvdal, vp: Alvdal, kommuner: ["3428"]}
+sel: {name: Sel, vp: Otta, kommuner: ["3437"]}
+vestre_slidre: {name: Vestre Slidre, vp: Slidre, kommuner: ["3452"]}
+gulen: {name: Gulen, vp: Eivindvik, kommuner: ["4635"]}
+rennebu: {name: Rennebu, vp: Berkåk, kommuner: ["5022"]}
+skaun: {name: Skaun, vp: Børsa, kommuner: ["5029"]}
+meraker: {name: Meråker, vp: Meråker, kommuner: ["5034"]}
+sor_varanger: {name: Sør-Varanger, vp: Kirkenes, kommuner: ["5605"]}
+
+# --- Sweden ---
+kiruna: {name: Kiruna, vp: Kiruna, kommuner: ["SE2584", "SE2523", "SE2510"]}
+lappland: {name: Södra Lappland, vp: Storuman, kommuner: ["SE2421", "SE2506", "SE2422", "SE2462"]}
+jamtland: {name: Norra Jämtland, vp: Strömsund, kommuner: ["SE2313", "SE2309"]}
+ostersund: {name: Östersund, vp: Östersund, kommuner: ["SE2380", "SE2321"]}
+harjedalen: {name: Härjedalen, vp: Sveg, kommuner: ["SE2361", "SE2326"]}
+dalarna: {name: Västra Dalarna, vp: Malung, kommuner: ["SE2023", "SE2039"]}
+varmland: {name: Norra Värmland, vp: Arvika, kommuner: ["SE1784", "SE1737", "SE1730", "SE1765"]}
+karlstad: {name: Karlstad, vp: Karlstad, kommuner: ["SE1780", "SE1715"]}
+dalsland: {name: Dalsland og Bohuslän, vp: Strömstad, kommuner: ["SE1486", "SE1438"]}
