@@ -12,7 +12,7 @@ SPM: {name: Neutral Coalition, adjective: Coalition, colour: [46, 125, 31], ideo
 ABI: {name: Askøy-Bømlo Insurgency, adjective: Insurgent, colour: [139, 15, 26], ideology: neutrality, capital: askoy}
 BRG: {name: Free City of Bergen, adjective: Bergenser, colour: [212, 178, 10], ideology: neutrality, capital: bergen}
 ANA: {name: Anarchist Cells, adjective: Anarchist, colour: [20, 8, 8], ideology: neutrality, capital: sel}
-SWE: {name: Sweden, adjective: Swedish, colour: [10, 70, 140], ideology: democratic, capital: ostersund}
+SWE: {name: Sweden, adjective: Swedish, colour: [176, 160, 116], ideology: democratic, capital: ostersund}
 
 # Background countries: own only the impassable land at the map edge.
 FIN: {name: Finland, adjective: Finnish, colour: [200, 205, 215], ideology: democratic, capital: waste_fin, background: true}

@@ -28,3 +28,30 @@ def preview_states(path, scale=0.5) -> None:
     img[raster.lake_mask()] = (120, 170, 210)
     im = Image.fromarray(img)
     im.resize((int(im.width * scale), int(im.height * scale)), Image.LANCZOS).save(path)
+
+
+def preview_political(path, scale=0.5) -> None:
+    """Owner colours with province borders (faint) and state borders (dark), like the game's political map."""
+    from tools import provinces, terrain
+
+    pm = provinces.provinces()
+    states = raster.state_raster()
+    img = owner_colours()[states].astype(np.float32)
+    hm = raster.heightmap().astype(np.float32)
+    land = states > 0
+    img[land] *= (0.8 + 0.35 * ((hm[land] - 95) / 160))[:, None]
+    img[~land] = (70, 110, 150)
+    img[raster.lake_mask()] = (90, 140, 190)
+    ids = pm.ids
+    pb = np.zeros(ids.shape, bool)
+    pb[:-1] |= ids[:-1] != ids[1:]
+    pb[:, :-1] |= ids[:, :-1] != ids[:, 1:]
+    sb = np.zeros(ids.shape, bool)
+    sb[:-1] |= states[:-1] != states[1:]
+    sb[:, :-1] |= states[:, :-1] != states[:, 1:]
+    img[pb & land] *= 0.85
+    img[sb & land] = (30, 30, 30)
+    rivers = terrain.river_bitmap() < terrain.R_WATER
+    img[rivers] = (60, 120, 200)
+    im = Image.fromarray(img.clip(0, 255).astype(np.uint8))
+    im.resize((int(im.width * scale), int(im.height * scale)), Image.LANCZOS).save(path)

@@ -10,9 +10,14 @@ START_DATE = "2030.1.1.12"
 END_DATE = "2080.1.1.1"
 MOD_NAME = "Norwegian Civil War 2030"
 
+# Vanilla world content that points at states and countries this map removes.
+# Kept from vanilla on purpose: common/ideas (laws), scripted effects/triggers, technologies.
 REPLACE_PATHS = (
     "history/states", "history/countries", "history/units", "history/general",
     "common/country_tags", "common/bookmarks", "map/strategicregions", "map/supplyareas",
+    "common/national_focus", "events", "common/decisions", "common/decisions/categories",
+    "common/on_actions", "common/ai_strategy", "common/ai_strategy_plans", "common/ai_areas",
+    "common/characters",
 )
 
 CATEGORIES = ((5_000, "pastoral"), (15_000, "rural"), (40_000, "town"), (90_000, "large_town"),
@@ -116,8 +121,12 @@ def country_history(f: geo.Faction, puppets: list[str]) -> str:
     return "\n".join(lines) + "\n"
 
 
+ASCII = str.maketrans({"å": "a", "Å": "A", "ø": "o", "Ø": "O", "æ": "ae", "Æ": "AE", "á": "a", "ä": "a",
+                       "ö": "o"})
+
+
 def _file_name(f: geo.Faction) -> str:
-    return "".join(c if c.isalnum() or c in " -" else "" for c in f.name).strip()
+    return "".join(c for c in f.name.translate(ASCII) if c.isascii() and (c.isalnum() or c in " -")).strip()
 
 
 def write_countries(mod: Path) -> None:

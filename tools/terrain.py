@@ -393,4 +393,8 @@ def water_colormap() -> np.ndarray:
 def write_colormaps(terrain_dir) -> None:
     terrain_dir.mkdir(parents=True, exist_ok=True)
     _write_dds_rgba(terrain_dir / "colormap_rgb_cityemissivemask_a.dds", colormap())
-    _write_dds_rgba(terrain_dir / "colormap_water_0.dds", water_colormap())
+    water = water_colormap()
+    for i in range(3):  # vanilla ships three sizes: _0 full, _1 half, _2 quarter
+        h, w = water.shape[0] >> i, water.shape[1] >> i
+        _write_dds_rgba(terrain_dir / f"colormap_water_{i}.dds",
+                        np.asarray(Image.fromarray(water, "RGBA").resize((w, h), Image.BILINEAR)))

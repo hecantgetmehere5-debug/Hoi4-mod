@@ -21,13 +21,17 @@ from tools.geo import DATA, HEIGHT, SRC
 STATE_REGISTRY = DATA / "registry" / "states.json"
 SEA_REGION_SIZE = 50  # sea provinces per sea strategic region (roughly)
 
+# Building position names and counts follow vanilla map/buildings.txt.
 STATE_BUILDINGS = {  # building -> models per state
     "arms_factory": 6, "industrial_complex": 6, "air_base": 1, "anti_air_building": 3,
-    "synthetic_refinery": 1, "fuel_silo": 1, "radar_station": 1, "rocket_site": 1, "nuclear_reactor": 1,
+    "synthetic_refinery": 1, "fuel_silo": 1, "radar_station": 1, "rocket_site_spawn": 1,
+    "nuclear_reactor_spawn": 1, "stronghold_network": 1, "special_project_facility_spawn": 3,
 }
 COASTAL_STATE_BUILDINGS = {"dockyard": 6}
 PROVINCE_BUILDINGS = ("bunker", "supply_node")
-COASTAL_PROVINCE_BUILDINGS = ("coastal_bunker", "naval_base", "floating_harbor")
+COASTAL_PROVINCE_BUILDINGS = ("coastal_bunker", "naval_base_spawn", "floating_harbor",
+                              "naval_headquarters", "naval_supply_hub")
+SEA_LINKED_BUILDINGS = ("naval_base_spawn", "floating_harbor")
 
 
 # --- state ids ---------------------------------------------------------------
@@ -482,7 +486,7 @@ def write_buildings(path: Path) -> None:
                 sea = _sea_neighbour(pid)
                 x, y = _shore_point(pid, sea)
                 for b in COASTAL_PROVINCE_BUILDINGS:
-                    last = sea if b in ("naval_base", "floating_harbor") else 0
+                    last = sea if b in SEA_LINKED_BUILDINGS else 0
                     lines.append(f"{sid[key]};{b};{_fmt(*world(x, y))};0.00;{last}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -517,6 +521,18 @@ def write_airports_and_rocketsites(folder: Path) -> None:
     (folder / "rocketsites.txt").write_text(text, encoding="utf-8")
 
 
+CITY_GROUP_WESTERN = 15  # vanilla map/cities.txt: color_index of the western city group
+
+
+def write_cities_bmp(path: Path) -> None:
+    """City mesh style map (vanilla cities.txt reads map/cities.bmp): western style everywhere."""
+    im = Image.fromarray(np.full((HEIGHT, geo.WIDTH), CITY_GROUP_WESTERN, np.uint8), "P")
+    pal = [0] * 768
+    pal[3 * CITY_GROUP_WESTERN:3 * CITY_GROUP_WESTERN + 3] = (255, 255, 255)
+    im.putpalette(pal)
+    im.save(path)
+
+
 def write_all(map_dir: Path) -> None:
     map_dir.mkdir(parents=True, exist_ok=True)
     write_provinces_bmp(map_dir / "provinces.bmp")
@@ -528,6 +544,7 @@ def write_all(map_dir: Path) -> None:
     terrain.write_normal_map(map_dir / "world_normal.bmp")
     terrain.write_colormaps(map_dir / "terrain")
     write_simple_files(map_dir)
+    write_cities_bmp(map_dir / "cities.bmp")
     write_strategic_regions(map_dir / "strategicregions")
     write_railways(map_dir / "railways.txt")
     write_supply_nodes(map_dir / "supply_nodes.txt")

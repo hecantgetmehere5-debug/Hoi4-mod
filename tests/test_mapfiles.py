@@ -94,3 +94,22 @@ def test_victory_point_in_own_state():
 def test_state_ids_gapless():
     ids = sorted(mapfiles.state_ids().values())
     assert ids == list(range(1, len(ids) + 1))
+
+
+VANILLA_BUILDING_NAMES = {
+    "air_base", "anti_air_building", "arms_factory", "bunker", "coastal_bunker", "dam_spawn", "dockyard",
+    "floating_harbor", "fuel_silo", "industrial_complex", "landmark_spawn", "locks_spawn", "naval_base_spawn",
+    "naval_headquarters", "naval_supply_hub", "nuclear_reactor_spawn", "radar_station", "rocket_site_spawn",
+    "special_project_facility_spawn", "stronghold_network", "supply_node", "synthetic_refinery",
+}
+
+
+def test_building_names_match_vanilla(tmp_path):
+    mapfiles.write_buildings(tmp_path / "buildings.txt")
+    rows = [l.split(";") for l in (tmp_path / "buildings.txt").read_text().splitlines()]
+    assert {r[1] for r in rows} <= VANILLA_BUILDING_NAMES
+    assert all(len(r) == 7 for r in rows)
+    sea = {p.id for p in terrain.annotate().info.values() if p.kind == "sea"}
+    for r in rows:
+        if r[1] in mapfiles.SEA_LINKED_BUILDINGS:
+            assert int(r[6]) in sea
