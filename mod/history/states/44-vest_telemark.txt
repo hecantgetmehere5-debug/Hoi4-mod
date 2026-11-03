@@ -1,0 +1,19 @@
+state = {
+	id = 44
+	name = "NWC_STATE_44"
+	manpower = 7397
+	state_category = rural
+	history = {
+		owner = KRF
+		add_core_of = KRF
+		add_core_of = NOR
+		victory_points = { 388 1 }
+		buildings = {
+			infrastructure = 1
+		}
+	}
+	provinces = {
+		380 381 382 383 384 385 386 387 388 389 390 391 392 2585 2591 2594
+	}
+	local_supplies = 0.0
+}

@@ -21,7 +21,7 @@ def _approved_owner():
     mm = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mm)
     tags = {"GOV": "NOR", "WGOV": "WFR", "MUS": "JNP", "KRF": "KRF", "SOC": "SOC", "FRP": "FRP",
-            "NRM": "NRM", "SAMI": "SAM", "CEN": "SPM", "AB": "ABI", "BRG": "BRG", "ANA": "ANA"}
+            "NRM": "NRM", "SAMI": "SAP", "CEN": "NCL", "AB": "ABI", "BRG": "BRG", "ANA": "ANA"}
     return lambda k: tags[mm.OVERRIDES.get(k, mm.COUNTY[k[:2]])]
 
 

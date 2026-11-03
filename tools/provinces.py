@@ -21,15 +21,16 @@ from tools.geo import DATA
 REGISTRY = DATA / "registry" / "provinces.json"
 SEA = "sea"
 MIN_PROVINCE_PX = 30
+MAX_BOX_PX = 120  # vanilla's widest province is 280 px; the game rejects provinces with too large a box
 
 # Seed spacing in pixels (400 m each).
 SPACING_CITY = 16
 SPACING_COASTAL = 38
 SPACING_INLAND = 52
 SPACING_SWEDEN = 64
-SPACING_WASTELAND = 130
+SPACING_WASTELAND = 90
 SPACING_SEA_NEAR = 50
-SPACING_SEA_FAR = 120
+SPACING_SEA_FAR = 90
 SEA_NEAR_PX = 40
 CITY_DENSITY = 250  # people per km² for city spacing
 
@@ -190,7 +191,15 @@ def _regions():
     for i, k in enumerate(keys):
         meta[i + 1] = (k, "land", owners.get(k) or waste_owner[k], i >= n_play)
     sea_code = len(keys) + 1
-    code[(states == 0) & ~lakes] = sea_code
+    sea = (states == 0) & ~lakes
+    # Water cut off from the open ocean (inner fjord basins) is a lake in HOI4, not sea.
+    sea_lab, _ = ndimage.label(sea)
+    ocean = {int(np.bincount(sea_lab[sea_lab > 0]).argmax())}
+    # Water that leaves the map (the Baltic past the bottom edge) is open sea too.
+    ocean |= set(np.unique(np.concatenate([sea_lab[0], sea_lab[-1], sea_lab[:, 0], sea_lab[:, -1]])).tolist())
+    enclosed = sea & ~np.isin(sea_lab, sorted(ocean - {0}))
+    lakes = lakes | enclosed
+    code[sea & ~enclosed] = sea_code
     meta[sea_code] = (SEA, "sea", None, False)
     lake_lab, n_lakes = ndimage.label(lakes)
     for j in range(1, n_lakes + 1):
@@ -280,6 +289,13 @@ def build_provinces(registry: list[dict] | None = None) -> ProvinceMap:
     # Nearest seed of the same region, then repair any piece cut off from its seed.
     tmp = _voronoi(code, seeds)
     tmp = _merge_small(tmp, code)
+    for _ in range(6):
+        extra = _split_seeds(tmp, seeds)
+        if not extra:
+            break
+        seeds = seeds + extra
+        tmp = _merge_small(_voronoi(code, seeds), code)
+    tmp = _remove_x_crossings(tmp, code)
     alive = np.unique(tmp)
     alive = alive[alive > 0]
     seeds = [seeds[i - 1] for i in alive]
@@ -308,6 +324,56 @@ def build_provinces(registry: list[dict] | None = None) -> ProvinceMap:
         used.add(rgb)
         info[pid] = Province(pid, rgb, kind, region, seed, int(sizes[pid]), (float(cx[pid]), float(cy[pid])))
     return ProvinceMap(ids, info)
+
+
+def _split_seeds(lab: np.ndarray, seeds) -> list:
+    """An extra seed, far from the existing one, for every province whose box is wider than MAX_BOX_PX."""
+    extra = []
+    for l, sl in enumerate(ndimage.find_objects(lab), start=1):
+        if sl is None:
+            continue
+        if max(sl[0].stop - sl[0].start, sl[1].stop - sl[1].start) <= MAX_BOX_PX:
+            continue
+        region, kind, (sy, sx), c = seeds[l - 1]
+        ys, xs = np.nonzero(lab[sl] == l)
+        ys, xs = ys + sl[0].start, xs + sl[1].start
+        i = int(np.argmax((ys - sy) ** 2 + (xs - sx) ** 2))
+        extra.append((region, kind, (int(ys[i]), int(xs[i])), c))
+    return extra
+
+
+def _x_crossings(lab: np.ndarray) -> np.ndarray:
+    """(y, x) of every 2x2 block where four different provinces meet; x wraps across the map edge."""
+    wrapped = np.concatenate([lab, lab[:, :1]], axis=1)
+    tl, tr, bl, br = wrapped[:-1, :-1], wrapped[:-1, 1:], wrapped[1:, :-1], wrapped[1:, 1:]
+    four = (tl != tr) & (tl != bl) & (tl != br) & (tr != bl) & (tr != br) & (bl != br)
+    return np.argwhere(four)
+
+
+def _remove_x_crossings(lab: np.ndarray, code: np.ndarray) -> np.ndarray:
+    """HOI4 rejects points where four provinces meet ("Map invalid X crossing").
+
+    Give one pixel of each such 2x2 block to a neighbour in the same region.
+    """
+    w = lab.shape[1]
+    lab = lab.copy()
+    for _ in range(4):
+        spots = _x_crossings(lab)
+        if not len(spots):
+            break
+        for y, x in spots:
+            cells = [(y, x), (y, (x + 1) % w), (y + 1, x), (y + 1, (x + 1) % w)]
+            done = False
+            for cy, cx in cells:
+                for ny, nx in cells:
+                    if (ny, nx) != (cy, cx) and (ny == cy or nx == cx) and code[ny, nx] == code[cy, cx] \
+                            and lab[ny, nx] != lab[cy, cx]:
+                        lab[cy, cx] = lab[ny, nx]
+                        done = True
+                        break
+                if done:
+                    break
+    return lab
 
 
 def _merge_small(lab: np.ndarray, code: np.ndarray) -> np.ndarray:

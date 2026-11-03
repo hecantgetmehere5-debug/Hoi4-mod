@@ -1,0 +1,20 @@
+state = {
+	id = 38
+	name = "NWC_STATE_38"
+	manpower = 23690
+	state_category = town
+	history = {
+		owner = KRF
+		add_core_of = KRF
+		add_core_of = NOR
+		victory_points = { 342 2 }
+		buildings = {
+			infrastructure = 2
+			341 = { naval_base = 1 }
+		}
+	}
+	provinces = {
+		341 342 343
+	}
+	local_supplies = 0.0
+}

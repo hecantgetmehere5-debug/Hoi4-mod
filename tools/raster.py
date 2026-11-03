@@ -21,7 +21,7 @@ MAX_HEIGHT_M = 2470
 MIN_LAKE_KM2 = 25
 LAKE_HEIGHT = 92
 MIN_WASTELAND_PX = 3000
-MIN_ISLAND_PX = 24
+MIN_ISLAND_PX = 30
 HEIGHT_SPAN = 110  # heightmap value above sea level at MAX_HEIGHT_M
 
 
@@ -131,8 +131,21 @@ def state_raster() -> np.ndarray:
     lake_labels = set(np.unique(labels[lakes]))
     sizes = ndimage.sum(water, labels, index=np.arange(n + 1))
     fill = np.zeros(n + 1, bool)
+    n_play = len(geo.load_states())
     for lab in range(1, n + 1):
-        if lab not in edge and lab not in lake_labels and sizes[lab] < 400:
+        if lab in edge or lab in lake_labels:
+            continue
+        if sizes[lab] < 400:
+            fill[lab] = True
+            continue
+        # Inland water in the impassable border area (Vänern and the like) becomes wasteland, so it
+        # doesn't turn into one huge lake province the game can't place units in.
+        sl = ndimage.find_objects((labels == lab).astype(np.uint8))[0]
+        sl = tuple(slice(max(0, a.start - 1), a.stop + 1) for a in sl)
+        ring = ndimage.binary_dilation(labels[sl] == lab) & (labels[sl] != lab)
+        around = r[sl][ring]
+        around = around[around > 0]
+        if len(around) and (around > n_play).mean() > 0.5:
             fill[lab] = True
     holes = fill[labels]
     if holes.any():
@@ -142,7 +155,45 @@ def state_raster() -> np.ndarray:
     labels, n = ndimage.label(r > 0)
     sizes = ndimage.sum(r > 0, labels, index=np.arange(n + 1))
     r[(sizes < MIN_ISLAND_PX)[labels] & (r > 0)] = 0
-    return _absorb_scraps(r, lakes)
+    # Absorbing one scrap can leave another behind, so repeat until nothing changes.
+    for _ in range(6):
+        nxt = _absorb_scraps(r, lakes)
+        if (nxt == r).all():
+            break
+        r = nxt
+    return _remove_region_x_crossings(r, lakes)
+
+
+def _remove_region_x_crossings(r: np.ndarray, lakes: np.ndarray) -> np.ndarray:
+    """No point where four regions meet or two regions touch only diagonally (HOI4: "Map invalid X crossing").
+
+    Sea, each lake and each state count as regions. A non-lake pixel of the 2x2 block takes the region of
+    a side neighbour, so the block always ends up with two pixels of one region side by side.
+    """
+    lake_lab, _ = ndimage.label(lakes)
+    r = r.astype(np.int64)
+    w = r.shape[1]
+    for _ in range(6):
+        region = np.where(lakes, -lake_lab - 1, r)
+        wrapped = np.concatenate([region, region[:, :1]], axis=1)
+        tl, tr, bl, br = wrapped[:-1, :-1], wrapped[:-1, 1:], wrapped[1:, :-1], wrapped[1:, 1:]
+        four = (tl != tr) & (tl != bl) & (tl != br) & (tr != bl) & (tr != br) & (bl != br)
+        # Same region touching only at a corner of the block.
+        checker = ((tl == br) & (tl != tr) & (tl != bl)) | ((tr == bl) & (tr != tl) & (tr != br))
+        spots = np.argwhere(four | checker)
+        if not len(spots):
+            break
+        for y, x in spots:
+            cells = [(y, x), (y, (x + 1) % w), (y + 1, x), (y + 1, (x + 1) % w)]
+            for cy, cx in cells:
+                if lakes[cy, cx]:
+                    continue
+                side = [(ny, nx) for ny, nx in cells if (ny == cy) != (nx == cx) and not lakes[ny, nx]
+                        and r[ny, nx] != r[cy, cx]]
+                if side:
+                    r[cy, cx] = r[side[0]]
+                    break
+    return r.astype(np.uint16)
 
 
 def _absorb_scraps(r: np.ndarray, lakes: np.ndarray) -> np.ndarray:
@@ -211,4 +262,7 @@ def heightmap() -> np.ndarray:
 
 
 def write_heightmap(path) -> None:
+    from tools.terrain import zero_bmp_colour_count
+
     Image.fromarray(heightmap(), "L").save(path)
+    zero_bmp_colour_count(path)

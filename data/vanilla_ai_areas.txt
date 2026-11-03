@@ -1,0 +1,55 @@
+# AI area names vanilla scripts refer to (common/ai_areas/default.txt, HOI4 1.19).
+	suez
+scandinavia
+italy
+sardinia
+	albania
+	greater_balkans
+north_africa
+	north_east_africa
+	central_north_africa
+	torch_landing_zone
+	europe
+mainland_europe
+	normandy_landing_zone
+	benelux
+	north_america
+	south_america
+	africa
+	asia
+	middle_east
+	pacific
+	oceania
+	home_islands
+	just_philippines
+	east_indies
+	burma
+	horn_of_africa
+	east_africa
+	defend_moscow_zone
+	belgian_congo
+	sub_saharan_africa
+	just_finland
+	just_norway
+	just_denmark_excluding_greenland
+	just_iceland
+	winter_war_front
+	andaman_islands
+	guam_area
+	japan
+	us_west_coast
+	pearl_harbor_pacific_control_zone
+	borneo_area
+	sumatra_area
+	java_area
+	bismarck_sea_area
+	kokoda_trail_area
+	north_australia
+	micronesia_pacific_control_zone
+	mariana_pacific_control_zone
+	north_pacific_control_zone
+	home_islands_control_zone
+	western_med_control_zone
+	eastern_med_control_zone
+	italy_med_control_zone
+	med_invasion_zone

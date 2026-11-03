@@ -1,0 +1,20 @@
+state = {
+	id = 87
+	name = "NWC_STATE_87"
+	manpower = 27795
+	state_category = town
+	history = {
+		owner = FRP
+		add_core_of = FRP
+		add_core_of = NOR
+		victory_points = { 929 2 }
+		buildings = {
+			infrastructure = 2
+			917 = { naval_base = 1 }
+		}
+	}
+	provinces = {
+		916 917 918 919 920 921 922 923 924 925 926 927 928 929 930 931 932 933 934 935 936 937 939 940 941 942 2511
+	}
+	local_supplies = 0.0
+}

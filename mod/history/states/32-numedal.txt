@@ -1,0 +1,19 @@
+state = {
+	id = 32
+	name = "NWC_STATE_32"
+	manpower = 3881
+	state_category = pastoral
+	history = {
+		owner = NCL
+		add_core_of = NCL
+		add_core_of = NOR
+		victory_points = { 280 1 }
+		buildings = {
+			infrastructure = 1
+		}
+	}
+	provinces = {
+		279 280 281 282 283 284 285
+	}
+	local_supplies = 0.0
+}

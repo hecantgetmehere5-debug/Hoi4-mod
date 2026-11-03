@@ -9,15 +9,31 @@ from tools import geo, mapfiles, raster, terrain
 START_DATE = "2030.1.1.12"
 END_DATE = "2080.1.1.1"
 MOD_NAME = "Norwegian Civil War 2030"
+# Tags this mod shares with vanilla, and vanilla's country file for each (common/country_tags/00_countries.txt).
+VANILLA_COUNTRY_FILES = {"NOR": "Norway", "SWE": "Sweden", "FIN": "Finland", "SOV": "Soviet Union", "DEN": "Denmark"}
+SUPPORTED_VERSION = "1.19.*"
+STARTING_TECH = ("infantry_weapons", "infantry_weapons1", "tech_support", "tech_engineers", "tech_recon",
+                 "gw_artillery", "interwar_antiair")
+DIVISION_TEMPLATE = """division_template = {
+\tname = "Infantry Division"
+\tregiments = {
+\t\tinfantry = { x = 0 y = 0 }
+\t\tinfantry = { x = 0 y = 1 }
+\t\tinfantry = { x = 1 y = 0 }
+\t\tinfantry = { x = 1 y = 1 }
+\t}
+}
+"""
 
 # Vanilla world content that points at states and countries this map removes.
-# Kept from vanilla on purpose: common/ideas (laws), scripted effects/triggers, technologies.
+# Only history, tags, bookmarks and map regions are replaced: the game needs vanilla's
+# default focus tree, on_actions, decisions and characters to start, even if they log errors.
 REPLACE_PATHS = (
-    "history/states", "history/countries", "history/units", "history/general",
-    "common/country_tags", "common/bookmarks", "map/strategicregions", "map/supplyareas",
-    "common/national_focus", "events", "common/decisions", "common/decisions/categories",
-    "common/on_actions", "common/ai_strategy", "common/ai_strategy_plans", "common/ai_areas",
-    "common/characters",
+    "history/states", "history/countries", "history/units",
+    "common/bookmarks", "map/strategicregions", "map/supplyareas",
+    # Vanilla AI data names strategic regions and states by number; on this map those ids are
+    # invalid, and the AI reads them on the first day of a game.
+    "common/ai_areas", "common/ai_strategy", "common/ai_strategy_plans",
 )
 
 CATEGORIES = ((5_000, "pastoral"), (15_000, "rural"), (40_000, "town"), (90_000, "large_town"),
@@ -39,10 +55,21 @@ def infrastructure(pop: int, km2: float) -> int:
     return 4 if density > 250 else 3 if density > 30 else 2 if density > 5 else 1
 
 
-def factories(pop: int) -> tuple[int, int]:
-    """(industrial_complex, arms_factory) for a 2030 service economy without oil money."""
-    civ = int(pop // 70_000)
-    return civ, int(pop >= 150_000)
+# Shared building slots per state category (vanilla common/state_category).
+BUILDING_SLOTS = {"pastoral": 1, "rural": 2, "town": 4, "large_town": 5, "city": 6, "large_city": 8,
+                  "metropolis": 10, "wasteland": 0}
+
+
+def factories(pop: int, category: str) -> tuple[int, int]:
+    """(industrial_complex, arms_factory) for a 2030 service economy without oil money.
+
+    Never more than the state category's building slots: the game crashes when a game starts
+    with a state over its limit ("Oslo has too many buildings").
+    """
+    slots = BUILDING_SLOTS[category]
+    mil = min(int(pop >= 150_000), slots)
+    civ = min(int(pop // 70_000), slots - mil)
+    return civ, mil
 
 
 def _state_pop() -> dict[str, int]:
@@ -60,6 +87,7 @@ def state_files() -> dict[str, str]:
     """file name -> contents for every history/states file."""
     sid = mapfiles.state_ids()
     sp = mapfiles.state_provinces()
+    lakes = mapfiles.state_lakes()
     vps = mapfiles.victory_points()
     pops = _state_pop()
     area = _state_area()
@@ -68,7 +96,7 @@ def state_files() -> dict[str, str]:
     for s in geo.load_states():
         owner = geo.state_owner(s)
         pop = pops[s.key]
-        civ, mil = factories(pop)
+        civ, mil = factories(pop, state_category(pop, False))
         cores = [owner] + (["NOR"] if owner not in ("NOR", "SWE") else [])
         naval = [p for p in sp[s.key] if info[p].coastal][:1]
         lines = [f"\t\towner = {owner}"] + [f"\t\tadd_core_of = {c}" for c in cores]
@@ -85,16 +113,17 @@ def state_files() -> dict[str, str]:
             lines.append(f"\t\t\t{p} = {{ naval_base = {2 if pop >= 50_000 else 1} }}")
         lines.append("\t\t}")
         out[f"{sid[s.key]}-{s.key}.txt"] = _state_text(sid[s.key], pop, state_category(pop, False),
-                                                       lines, sp[s.key], impassable=False)
+                                                       lines, sorted(set(sp[s.key] + lakes.get(s.key, []))), impassable=False)
     for key, owner, _ in raster.wasteland():
         lines = [f"\t\towner = {owner}", f"\t\tadd_core_of = {owner}"]
-        out[f"{sid[key]}-{key}.txt"] = _state_text(sid[key], 1000, "wasteland", lines, sp[key], impassable=True)
+        out[f"{sid[key]}-{key}.txt"] = _state_text(sid[key], 1000, "wasteland", lines, sorted(set(sp[key] + lakes.get(key, []))),
+                                                  impassable=True)
     return out
 
 
 def _state_text(sid, manpower, category, history, provs, impassable) -> str:
     extra = "\timpassable = yes\n" if impassable else ""
-    return (f"state = {{\n\tid = {sid}\n\tname = \"STATE_{sid}\"\n\tmanpower = {manpower}\n"
+    return (f"state = {{\n\tid = {sid}\n\tname = \"NWC_STATE_{sid}\"\n\tmanpower = {manpower}\n"
             f"\tstate_category = {category}\n{extra}\thistory = {{\n" + "\n".join(history) +
             f"\n\t}}\n\tprovinces = {{\n\t\t{' '.join(map(str, provs))}\n\t}}\n\tlocal_supplies = 0.0\n}}\n")
 
@@ -118,6 +147,10 @@ def country_history(f: geo.Faction, puppets: list[str]) -> str:
     lines += [f"\t{k} = {v}" for k, v in pops.items()] + ["}"]
     for p in puppets:
         lines.append(f"set_autonomy = {{ target = {p} autonomous_state = autonomy_puppet }}")
+    # Every vanilla country starts with laws, base technologies, convoys and an order of battle.
+    lines += [f'oob = "{f.tag}_2030"', "set_convoys = 10",
+              "add_ideas = {", "\tvolunteer_only", "\tcivilian_economy", "\texport_focus", "}",
+              "set_technology = {"] + [f"\t{t} = 1" for t in STARTING_TECH] + ["}"]
     return "\n".join(lines) + "\n"
 
 
@@ -140,16 +173,31 @@ def write_countries(mod: Path) -> None:
     tag_lines = []
     for tag, f in factions.items():
         name = _file_name(f)
-        tag_lines.append(f'{tag} = "countries/{name}.txt"')
+        if tag in VANILLA_COUNTRY_FILES:
+            # Reused vanilla tag: keep vanilla's tag entry and override its country file.
+            country_file = VANILLA_COUNTRY_FILES[tag]
+        else:
+            country_file = name
+            tag_lines.append(f'{tag} = "countries/{name}.txt"')
         r, g, b = f.colour
-        (countries / f"{name}.txt").write_text(
+        (countries / f"{country_file}.txt").write_text(
             f"graphical_culture = western_european_gfx\ngraphical_culture_2d = western_european_2d\n"
             f"color = rgb {{ {r} {g} {b} }}\n", encoding="utf-8")
         puppets = [t for t, o in factions.items() if o.puppet_of == tag]
         (hist / f"{tag} - {name}.txt").write_text(country_history(f, puppets), encoding="utf-8")
-        (units / f"{tag}_2030.txt").write_text("# Order of battle comes with the military project.\n",
-                                               encoding="utf-8")
-    (tags / "00_countries.txt").write_text("\n".join(tag_lines) + "\n", encoding="utf-8")
+        (units / f"{tag}_2030.txt").write_text(
+            "# Divisions come with the military project; vanilla always defines a template.\n" + DIVISION_TEMPLATE,
+            encoding="utf-8")
+    # Vanilla countries this map leaves out still need a history file; they start with no states.
+    # Vanilla gives even countries that start without land a capital; a game won't start without one.
+    absent_capital = mapfiles.state_ids()[factions["FIN"].capital]
+    lines = (geo.DATA / "vanilla_tags.txt").read_text().splitlines()
+    for tag in (l.strip() for l in lines if l.strip() and not l.startswith("#")):
+        if tag not in factions:
+            (hist / f"{tag} - absent.txt").write_text(
+                f"# Not on this map.\ncapital = {absent_capital}\n", encoding="utf-8")
+    # Added next to vanilla's tags, so vanilla scripts that name GER, ENG and so on still find them.
+    (tags / "nwc_countries.txt").write_text("\n".join(tag_lines) + "\n", encoding="utf-8")
 
 
 def write_states(mod: Path) -> None:
@@ -157,6 +205,35 @@ def write_states(mod: Path) -> None:
     d.mkdir(parents=True, exist_ok=True)
     for name, text in state_files().items():
         (d / name).write_text(text, encoding="utf-8")
+
+
+def write_ai_areas(mod: Path) -> None:
+    """Every AI area vanilla scripts name, each holding only valid strategic regions of this map."""
+    names = [l.strip() for l in (geo.DATA / "vanilla_ai_areas.txt").read_text().splitlines()
+             if l.strip() and not l.startswith("#")]
+    land = sorted(r.id for r in mapfiles.strategic_regions() if r.weather == "land")
+    ids = " ".join(map(str, land))
+    d = mod / "common" / "ai_areas"
+    d.mkdir(parents=True, exist_ok=True)
+    body = "".join(f"\t{n} = {{\n\t\tstrategic_regions = {{ {ids} }}\n\t}}\n" for n in names)
+    (d / "nwc_ai_areas.txt").write_text(f"areas = {{\n{body}}}\n", encoding="utf-8")
+
+
+def write_tutorial(mod: Path) -> None:
+    """Map-independent tutorial; vanilla's points the camera at state 550, which crashes game start here."""
+    d = mod / "tutorial"
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "tutorial.txt").write_text((geo.DATA / "tutorial.txt").read_text(encoding="utf-8"), encoding="utf-8")
+
+
+def write_names(mod: Path) -> None:
+    """Name lists for the new tags: without one the game can't name generated leaders and scientists."""
+    text = (geo.DATA / "names_norway.txt").read_text(encoding="utf-8")
+    block = "\n".join(l for l in text.splitlines() if not l.startswith("#"))
+    new_tags = [t for t in geo.load_factions() if t not in VANILLA_COUNTRY_FILES]
+    d = mod / "common" / "names"
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "nwc_names.txt").write_text("".join(f"{t} = {block}\n\n" for t in new_tags), encoding="utf-8")
 
 
 def write_bookmark_and_defines(mod: Path) -> None:
@@ -190,13 +267,13 @@ def localisation() -> str:
         rows += [f' {tag}:0 "{q(f.name)}"', f' {tag}_DEF:0 "{q(f.name)}"', f' {tag}_ADJ:0 "{q(f.adjective)}"']
     for key, i in sorted(sid.items(), key=lambda kv: kv[1]):
         if key in names:
-            rows.append(f' STATE_{i}:0 "{q(names[key].name)}"')
+            rows.append(f' NWC_STATE_{i}:0 "{q(names[key].name)}"')
             rows.append(f' VICTORY_POINTS_{vps[key]}:0 "{q(names[key].vp)}"')
         else:
             label = {"waste_fin": "Finland", "waste_sov": "Kola", "waste_den": "Jutland"}.get(key, "Sverige")
-            rows.append(f' STATE_{i}:0 "{label}"')
+            rows.append(f' NWC_STATE_{i}:0 "{label}"')
     for r in mapfiles.strategic_regions():
-        rows.append(f' STRATEGICREGION_{r.id}:0 "{q(r.name)}"')
+        rows.append(f' NWC_STRATEGICREGION_{r.id}:0 "{q(r.name)}"')
     rows += [' NWC_BOOKMARK:0 "The Norwegian Civil War"',
              ' NWC_BOOKMARK_DESC:0 "2030. The oil fund is gone, the parties have turned on each other, '
              'and Norway has broken apart."']
@@ -231,7 +308,7 @@ def write_flags(mod: Path) -> None:
 
 
 def descriptor(path: str | None = None) -> str:
-    lines = ['version="0.1.0"', f'name="{MOD_NAME}"', 'supported_version="1.*"',
+    lines = ['version="0.1.0"', f'name="{MOD_NAME}"', f'supported_version="{SUPPORTED_VERSION}"',
              'tags={\n\t"Map"\n\t"Alternative History"\n}']
     lines += [f'replace_path="{p}"' for p in REPLACE_PATHS]
     if path:
@@ -242,6 +319,9 @@ def descriptor(path: str | None = None) -> str:
 def write_all(mod: Path) -> None:
     write_states(mod)
     write_countries(mod)
+    write_names(mod)
+    write_tutorial(mod)
+    write_ai_areas(mod)
     write_bookmark_and_defines(mod)
     write_localisation(mod)
     write_flags(mod)

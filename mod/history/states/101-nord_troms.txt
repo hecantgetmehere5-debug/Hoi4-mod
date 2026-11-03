@@ -1,0 +1,20 @@
+state = {
+	id = 101
+	name = "NWC_STATE_101"
+	manpower = 10719
+	state_category = rural
+	history = {
+		owner = SAP
+		add_core_of = SAP
+		add_core_of = NOR
+		victory_points = { 1190 1 }
+		buildings = {
+			infrastructure = 1
+			1173 = { naval_base = 1 }
+		}
+	}
+	provinces = {
+		1171 1172 1173 1174 1175 1176 1177 1178 1179 1180 1181 1182 1183 1184 1185 1186 1187 1188 1189 1190 1191 1192 1193 1194 1195 1196 1197 1198 1199
+	}
+	local_supplies = 0.0
+}

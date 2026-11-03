@@ -1,0 +1,19 @@
+state = {
+	id = 79
+	name = "NWC_STATE_79"
+	manpower = 7389
+	state_category = rural
+	history = {
+		owner = FRP
+		add_core_of = FRP
+		add_core_of = NOR
+		victory_points = { 793 1 }
+		buildings = {
+			infrastructure = 1
+		}
+	}
+	provinces = {
+		793 794 795 796 797 798
+	}
+	local_supplies = 0.0
+}

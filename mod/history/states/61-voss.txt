@@ -1,0 +1,21 @@
+state = {
+	id = 61
+	name = "NWC_STATE_61"
+	manpower = 16471
+	state_category = town
+	history = {
+		owner = WFR
+		add_core_of = WFR
+		add_core_of = NOR
+		victory_points = { 573 1 }
+		buildings = {
+			infrastructure = 2
+			air_base = 2
+			571 = { naval_base = 1 }
+		}
+	}
+	provinces = {
+		569 570 571 572 573
+	}
+	local_supplies = 0.0
+}

@@ -1,0 +1,20 @@
+state = {
+	id = 112
+	name = "NWC_STATE_112"
+	manpower = 5756
+	state_category = rural
+	history = {
+		owner = ANA
+		add_core_of = ANA
+		add_core_of = NOR
+		victory_points = { 1332 1 }
+		buildings = {
+			infrastructure = 2
+			air_base = 2
+		}
+	}
+	provinces = {
+		1330 1331 1332
+	}
+	local_supplies = 0.0
+}

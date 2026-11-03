@@ -1,0 +1,15 @@
+state = {
+	id = 132
+	name = "NWC_STATE_132"
+	manpower = 1000
+	state_category = wasteland
+	impassable = yes
+	history = {
+		owner = SWE
+		add_core_of = SWE
+	}
+	provinces = {
+		770 1584 1585 1586 1587 1588 1836 2026 2078 2403 2404 2864 2865 2866 2867 2868 2869 3410
+	}
+	local_supplies = 0.0
+}

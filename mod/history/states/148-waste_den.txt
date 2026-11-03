@@ -1,0 +1,15 @@
+state = {
+	id = 148
+	name = "NWC_STATE_148"
+	manpower = 1000
+	state_category = wasteland
+	impassable = yes
+	history = {
+		owner = DEN
+		add_core_of = DEN
+	}
+	provinces = {
+		1777 1778 1779 1780 2713 3102
+	}
+	local_supplies = 0.0
+}

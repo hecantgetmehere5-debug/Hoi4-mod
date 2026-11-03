@@ -1,0 +1,2 @@
+# Not on this map.
+capital = 147

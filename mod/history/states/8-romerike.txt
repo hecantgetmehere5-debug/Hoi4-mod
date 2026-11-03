@@ -1,0 +1,20 @@
+state = {
+	id = 8
+	name = "NWC_STATE_8"
+	manpower = 255708
+	state_category = large_city
+	history = {
+		owner = NOR
+		add_core_of = NOR
+		victory_points = { 50 17 }
+		buildings = {
+			infrastructure = 3
+			industrial_complex = 3
+			arms_factory = 1
+		}
+	}
+	provinces = {
+		47 48 49 50 51
+	}
+	local_supplies = 0.0
+}

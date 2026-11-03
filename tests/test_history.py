@@ -61,17 +61,38 @@ def test_every_tag_has_flag_files(mod):
 
 
 def test_every_tag_has_history_and_country_file(mod):
-    tags = (mod / "common" / "country_tags" / "00_countries.txt").read_text()
+    tags = (mod / "common" / "country_tags" / "nwc_countries.txt").read_text()
     for tag in geo.load_factions():
-        assert f"{tag} = " in tags
+        assert (f"{tag} = " in tags) != (tag in history.VANILLA_COUNTRY_FILES)
         assert list((mod / "history" / "countries").glob(f"{tag} - *.txt"))
 
 
 def test_descriptor_replaces_world(mod):
     text = (mod / "descriptor.mod").read_text()
-    for p in ("history/states", "common/country_tags", "map/strategicregions"):
+    for p in ("history/states", "map/strategicregions"):
         assert f'replace_path="{p}"' in text
 
 
 def test_start_date_2030(mod):
     assert '"2030.1.1.12"' in (mod / "common" / "defines" / "00_nwc_defines.lua").read_text()
+
+
+def test_new_tags_do_not_clash_with_vanilla():
+    import os
+    vanilla = os.path.expanduser("~/Library/Application Support/Steam/steamapps/common/Hearts of Iron IV/"
+                                 "common/country_tags/00_countries.txt")
+    if not os.path.exists(vanilla):
+        pytest.skip("HOI4 not installed")
+    taken = {l.split("=")[0].strip() for l in open(vanilla, encoding="utf-8", errors="ignore") if "=" in l}
+    for tag in geo.load_factions():
+        assert (tag in taken) == (tag in history.VANILLA_COUNTRY_FILES), tag
+
+
+def test_supported_version_format(mod):
+    assert re.search(r'supported_version="\d+\.\d+\.\*"', (mod / "descriptor.mod").read_text())
+
+
+def test_tutorial_has_no_vanilla_map_ids(mod):
+    """Vanilla's tutorial moves the camera to vanilla state 550; any state/province id there crashes game start."""
+    text = (mod / "tutorial" / "tutorial.txt").read_text()
+    assert not re.search(r"\b(state|target|direction_pointer|highlight_\w+)\s*=", text)

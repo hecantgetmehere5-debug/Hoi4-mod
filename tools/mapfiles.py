@@ -32,6 +32,8 @@ PROVINCE_BUILDINGS = ("bunker", "supply_node")
 COASTAL_PROVINCE_BUILDINGS = ("coastal_bunker", "naval_base_spawn", "floating_harbor",
                               "naval_headquarters", "naval_supply_hub")
 SEA_LINKED_BUILDINGS = ("naval_base_spawn", "floating_harbor")
+VANILLA_CONTINENTS = ("europe", "north_america", "south_america", "australia", "africa", "asia", "middle_east")
+UNIT_STACK_TYPES = 39  # vanilla map/unitstacks.txt uses types 0-38
 
 
 # --- state ids ---------------------------------------------------------------
@@ -80,6 +82,21 @@ def state_provinces() -> dict[str, list[int]]:
     return {k: sorted(v) for k, v in out.items()}
 
 
+@cache
+def state_lakes() -> dict[str, list[int]]:
+    """Lakes join the state most of their land neighbours belong to, as in vanilla."""
+    info = terrain.annotate().info
+    adj = terrain.adjacency()
+    out: dict[str, list[int]] = {}
+    for p in info.values():
+        if p.kind != "lake":
+            continue
+        near = [info[q].region for q in adj.get(p.id, ()) if info[q].kind == "land"]
+        if near:
+            out.setdefault(max(sorted(set(near)), key=near.count), []).append(p.id)
+    return {k: sorted(v) for k, v in out.items()}
+
+
 def is_wasteland(key: str) -> bool:
     return key.startswith("waste_")
 
@@ -98,9 +115,9 @@ def province_pixels(pid: int) -> tuple[np.ndarray, np.ndarray]:
 
 
 def world(x: float, y: float) -> tuple[float, float, float]:
-    """Pixel position -> HOI4 world coordinates (x, height, z)."""
+    """Pixel position -> HOI4 world coordinates (x, height, z). Vanilla maps z to pixel row HEIGHT - 1 - z."""
     h = raster.heightmap()[int(min(max(y, 0), HEIGHT - 1)), int(x)] / 10
-    return float(x), float(h), float(HEIGHT - y)
+    return float(x), float(h), float(HEIGHT - 1 - y)
 
 
 def _fmt(x, h, z):
@@ -112,8 +129,12 @@ def interior_point(pid: int, key: str) -> tuple[int, int]:
     ys, xs = province_pixels(pid)
     sl = _slices()[pid - 1]
     sub = provinces.provinces().ids[sl] == pid
+    if provinces.provinces().info[pid].kind == "land":
+        # The game ignores building positions that are not over land, so stay above sea level.
+        dry = sub & (raster.heightmap()[sl] > raster.SEA_LEVEL)
+        sub = dry if dry.any() else sub
     d = ndimage.distance_transform_edt(np.pad(sub, 1))[1:-1, 1:-1]
-    best = np.argwhere(d >= max(1.0, d.max() * 0.5))
+    best = np.argwhere(sub & (d >= max(1.0, d.max() * 0.5)))
     rng = np.random.default_rng(zlib.crc32(key.encode()))
     y, x = best[rng.integers(len(best))]
     return int(x + sl[1].start), int(y + sl[0].start)
@@ -184,6 +205,29 @@ def _kmeans(points: np.ndarray, k: int, iters: int = 30) -> np.ndarray:
     return lab
 
 
+def _contiguous(members: list[int], lab: np.ndarray, adj) -> np.ndarray:
+    """Give every detached piece of a cluster to the neighbouring cluster it touches most."""
+    lab = lab.copy()
+    index = {p: i for i, p in enumerate(members)}
+    for _ in range(10):
+        moved = False
+        for j in sorted(set(lab.tolist())):
+            nodes = [members[i] for i in np.nonzero(lab == j)[0]]
+            node_set = set(nodes)
+            pieces = _components(nodes, [(a, b) for a in nodes for b in adj.get(a, ()) if b in node_set])
+            pieces.sort(key=len, reverse=True)
+            for piece in pieces[1:]:
+                near = [int(lab[index[q]]) for a in piece for q in adj.get(a, ()) if q in index and lab[index[q]] != j]
+                if near:
+                    target = max(sorted(set(near)), key=near.count)
+                    for a in piece:
+                        lab[index[a]] = target
+                    moved = True
+        if not moved:
+            break
+    return lab
+
+
 @cache
 def strategic_regions() -> list[Region]:
     pm = terrain.annotate()
@@ -203,23 +247,32 @@ def strategic_regions() -> list[Region]:
         for p in sp[key]:
             region_of[p] = nid
         nid += 1
-    # Lakes join the region most of their land neighbours belong to.
+    # Lakes go to the region of the state they belong to (a state must sit in one region),
+    # or, for lakes in no state, to the region most of their land neighbours belong to.
     adj = terrain.adjacency()
     by_id = {r.id: r for r in regions}
+    lake_state = {lake: key for key, lakes in state_lakes().items() for lake in lakes}
     for p in pm.info.values():
         if p.kind == "lake":
-            near = [region_of[q] for q in adj.get(p.id, ()) if q in region_of]
-            rid = max(set(near), key=near.count) if near else regions[0].id
+            if p.id in lake_state:
+                rid = region_of[sp[lake_state[p.id]][0]]
+            else:
+                near = [region_of[q] for q in adj.get(p.id, ()) if q in region_of]
+                rid = max(sorted(set(near)), key=near.count) if near else regions[0].id
             by_id[rid].provinces.append(p.id)
     # Sea regions from clustering sea province centroids.
     sea = sorted(p.id for p in pm.info.values() if p.kind == "sea")
     pts = np.array([pm.info[p].centroid for p in sea])
     k = max(1, math.ceil(len(sea) / SEA_REGION_SIZE))
-    lab = _kmeans(pts, k)
+    lab = _contiguous(sea, _kmeans(pts, k), adj)
+    n_sea = 0
     for j in range(k):
         members = [sea[i] for i in np.nonzero(lab == j)[0]]
-        if members:
-            regions.append(Region(nid, f"Sea {j + 1}", "sea", members))
+        member_set = set(members)
+        # A cluster spanning two separate seas (North Sea and Baltic) becomes one region per piece.
+        for piece in _components(members, [(a, b) for a in members for b in adj.get(a, ()) if b in member_set]):
+            n_sea += 1
+            regions.append(Region(nid, f"Sea {n_sea}", "sea", sorted(piece)))
             nid += 1
     return regions
 
@@ -233,7 +286,7 @@ def write_strategic_regions(folder: Path) -> None:
     folder.mkdir(parents=True, exist_ok=True)
     for r in strategic_regions():
         ids = " ".join(map(str, sorted(r.provinces)))
-        text = (f"strategic_region={{\n\tid={r.id}\n\tname=\"STRATEGICREGION_{r.id}\"\n"
+        text = (f"strategic_region={{\n\tid={r.id}\n\tname=\"NWC_STRATEGICREGION_{r.id}\"\n"
                 f"\tprovinces={{\n\t\t{ids} \n\t}}\n{_weather(r.weather)}\n}}\n")
         (folder / f"{r.id}-{r.name.replace(' ', '_')}.txt").write_text(text, encoding="utf-8")
 
@@ -297,6 +350,18 @@ def _nearest_sea(y: int, x: int) -> int:
     return int(provinces.provinces().ids[iy[y, x], ix[y, x]])
 
 
+def _through_sea(a: int, b: int, y: int, x: int) -> int:
+    """Water province a crossing passes through; it must touch both ends, as in vanilla."""
+    info = terrain.annotate().info
+    adj = terrain.adjacency()
+    shared = adj.get(a, set()) & adj.get(b, set())
+    both = sorted(q for q in shared if info[q].kind == "sea")
+    if both:
+        mid = _nearest_sea(y, x)
+        return mid if mid in both else both[0]
+    return -1  # no shared sea (e.g. across a lake): plain land link, as vanilla never crosses through lakes
+
+
 @cache
 def straits() -> list[tuple[int, int, int]]:
     """(from, to, through_sea) crossings that tie every island of the playable map to the mainland.
@@ -350,7 +415,7 @@ def straits() -> list[tuple[int, int, int]]:
                 raise ValueError(f"island province {a} is {d:.0f} px from any other land")
             added.add(key)
             my, mx = (ys[i] + ys[j]) // 2, (xs[i] + xs[j]) // 2
-            out.append((min(a, b), max(a, b), _nearest_sea(my, mx)))
+            out.append((min(a, b), max(a, b), _through_sea(a, b, my, mx)))
             edges.append((a, b))
     return sorted(set(out))
 
@@ -435,9 +500,13 @@ tree = { 3 4 7 10 }
 
 def write_simple_files(folder: Path) -> None:
     (folder / "default.map").write_text(DEFAULT_MAP, encoding="utf-8")
-    (folder / "continent.txt").write_text("continents = {\n\teurope\n}\n", encoding="utf-8")
+    # All vanilla continents, even unused ones: vanilla portraits and decisions name them, and an
+    # unknown continent breaks parsing of whole portrait files (no leader portraits -> crash).
+    names = "\n".join(f"\t{c}" for c in VANILLA_CONTINENTS)
+    (folder / "continent.txt").write_text(f"continents = {{\n{names}\n}}\n", encoding="utf-8")
     rows = ["From;To;Type;Through;start_x;start_y;stop_x;stop_y;adjacency_rule_name;Comment"]
-    rows += [f"{a};{b};sea;{t};-1;-1;-1;-1;;bridge, tunnel or ferry" for a, b, t in straits()]
+    rows += [f"{a};{b};sea;{t};-1;-1;-1;-1;;bridge, tunnel or ferry" if t > 0 else
+             f"{a};{b};;-1;-1;-1;-1;-1;;bridge, tunnel or ferry" for a, b, t in straits()]
     rows.append("-1;-1;;-1;-1;-1;-1;-1;-1;")
     (folder / "adjacencies.csv").write_text("\n".join(rows) + "\n", encoding="utf-8")
     (folder / "adjacency_rules.txt").write_text("# No special adjacency rules on this map.\n", encoding="utf-8")
@@ -457,8 +526,8 @@ def _shore_point(pid: int, sea_pid: int) -> tuple[int, int]:
     ys, xs = province_pixels(pid)
     for y, x in zip(ys.tolist(), xs.tolist()):
         for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-            yy, xx = y + dy, x + dx
-            if 0 <= yy < ids.shape[0] and 0 <= xx < ids.shape[1] and ids[yy, xx] == sea_pid:
+            yy, xx = y + dy, (x + dx) % ids.shape[1]  # the map wraps horizontally
+            if 0 <= yy < ids.shape[0] and ids[yy, xx] == sea_pid:
                 return x, y
     return interior_point(pid, f"shore{pid}")
 
@@ -473,13 +542,17 @@ def write_buildings(path: Path) -> None:
         wanted = dict(STATE_BUILDINGS)
         if coastal:
             wanted.update(COASTAL_STATE_BUILDINGS)
+        if is_wasteland(key):
+            # Impassable: the game still wants an air base and rocket site position per state,
+            # plus the port positions every coastal province needs.
+            wanted = {"air_base": 1, "rocket_site_spawn": 1}
         for b, n in wanted.items():
             for i in range(n):
                 pid = provs[(i + provs.index(vps[key])) % len(provs)]
                 x, y = interior_point(pid, f"{key}-{b}-{i}")
                 lines.append(f"{sid[key]};{b};{_fmt(*world(x, y))};0.00;0")
         for pid in provs:
-            for b in PROVINCE_BUILDINGS:
+            for b in (() if is_wasteland(key) else PROVINCE_BUILDINGS):
                 x, y = interior_point(pid, f"{pid}-{b}")
                 lines.append(f"{sid[key]};{b};{_fmt(*world(x, y))};0.00;0")
             if pm.info[pid].coastal:
@@ -488,7 +561,8 @@ def write_buildings(path: Path) -> None:
                 for b in COASTAL_PROVINCE_BUILDINGS:
                     last = sea if b in SEA_LINKED_BUILDINGS else 0
                     lines.append(f"{sid[key]};{b};{_fmt(*world(x, y))};0.00;{last}")
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    # No trailing newline: the game reads an empty last line as a building with the wrong field count.
+    path.write_text("\n".join(lines), encoding="utf-8")
 
 
 def write_unitstacks(path: Path) -> None:
@@ -498,9 +572,11 @@ def write_unitstacks(path: Path) -> None:
         x, y = pm.info[pid].seed[1], pm.info[pid].seed[0]
         if pm.info[pid].kind == "land":
             x, y = interior_point(pid, f"stack{pid}")
-        for t in (0, 1):
+        # Vanilla gives provinces up to 39 stack positions (0-38: standing, moving, attacking, ports,
+        # victory point and so on). The game expects them once a game starts, so write them all.
+        for t in range(UNIT_STACK_TYPES):
             lines.append(f"{pid};{t};{_fmt(*world(x, y))};0.00;0.00")
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text("\n".join(lines), encoding="utf-8")
 
 
 def write_weatherpositions(path: Path) -> None:
@@ -533,6 +609,15 @@ def write_cities_bmp(path: Path) -> None:
     im.save(path)
 
 
+def write_supply_area(folder: Path) -> None:
+    """Vanilla still ships one legacy supply area; keep one so the folder is never empty."""
+    folder.mkdir(parents=True, exist_ok=True)
+    ids = " ".join(str(i) for i in sorted(state_ids().values()))
+    (folder / "1-SupplyArea.txt").write_text(
+        f'supply_area={{\n\tid=1\n\tname="SUPPLYAREA_1"\n\tvalue=12\n\tstates={{\n\t\t{ids}\n\t}}\n}}\n',
+        encoding="utf-8")
+
+
 def write_all(map_dir: Path) -> None:
     map_dir.mkdir(parents=True, exist_ok=True)
     write_provinces_bmp(map_dir / "provinces.bmp")
@@ -546,6 +631,7 @@ def write_all(map_dir: Path) -> None:
     write_simple_files(map_dir)
     write_cities_bmp(map_dir / "cities.bmp")
     write_strategic_regions(map_dir / "strategicregions")
+    write_supply_area(map_dir / "supplyareas")
     write_railways(map_dir / "railways.txt")
     write_supply_nodes(map_dir / "supply_nodes.txt")
     write_buildings(map_dir / "buildings.txt")

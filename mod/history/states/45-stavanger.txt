@@ -1,0 +1,22 @@
+state = {
+	id = 45
+	name = "NWC_STATE_45"
+	manpower = 149048
+	state_category = city
+	history = {
+		owner = SOC
+		add_core_of = SOC
+		add_core_of = NOR
+		victory_points = { 393 10 }
+		buildings = {
+			infrastructure = 4
+			industrial_complex = 2
+			air_base = 2
+			393 = { naval_base = 2 }
+		}
+	}
+	provinces = {
+		393 394 395 396 397 398 399 400 401 402 403 406
+	}
+	local_supplies = 0.0
+}

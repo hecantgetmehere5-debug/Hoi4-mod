@@ -71,7 +71,9 @@ def test_straits_join_all_playable_land():
     edges += [(a, b) for a, b, _ in mapfiles.straits()]
     assert len(mapfiles._components(land, edges)) == 1
     for a, b, t in mapfiles.straits():
-        assert info[t].kind == "sea"
+        if t > 0:
+            assert info[t].kind == "sea"
+            assert t in adj[a] and t in adj[b]
 
 
 def test_supply_node_in_every_state_capital(out):
@@ -113,3 +115,72 @@ def test_building_names_match_vanilla(tmp_path):
     for r in rows:
         if r[1] in mapfiles.SEA_LINKED_BUILDINGS:
             assert int(r[6]) in sea
+
+
+def test_port_positions_land_in_coastal_province(tmp_path):
+    """The game finds a building's province from its position; every coastal province needs its port there."""
+    mapfiles.write_buildings(tmp_path / "buildings.txt")
+    ids = provinces.provinces().ids
+    info = terrain.annotate().info
+    found = set()
+    for line in (tmp_path / "buildings.txt").read_text().splitlines():
+        f = line.split(";")
+        if f[1] != "naval_base_spawn":
+            continue
+        x, z = float(f[2]), float(f[4])
+        pid = int(ids[int(ids.shape[0] - 1 - z), int(x)])
+        assert info[pid].kind == "land" and info[pid].coastal
+        found.add(pid)
+    coastal = {p.id for p in info.values() if p.kind == "land" and p.coastal}
+    assert coastal == found
+
+
+def test_every_state_in_one_strategic_region():
+    region_of = {p: r.id for r in mapfiles.strategic_regions() for p in r.provinces}
+    lakes = mapfiles.state_lakes()
+    for key, provs in mapfiles.state_provinces().items():
+        assert len({region_of[p] for p in provs + lakes.get(key, [])}) == 1, key
+
+
+def test_sea_regions_are_contiguous():
+    adj = terrain.adjacency()
+    for r in mapfiles.strategic_regions():
+        if r.weather == "sea":
+            s = set(r.provinces)
+            edges = [(a, b) for a in s for b in adj.get(a, ()) if b in s]
+            assert len(mapfiles._components(list(s), edges)) == 1, r.name
+
+
+def test_all_sea_is_one_connected_ocean():
+    info = terrain.annotate().info
+    adj = terrain.adjacency()
+    sea = [p.id for p in info.values() if p.kind == "sea"]
+    s = set(sea)
+    assert len(mapfiles._components(sea, [(a, b) for a in sea for b in adj.get(a, ()) if b in s])) == 1
+
+
+def test_buildings_stand_on_land_in_their_state(tmp_path):
+    """The game ignores (and logs) building positions that are not over land."""
+    from tools import raster
+    mapfiles.write_buildings(tmp_path / "buildings.txt")
+    ids = provinces.provinces().ids
+    hm = raster.heightmap()
+    info = terrain.annotate().info
+    key_of = {v: k for k, v in mapfiles.state_ids().items()}
+    bad = []
+    for line in (tmp_path / "buildings.txt").read_text().splitlines():
+        f = line.split(";")
+        x, z = int(float(f[2])), int(float(f[4]))
+        y = ids.shape[0] - 1 - z
+        p = info[int(ids[y, x])]
+        if hm[y, x] <= raster.SEA_LEVEL or p.kind != "land" or p.region != key_of[int(f[0])]:
+            bad.append(line)
+    assert bad == []
+
+
+def test_state_province_lists_have_no_duplicates(tmp_path):
+    from tools import history
+    for name, text in history.state_files().items():
+        import re
+        provs = re.search(r"provinces = \{([^}]*)\}", text).group(1).split()
+        assert len(provs) == len(set(provs)), name

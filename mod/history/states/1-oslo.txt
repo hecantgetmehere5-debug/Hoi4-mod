@@ -1,0 +1,23 @@
+state = {
+	id = 1
+	name = "NWC_STATE_1"
+	manpower = 717710
+	state_category = metropolis
+	history = {
+		owner = JNP
+		add_core_of = JNP
+		add_core_of = NOR
+		victory_points = { 5 48 }
+		buildings = {
+			infrastructure = 4
+			industrial_complex = 9
+			arms_factory = 1
+			air_base = 2
+			4 = { naval_base = 2 }
+		}
+	}
+	provinces = {
+		1 2 3 4 5 6 7 8 9 10
+	}
+	local_supplies = 0.0
+}

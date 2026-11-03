@@ -1,0 +1,18 @@
+state = {
+	id = 124
+	name = "NWC_STATE_124"
+	manpower = 17200
+	state_category = town
+	history = {
+		owner = SWE
+		add_core_of = SWE
+		victory_points = { 1549 1 }
+		buildings = {
+			infrastructure = 1
+		}
+	}
+	provinces = {
+		1535 1536 1537 1538 1539 1540 1541 1542 1543 1544 1545 1546 1547 1548 1549 2558 2839 2840 3401
+	}
+	local_supplies = 0.0
+}

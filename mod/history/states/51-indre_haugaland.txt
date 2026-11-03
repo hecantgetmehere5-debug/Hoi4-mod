@@ -1,0 +1,20 @@
+state = {
+	id = 51
+	name = "NWC_STATE_51"
+	manpower = 13010
+	state_category = rural
+	history = {
+		owner = SOC
+		add_core_of = SOC
+		add_core_of = NOR
+		victory_points = { 445 1 }
+		buildings = {
+			infrastructure = 2
+			445 = { naval_base = 1 }
+		}
+	}
+	provinces = {
+		445 446 447 448 449
+	}
+	local_supplies = 0.0
+}

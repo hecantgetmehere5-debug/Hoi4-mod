@@ -1,0 +1,19 @@
+state = {
+	id = 36
+	name = "NWC_STATE_36"
+	manpower = 3396
+	state_category = pastoral
+	history = {
+		owner = KRF
+		add_core_of = KRF
+		add_core_of = NOR
+		victory_points = { 310 1 }
+		buildings = {
+			infrastructure = 1
+		}
+	}
+	provinces = {
+		309 310 311 312 313 314 315 316 317 318 319 320 321 322 2595 2598
+	}
+	local_supplies = 0.0
+}

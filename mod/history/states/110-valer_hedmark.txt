@@ -1,0 +1,19 @@
+state = {
+	id = 110
+	name = "NWC_STATE_110"
+	manpower = 3615
+	state_category = pastoral
+	history = {
+		owner = ANA
+		add_core_of = ANA
+		add_core_of = NOR
+		victory_points = { 1326 1 }
+		buildings = {
+			infrastructure = 2
+		}
+	}
+	provinces = {
+		1325 1326
+	}
+	local_supplies = 0.0
+}

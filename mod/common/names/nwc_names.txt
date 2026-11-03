@@ -1,0 +1,209 @@
+WFR = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+
+JNP = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+
+KRF = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+
+SOC = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+
+FRP = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+
+NRM = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+
+SAP = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+
+NCL = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+
+ABI = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+
+BRG = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+
+ANA = {
+	male = {
+		names = {
+			Adolph Jens Sverre Odd Johan Frederik Lorentz Ole Hans
+			Harald Haakon Olaf Paul Petter Carl Christian Kaare Jacob Søren Wilhelm Tryggve Daniel
+		}
+	}
+
+	female = {
+		names = { Trine Kajsa Helga Paula Olivia Nela Monika Torhild Trude Ingeborg Gerda }
+	}
+
+	surnames = {
+		Munthe Sejersted Ræder Dahl Nordhaug Hamre Fleischer Eriksen Berg Hauge
+		Prytz Lund Nørregaard Vilberg Hauge Sunde Petersen Brandt Lie Wergeland Frisvold
+		Teige Carenwall Falck
+	}
+}
+

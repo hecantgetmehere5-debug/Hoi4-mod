@@ -1,0 +1,22 @@
+state = {
+	id = 54
+	name = "NWC_STATE_54"
+	manpower = 70432
+	state_category = large_town
+	history = {
+		owner = ABI
+		add_core_of = ABI
+		add_core_of = NOR
+		victory_points = { 512 5 }
+		buildings = {
+			infrastructure = 3
+			industrial_complex = 1
+			air_base = 2
+			507 = { naval_base = 2 }
+		}
+	}
+	provinces = {
+		507 508 509 510 511 512 513 514
+	}
+	local_supplies = 0.0
+}

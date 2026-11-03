@@ -1,0 +1,20 @@
+state = {
+	id = 88
+	name = "NWC_STATE_88"
+	manpower = 53712
+	state_category = large_town
+	history = {
+		owner = SAP
+		add_core_of = SAP
+		add_core_of = NOR
+		victory_points = { 944 4 }
+		buildings = {
+			infrastructure = 3
+			943 = { naval_base = 2 }
+		}
+	}
+	provinces = {
+		943 944 945 946 947 948 949 950
+	}
+	local_supplies = 0.0
+}

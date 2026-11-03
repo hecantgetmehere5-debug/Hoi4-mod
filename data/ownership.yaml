@@ -52,8 +52,8 @@
 "1578": NRM  # Fjord
 "1579": NRM  # Hustadvika
 "1580": NRM  # Haram
-"1804": SAM  # Bodø
-"1806": SAM  # Narvik
+"1804": SAP  # Bodø
+"1806": SAP  # Narvik
 "1811": FRP  # Bindal
 "1812": FRP  # Sømna
 "1813": FRP  # Brønnøy
@@ -66,33 +66,33 @@
 "1825": ANA  # Grane
 "1826": FRP  # Aarborte - Hattfjelldal
 "1827": FRP  # Dønna
-"1828": SAM  # Nesna
-"1832": SAM  # Hemnes
-"1833": SAM  # Rana
-"1834": SAM  # Lurøy
-"1835": SAM  # Træna
-"1836": SAM  # Rødøy
-"1837": SAM  # Meløy
-"1838": SAM  # Gildeskål
-"1839": SAM  # Beiarn
-"1840": SAM  # Saltdal
-"1841": SAM  # Fauske - Fuossko
-"1845": SAM  # Sørfold
-"1848": SAM  # Steigen
-"1851": SAM  # Lødingen
-"1853": SAM  # Evenes - Evenášši
-"1856": SAM  # Røst
-"1857": SAM  # Værøy
-"1859": SAM  # Flakstad
-"1860": SAM  # Vestvågøy
-"1865": SAM  # Vågan
-"1866": SAM  # Hadsel
-"1867": SAM  # Bø
-"1868": SAM  # Øksnes
-"1870": SAM  # Sortland - Suortá
-"1871": SAM  # Andøy
-"1874": SAM  # Moskenes
-"1875": SAM  # Hábmer - Hamarøy
+"1828": SAP  # Nesna
+"1832": SAP  # Hemnes
+"1833": SAP  # Rana
+"1834": SAP  # Lurøy
+"1835": SAP  # Træna
+"1836": SAP  # Rødøy
+"1837": SAP  # Meløy
+"1838": SAP  # Gildeskål
+"1839": SAP  # Beiarn
+"1840": SAP  # Saltdal
+"1841": SAP  # Fauske - Fuossko
+"1845": SAP  # Sørfold
+"1848": SAP  # Steigen
+"1851": SAP  # Lødingen
+"1853": SAP  # Evenes - Evenášši
+"1856": SAP  # Røst
+"1857": SAP  # Værøy
+"1859": SAP  # Flakstad
+"1860": SAP  # Vestvågøy
+"1865": SAP  # Vågan
+"1866": SAP  # Hadsel
+"1867": SAP  # Bø
+"1868": SAP  # Øksnes
+"1870": SAP  # Sortland - Suortá
+"1871": SAP  # Andøy
+"1874": SAP  # Moskenes
+"1875": SAP  # Hábmer - Hamarøy
 "3101": NOR  # Halden
 "3103": NOR  # Moss
 "3105": NOR  # Sarpsborg
@@ -133,63 +133,63 @@
 "3312": NOR  # Lier
 "3314": NOR  # Øvre Eiker
 "3316": NOR  # Modum
-"3318": SPM  # Krødsherad
-"3320": SPM  # Flå
-"3322": SPM  # Nesbyen
-"3324": SPM  # Gol
-"3326": SPM  # Hemsedal
-"3328": SPM  # Ål
-"3330": SPM  # Hol
+"3318": NCL  # Krødsherad
+"3320": NCL  # Flå
+"3322": NCL  # Nesbyen
+"3324": NCL  # Gol
+"3326": NCL  # Hemsedal
+"3328": NCL  # Ål
+"3330": NCL  # Hol
 "3332": ANA  # Sigdal
 "3334": ANA  # Flesberg
-"3336": SPM  # Rollag
-"3338": SPM  # Nore og Uvdal
+"3336": NCL  # Rollag
+"3338": NCL  # Nore og Uvdal
 "3401": NOR  # Kongsvinger
-"3403": SPM  # Hamar
-"3405": SPM  # Lillehammer
-"3407": SPM  # Gjøvik
-"3411": SPM  # Ringsaker
-"3412": SPM  # Løten
-"3413": SPM  # Stange
-"3414": SPM  # Nord-Odal
+"3403": NCL  # Hamar
+"3405": NCL  # Lillehammer
+"3407": NCL  # Gjøvik
+"3411": NCL  # Ringsaker
+"3412": NCL  # Løten
+"3413": NCL  # Stange
+"3414": NCL  # Nord-Odal
 "3415": NOR  # Sør-Odal
 "3416": NOR  # Eidskog
-"3417": SPM  # Grue
-"3418": SPM  # Åsnes
+"3417": NCL  # Grue
+"3418": NCL  # Åsnes
 "3419": ANA  # Våler
-"3420": SPM  # Elverum
-"3421": SPM  # Trysil
-"3422": SPM  # Åmot
-"3423": SPM  # Stor-Elvdal
-"3424": SPM  # Rendalen
-"3425": SPM  # Engerdal
-"3426": SPM  # Tolga
-"3427": SPM  # Tynset
+"3420": NCL  # Elverum
+"3421": NCL  # Trysil
+"3422": NCL  # Åmot
+"3423": NCL  # Stor-Elvdal
+"3424": NCL  # Rendalen
+"3425": NCL  # Engerdal
+"3426": NCL  # Tolga
+"3427": NCL  # Tynset
 "3428": ANA  # Alvdal
-"3429": SPM  # Folldal
-"3430": SPM  # Os
-"3431": SPM  # Dovre
-"3432": SPM  # Lesja
-"3433": SPM  # Skjåk
-"3434": SPM  # Lom
-"3435": SPM  # Vågå
-"3436": SPM  # Nord-Fron
+"3429": NCL  # Folldal
+"3430": NCL  # Os
+"3431": NCL  # Dovre
+"3432": NCL  # Lesja
+"3433": NCL  # Skjåk
+"3434": NCL  # Lom
+"3435": NCL  # Vågå
+"3436": NCL  # Nord-Fron
 "3437": ANA  # Sel
-"3438": SPM  # Sør-Fron
-"3439": SPM  # Ringebu
-"3440": SPM  # Øyer
-"3441": SPM  # Gausdal
-"3442": SPM  # Østre Toten
-"3443": SPM  # Vestre Toten
-"3446": SPM  # Gran
-"3447": SPM  # Søndre Land
-"3448": SPM  # Nordre Land
-"3449": SPM  # Sør-Aurdal
-"3450": SPM  # Etnedal
-"3451": SPM  # Nord-Aurdal
+"3438": NCL  # Sør-Fron
+"3439": NCL  # Ringebu
+"3440": NCL  # Øyer
+"3441": NCL  # Gausdal
+"3442": NCL  # Østre Toten
+"3443": NCL  # Vestre Toten
+"3446": NCL  # Gran
+"3447": NCL  # Søndre Land
+"3448": NCL  # Nordre Land
+"3449": NCL  # Sør-Aurdal
+"3450": NCL  # Etnedal
+"3451": NCL  # Nord-Aurdal
 "3452": ANA  # Vestre Slidre
-"3453": SPM  # Øystre Slidre
-"3454": SPM  # Vang
+"3453": NCL  # Øystre Slidre
+"3454": NCL  # Vang
 "3901": NOR  # Horten
 "3903": NOR  # Holmestrand
 "3905": NOR  # Tønsberg
@@ -207,12 +207,12 @@
 "4020": KRF  # Midt-Telemark
 "4022": KRF  # Seljord
 "4024": KRF  # Hjartdal
-"4026": SPM  # Tinn
+"4026": NCL  # Tinn
 "4028": KRF  # Kviteseid
 "4030": KRF  # Nissedal
 "4032": KRF  # Fyresdal
 "4034": KRF  # Tokke
-"4036": SPM  # Vinje
+"4036": NCL  # Vinje
 "4201": KRF  # Risør
 "4202": KRF  # Grimstad
 "4203": KRF  # Arendal
@@ -319,42 +319,42 @@
 "5059": FRP  # Orkland
 "5060": FRP  # Nærøysund
 "5061": FRP  # Rindal
-"5501": SAM  # Tromsø
-"5503": SAM  # Harstad - Hárstták
-"5510": SAM  # Kvæfjord
-"5512": SAM  # Dielddanuorri - Tjeldsund
-"5514": SAM  # Ibestad
-"5516": SAM  # Gratangen
-"5518": SAM  # Loabák - Lavangen
-"5520": SAM  # Bardu
-"5522": SAM  # Salangen
-"5524": SAM  # Målselv
-"5526": SAM  # Sørreisa
-"5528": SAM  # Dyrøy
-"5530": SAM  # Senja
-"5532": SAM  # Balsfjord
-"5534": SAM  # Karlsøy
-"5536": SAM  # Lyngen
-"5538": SAM  # Storfjord - Omasvuotna - Omasvuono
-"5540": SAM  # Gáivuotna - Kåfjord - Kaivuono
-"5542": SAM  # Skjervøy
-"5544": SAM  # Nordreisa - Ráisa - Raisi
-"5546": SAM  # Kvænangen
-"5601": SAM  # Alta
-"5603": SAM  # Hammerfest - Hámmerfeasta
+"5501": SAP  # Tromsø
+"5503": SAP  # Harstad - Hárstták
+"5510": SAP  # Kvæfjord
+"5512": SAP  # Dielddanuorri - Tjeldsund
+"5514": SAP  # Ibestad
+"5516": SAP  # Gratangen
+"5518": SAP  # Loabák - Lavangen
+"5520": SAP  # Bardu
+"5522": SAP  # Salangen
+"5524": SAP  # Målselv
+"5526": SAP  # Sørreisa
+"5528": SAP  # Dyrøy
+"5530": SAP  # Senja
+"5532": SAP  # Balsfjord
+"5534": SAP  # Karlsøy
+"5536": SAP  # Lyngen
+"5538": SAP  # Storfjord - Omasvuotna - Omasvuono
+"5540": SAP  # Gáivuotna - Kåfjord - Kaivuono
+"5542": SAP  # Skjervøy
+"5544": SAP  # Nordreisa - Ráisa - Raisi
+"5546": SAP  # Kvænangen
+"5601": SAP  # Alta
+"5603": SAP  # Hammerfest - Hámmerfeasta
 "5605": ANA  # Sør-Varanger
-"5607": SAM  # Vadsø
+"5607": SAP  # Vadsø
 "5610": SOC  # Kárášjohka - Karasjok
 "5612": SOC  # Guovdageaidnu - Kautokeino
-"5614": SAM  # Loppa
-"5616": SAM  # Hasvik
-"5618": SAM  # Måsøy
-"5620": SAM  # Nordkapp
-"5622": SAM  # Porsanger - Porsáŋgu - Porsanki
-"5624": SAM  # Lebesby
-"5626": SAM  # Gamvik
-"5628": SAM  # Deatnu - Tana
-"5630": SAM  # Berlevåg
-"5632": SAM  # Båtsfjord
-"5634": SAM  # Vardø
-"5636": SAM  # Unjárga - Nesseby
+"5614": SAP  # Loppa
+"5616": SAP  # Hasvik
+"5618": SAP  # Måsøy
+"5620": SAP  # Nordkapp
+"5622": SAP  # Porsanger - Porsáŋgu - Porsanki
+"5624": SAP  # Lebesby
+"5626": SAP  # Gamvik
+"5628": SAP  # Deatnu - Tana
+"5630": SAP  # Berlevåg
+"5632": SAP  # Båtsfjord
+"5634": SAP  # Vardø
+"5636": SAP  # Unjárga - Nesseby

@@ -1,0 +1,20 @@
+state = {
+	id = 62
+	name = "NWC_STATE_62"
+	manpower = 10553
+	state_category = rural
+	history = {
+		owner = WFR
+		add_core_of = WFR
+		add_core_of = NOR
+		victory_points = { 583 1 }
+		buildings = {
+			infrastructure = 1
+			575 = { naval_base = 1 }
+		}
+	}
+	provinces = {
+		574 575 576 577 578 579 580 581 582 583
+	}
+	local_supplies = 0.0
+}

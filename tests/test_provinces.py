@@ -54,8 +54,16 @@ def test_ids_are_gapless(fresh):
 
 
 def test_min_province_size(fresh):
-    small = [p.id for p in fresh.info.values() if p.size < 8]
+    small = [p.id for p in fresh.info.values() if p.size < 10]  # vanilla's smallest is 10 px
     assert small == []
+
+
+def test_province_boxes_not_too_large(fresh):
+    wide = []
+    for pid, sl in enumerate(ndimage.find_objects(fresh.ids), start=1):
+        if sl is not None and max(sl[0].stop - sl[0].start, sl[1].stop - sl[1].start) > provinces.MAX_BOX_PX:
+            wide.append(pid)
+    assert wide == []
 
 
 def test_colours_unique(fresh):
@@ -101,3 +109,7 @@ def test_rerun_ids_stable(fresh, monkeypatch):
     changed = {k: (v, now.get(k)) for k, v in before.items() if now.get(k) != v}
     assert changed == {}
     assert sorted(after.info) == list(range(1, len(after.info) + 1))
+
+
+def test_no_x_crossings(fresh):
+    assert len(provinces._x_crossings(fresh.ids)) == 0

@@ -1,0 +1,19 @@
+state = {
+	id = 25
+	name = "NWC_STATE_25"
+	manpower = 13118
+	state_category = rural
+	history = {
+		owner = NCL
+		add_core_of = NCL
+		add_core_of = NOR
+		victory_points = { 165 1 }
+		buildings = {
+			infrastructure = 1
+		}
+	}
+	provinces = {
+		163 164 165 166 167 168 169 170
+	}
+	local_supplies = 0.0
+}

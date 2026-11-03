@@ -1,0 +1,16 @@
+version="0.1.0"
+name="Norwegian Civil War 2030"
+supported_version="1.19.*"
+tags={
+	"Map"
+	"Alternative History"
+}
+replace_path="history/states"
+replace_path="history/countries"
+replace_path="history/units"
+replace_path="common/bookmarks"
+replace_path="map/strategicregions"
+replace_path="map/supplyareas"
+replace_path="common/ai_areas"
+replace_path="common/ai_strategy"
+replace_path="common/ai_strategy_plans"

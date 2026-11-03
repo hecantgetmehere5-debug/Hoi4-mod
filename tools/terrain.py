@@ -29,10 +29,10 @@ R_WATER, R_LAND = 254, 255
 RIVER_PALETTE = [(0, 255, 0), (255, 0, 0), (255, 252, 0), (0, 225, 255), (0, 200, 255), (0, 150, 255),
                  (0, 100, 255), (0, 0, 255), (0, 0, 225), (0, 0, 200), (0, 0, 150), (0, 0, 100)]
 
-# trees.bmp: vanilla scales trees.bmp to 1650/5632 of the map; indices in TREE_INDICES count as trees.
+# trees.bmp: vanilla scales trees.bmp to 1650/5632 of the map.
 TREES_SCALE = 1650 / 5632
-TREE_CONIFER = 3
-TREE_INDICES = (3, 4, 7, 10)
+TREE_SPRUCE, TREE_PINE = 6, 5  # indices vanilla trees.bmp uses across Scandinavia
+TREE_PALETTE = {TREE_PINE: (76, 156, 51), TREE_SPRUCE: (47, 120, 24)}
 
 # Graphical colour for terrain.bmp palette (editor display only) and colormap.
 TERRAIN_RGB = {T_PLAINS: (134, 151, 89), T_FOREST: (52, 83, 45), T_MARSH: (98, 110, 70), T_MOUNTAIN: (128, 120, 108),
@@ -70,9 +70,12 @@ def classify_land(mean_h, relief, lat, lon, coastal, urban) -> str:
 
 
 def _neighbour_pairs(ids: np.ndarray) -> np.ndarray:
-    """Unique (a, b) pairs of 4-adjacent different province IDs, a < b."""
+    """Unique (a, b) pairs of 4-adjacent different province IDs, a < b.
+
+    The map wraps horizontally in HOI4, so the first and last columns touch too.
+    """
     pairs = []
-    for a, b in ((ids[:-1], ids[1:]), (ids[:, :-1], ids[:, 1:])):
+    for a, b in ((ids[:-1], ids[1:]), (ids[:, :-1], ids[:, 1:]), (ids[:, -1], ids[:, 0])):
         m = a != b
         pairs.append(np.stack([a[m], b[m]], 1))
     p = np.concatenate(pairs)
@@ -301,14 +304,22 @@ def _draw_river(out, river, land, run, width):
         out[drawn[-1][1], drawn[-1][0]] = R_FLOW_IN
 
 
+def zero_bmp_colour_count(path) -> None:
+    """Set the BMP header's colours-used fields to 0, as vanilla rivers.bmp and heightmap.bmp have.
+
+    The game asserts this for rivers.bmp ("Palette in rivers.bmp is probably not correct").
+    """
+    with open(path, "r+b") as f:
+        f.seek(46)
+        f.write(struct.pack("<II", 0, 0))
+
+
 def write_rivers_bmp(path) -> None:
     im = Image.fromarray(river_bitmap(), "P")
-    pal = [255] * 768
-    for i, c in enumerate(RIVER_PALETTE):
-        pal[3 * i:3 * i + 3] = c
-    pal[3 * R_WATER:3 * R_WATER + 3] = (122, 122, 122)
-    im.putpalette(pal)
+    palette = json.loads((geo.DATA / "rivers_palette.json").read_text())  # copied from vanilla rivers.bmp
+    im.putpalette([v for rgb in palette for v in rgb])
     im.save(path)
+    zero_bmp_colour_count(path)
 
 
 # --- trees, normals, colormaps ----------------------------------------------
@@ -324,15 +335,17 @@ def tree_bitmap() -> np.ndarray:
     small = np.asarray(Image.fromarray(forest * 255).convert("L").resize((w, h), Image.BILINEAR)) > 100
     # Thin the canopy into scattered clumps so trees don't render as a solid carpet.
     rng = np.random.default_rng(2030)
-    keep = rng.random(small.shape) < 0.55
-    return np.where(small & keep, TREE_CONIFER, 0).astype(np.uint8)
+    roll = rng.random(small.shape)
+    out = np.where(small & (roll < 0.35), TREE_SPRUCE, 0)
+    out = np.where(small & (roll >= 0.35) & (roll < 0.55), TREE_PINE, out)
+    return out.astype(np.uint8)
 
 
 def write_trees_bmp(path) -> None:
     im = Image.fromarray(tree_bitmap(), "P")
     pal = [0] * 768
-    for i in TREE_INDICES:
-        pal[3 * i:3 * i + 3] = (30, 90, 40)
+    for i, c in TREE_PALETTE.items():
+        pal[3 * i:3 * i + 3] = c
     im.putpalette(pal)
     im.save(path)
 

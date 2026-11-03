@@ -1,0 +1,25 @@
+bookmarks = {
+	bookmark = {
+		name = "NWC_BOOKMARK"
+		desc = "NWC_BOOKMARK_DESC"
+		date = 2030.1.1.12
+		picture = "GFX_select_date_1936"
+		default_country = "NOR"
+		default = yes
+		NOR = { }
+		WFR = { }
+		JNP = { }
+		KRF = { }
+		SOC = { }
+		FRP = { }
+		NRM = { }
+		SAP = { }
+		NCL = { }
+		ABI = { }
+		BRG = { }
+		ANA = { }
+		effect = {
+			randomize_weather = 22345
+		}
+	}
+}

@@ -1,0 +1,20 @@
+state = {
+	id = 55
+	name = "NWC_STATE_55"
+	manpower = 34945
+	state_category = town
+	history = {
+		owner = ABI
+		add_core_of = ABI
+		add_core_of = NOR
+		victory_points = { 516 2 }
+		buildings = {
+			infrastructure = 2
+			516 = { naval_base = 1 }
+		}
+	}
+	provinces = {
+		516 517 518 519 520 521 522 523
+	}
+	local_supplies = 0.0
+}

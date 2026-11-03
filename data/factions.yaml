@@ -7,8 +7,8 @@ KRF: {name: Christian Democratic Norway, adjective: Christian Democratic, colour
 SOC: {name: Socialist Norway, adjective: Socialist, colour: [214, 31, 31], ideology: communism, capital: stavanger}
 FRP: {name: Free Norway, adjective: Libertarian, colour: [47, 155, 240], ideology: democratic, capital: trondheim}
 NRM: {name: Nordic Resistance Movement, adjective: Nordic, colour: [122, 74, 18], ideology: fascism, capital: alesund}
-SAM: {name: Sápmi, adjective: Sámi, colour: [148, 102, 214], ideology: democratic, capital: tromso}
-SPM: {name: Neutral Coalition, adjective: Coalition, colour: [46, 125, 31], ideology: neutrality, capital: hamar}
+SAP: {name: Sápmi, adjective: Sámi, colour: [148, 102, 214], ideology: democratic, capital: tromso}
+NCL: {name: Neutral Coalition, adjective: Coalition, colour: [46, 125, 31], ideology: neutrality, capital: hamar}
 ABI: {name: Askøy-Bømlo Insurgency, adjective: Insurgent, colour: [139, 15, 26], ideology: neutrality, capital: askoy}
 BRG: {name: Free City of Bergen, adjective: Bergenser, colour: [212, 178, 10], ideology: neutrality, capital: bergen}
 ANA: {name: Anarchist Cells, adjective: Anarchist, colour: [20, 8, 8], ideology: neutrality, capital: sel}
