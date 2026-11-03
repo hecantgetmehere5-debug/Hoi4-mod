@@ -21,6 +21,7 @@ MAX_HEIGHT_M = 2470
 MIN_LAKE_KM2 = 25
 LAKE_HEIGHT = 92
 MIN_WASTELAND_PX = 3000
+MIN_ISLAND_PX = 24
 HEIGHT_SPAN = 110  # heightmap value above sea level at MAX_HEIGHT_M
 
 
@@ -101,7 +102,15 @@ def lake_mask() -> np.ndarray:
                 lakes.append(g)
     m = _rasterize([(g, 1) for g in lakes], dtype="uint8").astype(bool)
     playable = (_raw_state_raster() > 0) & (_raw_state_raster() <= len(geo.load_states()))
-    return m & playable
+    m &= playable
+    # Islets inside lakes too small to be provinces become lake.
+    holes = ndimage.binary_fill_holes(m) & ~m
+    hl, hn = ndimage.label(holes)
+    hsizes = ndimage.sum(holes, hl, index=np.arange(hn + 1))
+    m |= (hsizes < MIN_ISLAND_PX)[hl] & holes
+    labels, n = ndimage.label(m)
+    sizes = ndimage.sum(m, labels, index=np.arange(n + 1))
+    return m & (sizes >= MIN_ISLAND_PX)[labels]
 
 
 def _map_box():
@@ -129,6 +138,33 @@ def state_raster() -> np.ndarray:
     if holes.any():
         _, (iy, ix) = ndimage.distance_transform_edt(r == 0, return_indices=True)
         r[holes] = r[iy[holes], ix[holes]]
+    # Skerries too small to be a province become sea.
+    labels, n = ndimage.label(r > 0)
+    sizes = ndimage.sum(r > 0, labels, index=np.arange(n + 1))
+    r[(sizes < MIN_ISLAND_PX)[labels] & (r > 0)] = 0
+    return _absorb_scraps(r, lakes)
+
+
+def _absorb_scraps(r: np.ndarray, lakes: np.ndarray) -> np.ndarray:
+    """Pieces of a state (or of the sea) under MIN_ISLAND_PX join the nearest other land."""
+    scrap = np.zeros(r.shape, bool)
+    for i, sl in enumerate(ndimage.find_objects(r), start=1):
+        if sl is None:
+            continue
+        lab, n = ndimage.label(r[sl] == i)
+        sizes = ndimage.sum(lab > 0, lab, index=np.arange(n + 1))
+        small = (sizes < MIN_ISLAND_PX)[lab] & (lab > 0)
+        if n > 1 and small.any():
+            scrap[sl] |= small
+    sea = (r == 0) & ~lakes
+    lab, n = ndimage.label(sea)
+    sizes = ndimage.sum(sea, lab, index=np.arange(n + 1))
+    scrap |= (sizes < MIN_ISLAND_PX)[lab] & sea
+    if scrap.any():
+        donor = (r > 0) & ~scrap
+        _, (iy, ix) = ndimage.distance_transform_edt(~donor, return_indices=True)
+        r = r.copy()
+        r[scrap] = r[iy[scrap], ix[scrap]]
     return r
 
 
