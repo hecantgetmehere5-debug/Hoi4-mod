@@ -63,9 +63,11 @@ def test_sweden_strip_has_cities():
 def test_faction_capitals_owned_by_faction():
     states = {s.key: s for s in load_states()}
     for tag, f in load_factions().items():
+        if f.background:
+            continue
         assert state_owner(states[f.capital]) == tag
 
 
 def test_every_owner_is_a_faction():
-    tags = set(load_factions())
+    tags = {t for t, f in load_factions().items() if not f.background}
     assert {state_owner(s) for s in load_states()} == tags

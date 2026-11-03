@@ -13,3 +13,8 @@ ABI: {name: Askøy-Bømlo Insurgency, adjective: Insurgent, colour: [139, 15, 26
 BRG: {name: Free City of Bergen, adjective: Bergenser, colour: [212, 178, 10], ideology: neutrality, capital: bergen}
 ANA: {name: Anarchist Cells, adjective: Anarchist, colour: [20, 8, 8], ideology: neutrality, capital: sel}
 SWE: {name: Sweden, adjective: Swedish, colour: [10, 70, 140], ideology: democratic, capital: ostersund}
+
+# Background countries: own only the impassable land at the map edge.
+FIN: {name: Finland, adjective: Finnish, colour: [200, 205, 215], ideology: democratic, capital: waste_fin, background: true}
+SOV: {name: Russia, adjective: Russian, colour: [170, 120, 120], ideology: neutrality, capital: waste_sov, background: true}
+DEN: {name: Denmark, adjective: Danish, colour: [180, 90, 90], ideology: democratic, capital: waste_den, background: true}

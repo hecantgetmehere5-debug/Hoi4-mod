@@ -3,6 +3,7 @@ import hashlib
 import math
 import sys
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import yaml
@@ -69,10 +70,10 @@ def fetch_all(dest: Path = SRC) -> dict[str, Path]:
     z = cfg["dem"]["zoom"]
     tile_dir = dest / f"dem{z}"
     tiles = dem_tiles(z)
-    for x, y in tiles:
-        p = tile_dir / f"{x}_{y}.png"
-        if not p.exists():
-            _download(cfg["dem"]["url"].format(z=z, x=x, y=y), p)
+    missing = [(x, y) for x, y in tiles if not (tile_dir / f"{x}_{y}.png").exists()]
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        list(pool.map(lambda t: _download(cfg["dem"]["url"].format(z=z, x=t[0], y=t[1]),
+                                          tile_dir / f"{t[0]}_{t[1]}.png"), missing))
     if len(list(tile_dir.glob("*.png"))) < len(tiles):
         raise ChecksumError("missing elevation tiles")
     out["dem_tiles"] = tile_dir

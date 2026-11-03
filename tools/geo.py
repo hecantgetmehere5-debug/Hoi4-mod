@@ -59,6 +59,7 @@ class Faction:
     ideology: str
     capital: str
     puppet_of: str | None = None
+    background: bool = False
 
 
 def _yaml(name):
@@ -86,7 +87,7 @@ def load_states() -> list[State]:
 
 def load_factions() -> dict[str, Faction]:
     return {t: Faction(t, v["name"], v["adjective"], tuple(v["colour"]), v["ideology"],
-                       v["capital"], v.get("puppet_of")) for t, v in _yaml("factions.yaml").items()}
+                       v["capital"], v.get("puppet_of"), v.get("background", False)) for t, v in _yaml("factions.yaml").items()}
 
 
 def kommune_owner(code: str) -> str:
