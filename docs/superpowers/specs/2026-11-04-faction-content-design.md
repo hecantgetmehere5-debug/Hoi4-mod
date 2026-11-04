@@ -153,7 +153,8 @@ Choose who to side with:
 | Marxist-Leninism | SOC hardline |
 | Left Communism | SOC left-com |
 | Anarchism | ABI anarcho-communism/syndicalism, ANA |
-| Mutualism / Egoism | ABI distributist lean |
+| Mutualism | ABI Georgist-mutualist |
+| Egoism | ABI egoist |
 | Democratic Socialism | Rødt/SV, Ap socialist |
 | Social Democracy | Ap, SWE, DEN, FIN |
 | Technocracy | Ap AI technocracy |
@@ -171,3 +172,39 @@ Choose who to side with:
 | Animal Rule | The Elk, SAP sentient reindeer |
 | Military Council | Anti-fascist WFR (until it defeats the fascist Government, then Social Democracy) |
 | Autocracy | SOV and leftovers |
+
+### Leader titles (user-chosen)
+
+- Marxist-Leninism: General Secretary
+- Left Communism: General Secretary
+- Anarchism: no leader (HOI4 needs one, so the "leader" is a collective, e.g. "The Assembly", with no title)
+- Mutualism: Community Council
+- Egoism: leader is **Max Stirner** himself (joke); title "The Unique One" (Claude's call)
+- Democratic Socialism: President
+- Social Democracy: Prime Minister
+- Technocracy: leader **AbyzovGPT**, title "The AI"
+- Green Agrarianism: Farmers' Union
+- Libertarianism: President
+- Conservatism: Prime Minister
+- Monarchism: King / Queen (by the monarch's sex)
+- Theocracy (per path, Claude's call):
+  - KrF Abyzov AI theocracy: Patriarch of the Machine
+  - KrF Monastery: Abbot
+  - KrF Non-denominational: Pastor
+  - KrF Martin Luther: Bishop of the Reformation
+  - KrF Crusade: Grand Master
+  - KrF Papacy: Pope
+  - Great Muslim Oslo Republic: Emir
+- Oligarchy: League of Corporations
+- Fascism: Duce
+- National Socialism: Führer
+- Totalitarianism (Ingsoc): Big Brother
+- Neo-Paganism:
+  - NRM Viking: Jarl
+  - NCL paganism: Odin (chief Norse god)
+- Indigenous Nationalism: Shaman (Sámi: Noaidi)
+- Animal Rule (Claude's call):
+  - The Elk: leader **Jens Stoltenelg** — the elk disguised as "Jens Stoltenberg"; title Prime Minister to keep the disguise (Claude's call)
+  - Sápmi sentient reindeer: Herd Chief
+- Military Council: Chief Commander
+- Autocracy: President (modern Russia, led by Putin)
