@@ -1,0 +1,6 @@
+nwc_x_cat = {
+	nwc_x_dec = {
+		available = { has_global_flag = nwc_gflag check_variable = { nwc_v > 1 } }
+		complete_effect = { set_global_flag = nwc_gflag set_variable = { nwc_v = 2 } NOR = { add_stability = 0.01 } news_event = nwc_x.2 }
+	}
+}

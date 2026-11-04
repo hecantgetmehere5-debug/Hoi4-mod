@@ -1,0 +1,8 @@
+nwc_tags = {
+	XAA = { add_stability = 0.1 }
+	if = { limit = { tag = XAB original_tag = XAC has_war_with = XAG } }
+	puppet = XAD
+	annex_country = { target = XAE }
+	declare_war_on = { target = XAF type = annex_everything }
+	NOT = { tag = SWE } ROOT = { tag = GER } PREV = { tag = NOR }
+}
