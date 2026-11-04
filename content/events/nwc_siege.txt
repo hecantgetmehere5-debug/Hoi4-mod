@@ -114,7 +114,7 @@ country_event = {
 	option = {
 		name = nwc_siege.5.a
 		ai_chance = { base = 1 }
-		country_event = { id = nwc_siege.6 days = 14 }
+		country_event = { id = nwc_siege.6 days = 60 }
 	}
 }
 

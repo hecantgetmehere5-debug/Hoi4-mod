@@ -3,5 +3,10 @@ nwc_storting_active = {
 }
 
 nwc_storting_bill_pending = {
-	has_country_flag = nwc_bill_emergency_budget_pending
+	OR = {
+		has_country_flag = nwc_bill_emergency_budget_pending
+		has_country_flag = nwc_bill_swe_trade_pending
+		has_country_flag = nwc_bill_swe_border_pending
+		has_country_flag = nwc_bill_swe_defence_pending
+	}
 }

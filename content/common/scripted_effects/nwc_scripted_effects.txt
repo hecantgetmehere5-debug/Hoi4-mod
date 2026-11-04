@@ -53,7 +53,7 @@ nwc_game_start = {
 		NOR = { nwc_storting_init = yes }
 		NOR = { nwc_sweden_init = yes }
 		NOR = { declare_war_on = { target = JNP type = annex_everything } }
-		WFR = { add_to_war = { targeted_alliance = NOR enemy = JNP hostility_reason = asked_to_join } }
+		WFR = { declare_war_on = { target = JNP type = annex_everything } }
 		ANA = {
 			every_country = {
 				limit = {
@@ -79,11 +79,9 @@ nwc_outbreak = {
 		}
 		if = { limit = { WFR = { exists = yes } ABI = { exists = yes } WFR = { NOT = { has_war_with = ABI } } }
 			ABI = { declare_war_on = { target = WFR type = annex_everything } }
-			if = { limit = { NOR = { has_war_with = ABI } } NOR = { white_peace = ABI } }
 		}
 		if = { limit = { WFR = { exists = yes } NRM = { exists = yes } WFR = { NOT = { has_war_with = NRM } } }
 			NRM = { declare_war_on = { target = WFR type = annex_everything } }
-			if = { limit = { NOR = { has_war_with = NRM } } NOR = { white_peace = NRM } }
 		}
 		if = { limit = { ABI = { exists = yes } NRM = { exists = yes } ABI = { NOT = { has_war_with = NRM } } }
 			NRM = { declare_war_on = { target = ABI type = annex_everything } }

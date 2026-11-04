@@ -16,7 +16,7 @@ The Oslo siege outcome is the big fork:
 
 Claude's guesses (not yet confirmed): shared focuses before the fork (army, economy, siege); the branch unlocks by event after the assassination/resignation.
 
-## Western Forces (WFR — Government puppet in the west)
+## Western Forces (WFR — independent Government ally in the west; no longer a puppet, so it fights its own wars)
 
 - Mainly a **military tree**, plus events showing dependence on the Government, e.g. "Supply Package from Oslo", "Volunteers from the East".
 - Default ending: merges back into the Government after the war (decided earlier).

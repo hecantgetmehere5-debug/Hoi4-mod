@@ -1,7 +1,7 @@
 # Every country on the map. colour is RGB; ideology is a placeholder until the
 # ideology project replaces it. capital is a state key from states.yaml.
 NOR: {name: Government of Norway, adjective: Norwegian, colour: [31, 63, 214], ideology: democratic, capital: baerum_asker}
-WFR: {name: Western Forces, adjective: Western, colour: [74, 99, 201], ideology: democratic, capital: voss, puppet_of: NOR}
+WFR: {name: Western Forces, adjective: Western, colour: [74, 99, 201], ideology: democratic, capital: voss}
 JNP: {name: Jihadist Nationalist Party, adjective: Jihadist, colour: [43, 43, 43], ideology: neutrality, capital: oslo}
 KRF: {name: Christian Democratic Norway, adjective: Christian Democratic, colour: [240, 140, 0], ideology: democratic, capital: kristiansand}
 SOC: {name: Socialist Norway, adjective: Socialist, colour: [214, 31, 31], ideology: communism, capital: stavanger}

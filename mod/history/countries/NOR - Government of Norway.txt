@@ -14,7 +14,6 @@ set_popularities = {
 	communism = 10
 	fascism = 10
 }
-set_autonomy = { target = WFR autonomous_state = autonomy_puppet }
 oob = "NOR_2030"
 set_convoys = 10
 add_ideas = {

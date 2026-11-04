@@ -32,9 +32,9 @@ def test_state_ids_match_registry(mod):
         assert f"id = {num}\n" in p.read_text()
 
 
-def test_wfr_is_puppet_of_nor(mod):
+def test_wfr_is_independent(mod):
     nor = next((mod / "history" / "countries").glob("NOR - *.txt")).read_text()
-    assert "set_autonomy = { target = WFR autonomous_state = autonomy_puppet }" in nor
+    assert "target = WFR" not in nor
 
 
 def test_ana_owns_every_pocket_state():
