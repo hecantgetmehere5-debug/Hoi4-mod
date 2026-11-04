@@ -12,8 +12,8 @@ SAP: {divisions: 13, equipment: 1.0}
 ABI: {divisions: 13, equipment: 1.0}
 NCL: {divisions: 8, equipment: 1.0, economy_idea: nwc_civilian_boom}
 BRG: {divisions: 0, equipment: 1.0, economy_idea: nwc_civilian_boom}
-JNP: {divisions: 5, equipment: 1.0}
-ANA: {per_state: 3, equipment: 0.2}
+JNP: {divisions: 15, equipment: 1.0}
+ANA: {per_state: 3, equipment: 1.0}
 SWE: {divisions: 0, equipment: 1.0}
 FIN: {divisions: 0, equipment: 1.0}
 SOV: {divisions: 0, equipment: 1.0}

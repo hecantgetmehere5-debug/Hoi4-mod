@@ -12,9 +12,12 @@ ideas = {
 				supply_consumption_factor = -0.5
 				conscription_factor = 2.0
 				weekly_manpower = 250
-				army_attack_factor = -0.4
-				production_speed_buildings_factor = -0.5
-				industrial_capacity_factory = -0.5
+				surrender_limit = 1
+				max_surrender_limit_offset = 1
+				no_supply_grace = 240
+				out_of_supply_factor = -0.8
+				recon_factor = 0.5
+				army_org_factor = 0.3
 			}
 		}
 		nwc_civilian_boom = {
