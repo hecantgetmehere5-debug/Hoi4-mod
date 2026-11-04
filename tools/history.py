@@ -10,7 +10,8 @@ START_DATE = "2030.1.1.12"
 END_DATE = "2080.1.1.1"
 MOD_NAME = "Norwegian Civil War 2030"
 # Tags this mod shares with vanilla, and vanilla's country file for each (common/country_tags/00_countries.txt).
-VANILLA_COUNTRY_FILES = {"NOR": "Norway", "SWE": "Sweden", "FIN": "Finland", "SOV": "Soviet Union", "DEN": "Denmark"}
+VANILLA_COUNTRY_FILES = {"NOR": "Norway", "SWE": "Sweden", "FIN": "Finland", "SOV": "Soviet Union", "DEN": "Denmark",
+                         "EST": "Estonia", "LAT": "Latvia", "LIT": "Lithuania", "ICE": "Iceland", "SCO": "Scotland"}
 SUPPORTED_VERSION = "1.19.*"
 STARTING_TECH = ("infantry_weapons", "infantry_weapons1", "tech_support", "tech_engineers", "tech_recon",
                  "gw_artillery", "interwar_antiair")
@@ -175,6 +176,9 @@ IDEOLOGY_SPLITS = {
 
 def country_history(f: geo.Faction, puppets: list[str]) -> str:
     sid = mapfiles.state_ids()
+    if f.spawn:
+        # Released mid-game by an event, which sets its government; it starts with no land or army.
+        return f"capital = {sid[f.capital]}\n" + "set_technology = {\n" + "".join(f"\t{t} = 1\n" for t in STARTING_TECH) + "}\n"
     pops = IDEOLOGY_SPLITS[f.ideology]
     lines = [f"capital = {sid[f.capital]}", "set_research_slots = 3",
              "set_stability = 0.4", "set_war_support = 0.6",
@@ -224,10 +228,11 @@ def write_countries(mod: Path) -> None:
             f"graphical_culture = western_european_gfx\ngraphical_culture_2d = western_european_2d\n"
             f"color = rgb {{ {r} {g} {b} }}\n", encoding="utf-8")
         puppets = [t for t, o in factions.items() if o.puppet_of == tag]
-        (hist / f"{tag} - {name}.txt").write_text(country_history(f, puppets), encoding="utf-8")
-        (units / f"{tag}_2030.txt").write_text(
-            units_text(tag),
-            encoding="utf-8")
+        # A reused spawn tag takes vanilla's exact history file name, so it replaces vanilla's file.
+        hist_name = VANILLA_COUNTRY_FILES[tag] if f.spawn and tag in VANILLA_COUNTRY_FILES else name
+        (hist / f"{tag} - {hist_name}.txt").write_text(country_history(f, puppets), encoding="utf-8")
+        if not f.spawn:
+            (units / f"{tag}_2030.txt").write_text(units_text(tag), encoding="utf-8")
     # Vanilla countries this map leaves out still need a history file; they start with no states.
     # Vanilla gives even countries that start without land a capital; a game won't start without one.
     absent_capital = mapfiles.state_ids()[factions["FIN"].capital]
@@ -280,7 +285,7 @@ def write_bookmark_and_defines(mod: Path) -> None:
     factions = geo.load_factions()
     d = mod / "common" / "bookmarks"
     d.mkdir(parents=True, exist_ok=True)
-    playable = [t for t, f in factions.items() if not f.background and t != "SWE"]
+    playable = [t for t, f in factions.items() if not f.background and not f.spawn and t != "SWE"]
     countries = "\n".join(f"\t\t{t} = {{ }}" for t in playable)
     (d / "nwc_2030.txt").write_text(
         "bookmarks = {\n\tbookmark = {\n\t\tname = \"NWC_BOOKMARK\"\n\t\tdesc = \"NWC_BOOKMARK_DESC\"\n"

@@ -14,6 +14,16 @@ BRG: {name: Free City of Bergen, adjective: Bergenser, colour: [212, 178, 10], i
 ANA: {name: Anarchist Cells, adjective: Anarchist, colour: [20, 8, 8], ideology: neutrality, capital: sel}
 SWE: {name: Sweden, adjective: Swedish, colour: [176, 160, 116], ideology: democratic, capital: ostersund}
 
+# Spawnable countries: own no states at start, released by events.
+RDN: {name: Reindeer Nation, adjective: Reindeer, colour: [160, 120, 70], ideology: neutrality, capital: voss, spawn: true}
+GMO: {name: Great Muslim Oslo Republic, adjective: Oslo, colour: [20, 110, 60], ideology: neutrality, capital: oslo, spawn: true}
+# Neutral Coalition cantons reuse vanilla tags; cantons lists the NCL states each receives (first is the capital).
+EST: {name: Hedmarken Canton, adjective: Hedmark, colour: [70, 150, 60], ideology: neutrality, capital: hamar, spawn: true, cantons: [hamar, ringsaker]}
+LAT: {name: Gudbrandsdal Canton, adjective: Gudbrandsdal, colour: [90, 165, 80], ideology: neutrality, capital: lillehammer, spawn: true, cantons: [lillehammer, midt_gudbrandsdal, nord_gudbrandsdal]}
+LIT: {name: Valdres Canton, adjective: Valdres, colour: [55, 135, 95], ideology: neutrality, capital: valdres, spawn: true, cantons: [valdres]}
+ICE: {name: Østerdal Canton, adjective: Østerdal, colour: [35, 110, 45], ideology: neutrality, capital: sor_osterdal, spawn: true, cantons: [sor_osterdal, nord_osterdal, trysil]}
+SCO: {name: Hadeland Canton, adjective: Hadeland, colour: [110, 175, 60], ideology: neutrality, capital: land, spawn: true, cantons: [land]}
+
 # Background countries: own only the impassable land at the map edge.
 FIN: {name: Finland, adjective: Finnish, colour: [200, 205, 215], ideology: democratic, capital: waste_fin, background: true}
 SOV: {name: Russia, adjective: Russian, colour: [170, 120, 120], ideology: neutrality, capital: waste_sov, background: true}
