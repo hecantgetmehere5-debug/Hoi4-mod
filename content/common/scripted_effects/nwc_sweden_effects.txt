@@ -1,0 +1,152 @@
+# Swedish Opinion mechanic. Opinion is the global variable nwc_swe_opinion (0-100).
+# Stance flags are global: nwc_swe_stance_neutral|aid|intervene|puppet.
+
+nwc_sweden_init = {
+	set_variable = { global.nwc_swe_opinion = 50 }
+	set_variable = { nwc_swe_low_months = 0 }
+	set_global_flag = nwc_swe_stance_neutral
+}
+
+# Caller sets temp var nwc_swe_delta.
+nwc_swe_opinion_add = {
+	add_to_variable = { var = global.nwc_swe_opinion value = nwc_swe_delta }
+	clamp_variable = { var = global.nwc_swe_opinion min = 0 max = 100 }
+}
+
+# Union with Sweden.
+nwc_swe_set_max = {
+	set_variable = { global.nwc_swe_opinion = 100 }
+}
+
+# Union with Denmark: the focus calls this before firing nwc_denmark.2. Run in NOR scope.
+nwc_swe_mark_union_denmark = {
+	set_country_flag = nwc_union_denmark
+}
+
+# Monthly pulse, NOR scope (on_monthly_NOR).
+nwc_sweden_monthly = {
+	if = {
+		limit = { has_country_flag = nwc_union_denmark }
+		if = {
+			limit = { NOT = { has_global_flag = nwc_swe_union_war } }
+			set_global_flag = nwc_swe_union_war
+			country_event = nwc_sweden.6
+		}
+	}
+	else_if = {
+		limit = { nwc_gov_alive = yes }
+		# 0-19 displeased
+		if = {
+			limit = {
+				check_variable = { global.nwc_swe_opinion >= 0 }
+				check_variable = { global.nwc_swe_opinion < 20 }
+			}
+			add_to_variable = { nwc_swe_low_months = 1 }
+			if = {
+				limit = { NOT = { has_global_flag = nwc_swe_warned } }
+				set_global_flag = nwc_swe_warned
+				country_event = nwc_sweden.3
+			}
+			if = {
+				limit = { check_variable = { nwc_swe_low_months >= 2 } }
+				country_event = nwc_sweden.4
+			}
+		}
+		# 20-54 neutral
+		else_if = {
+			limit = {
+				check_variable = { global.nwc_swe_opinion >= 20 }
+				check_variable = { global.nwc_swe_opinion < 55 }
+			}
+			set_variable = { nwc_swe_low_months = 0 }
+			clr_global_flag = nwc_swe_stance_aid
+			clr_global_flag = nwc_swe_stance_intervene
+			set_global_flag = nwc_swe_stance_neutral
+		}
+		# 55-79 aid
+		else_if = {
+			limit = {
+				check_variable = { global.nwc_swe_opinion >= 55 }
+				check_variable = { global.nwc_swe_opinion < 80 }
+			}
+			set_variable = { nwc_swe_low_months = 0 }
+			clr_global_flag = nwc_swe_stance_neutral
+			clr_global_flag = nwc_swe_stance_intervene
+			set_global_flag = nwc_swe_stance_aid
+			if = {
+				limit = { NOT = { has_global_flag = nwc_swe_aid_begun } }
+				set_global_flag = nwc_swe_aid_begun
+				country_event = nwc_sweden.1
+			}
+		}
+		# 80-100 intervene
+		else_if = {
+			limit = {
+				check_variable = { global.nwc_swe_opinion >= 80 }
+				check_variable = { global.nwc_swe_opinion <= 100 }
+			}
+			set_variable = { nwc_swe_low_months = 0 }
+			clr_global_flag = nwc_swe_stance_neutral
+			clr_global_flag = nwc_swe_stance_aid
+			set_global_flag = nwc_swe_stance_intervene
+			if = {
+				limit = { NOT = { has_global_flag = nwc_swe_intervened } }
+				set_global_flag = nwc_swe_intervened
+				country_event = nwc_sweden.2
+			}
+		}
+		if = {
+			limit = { has_global_flag = nwc_swe_stance_aid }
+			SWE = {
+				send_equipment = { equipment = infantry_equipment amount = 500 target = NOR }
+				send_equipment = { equipment = support_equipment amount = 50 target = NOR }
+			}
+		}
+	}
+}
+
+# Swedish bills: +10 opinion, halved per amendment.
+nwc_bill_swe_trade_effect = {
+	if = {
+		limit = { check_variable = { nwc_bill_amend = 0 } }
+		set_temp_variable = { nwc_swe_delta = 10 }
+	}
+	else_if = {
+		limit = { check_variable = { nwc_bill_amend = 1 } }
+		set_temp_variable = { nwc_swe_delta = 5 }
+	}
+	else = {
+		set_temp_variable = { nwc_swe_delta = 2.5 }
+	}
+	nwc_swe_opinion_add = yes
+}
+
+nwc_bill_swe_border_effect = {
+	if = {
+		limit = { check_variable = { nwc_bill_amend = 0 } }
+		set_temp_variable = { nwc_swe_delta = 10 }
+	}
+	else_if = {
+		limit = { check_variable = { nwc_bill_amend = 1 } }
+		set_temp_variable = { nwc_swe_delta = 5 }
+	}
+	else = {
+		set_temp_variable = { nwc_swe_delta = 2.5 }
+	}
+	nwc_swe_opinion_add = yes
+}
+
+nwc_bill_swe_defence_effect = {
+	if = {
+		limit = { check_variable = { nwc_bill_amend = 0 } }
+		set_temp_variable = { nwc_swe_delta = 10 }
+	}
+	else_if = {
+		limit = { check_variable = { nwc_bill_amend = 1 } }
+		set_temp_variable = { nwc_swe_delta = 5 }
+	}
+	else = {
+		set_temp_variable = { nwc_swe_delta = 2.5 }
+	}
+	nwc_swe_opinion_add = yes
+}

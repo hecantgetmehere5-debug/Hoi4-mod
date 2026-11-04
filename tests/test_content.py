@@ -188,3 +188,112 @@ def test_fascism_suspends_storting():
     focus_dir = CONTENT / "common" / "national_focus"
     text = "".join(f.read_text(encoding="utf-8-sig") for f in focus_dir.rglob("*.txt")) if focus_dir.exists() else ""
     assert "set_country_flag = nwc_storting_suspended" in text or "nwc_storting_suspend = yes" in text
+
+
+# --- Swedish Opinion ---------------------------------------------------------
+
+SWE_OPINION = "global.nwc_swe_opinion"
+
+
+def _sweden_monthly():
+    body = _get(_parsed("common/scripted_effects/nwc_sweden_effects.txt"), "nwc_sweden_monthly")
+    assert body is not None
+    return body
+
+
+def _sweden_event(eid):
+    for k, _, v in _parsed("events/nwc_sweden.txt"):
+        if k in ("country_event", "news_event") and isinstance(v, list) and _get(v, "id") == eid:
+            return v
+    raise AssertionError(f"event {eid} missing")
+
+
+def _band_bounds(limit):
+    lo = hi = None
+    for k, _, v in limit:
+        if k != "check_variable":
+            continue
+        for var, op, val in v:
+            if var != SWE_OPINION:
+                continue
+            if op == ">=":
+                lo = float(val)
+            elif op in ("<", "<="):
+                hi = (float(val), op)
+    return lo, hi
+
+
+def test_swedish_bands_partition():
+    alive = next(v for k, _, v in _sweden_monthly() if k in ("if", "else_if")
+                 and ("nwc_gov_alive", "=", "yes") in (_get(v, "limit") or []))
+    bands = [_band_bounds(_get(v, "limit") or []) for k, _, v in alive if k in ("if", "else_if")]
+    bands = [b for b in bands if b[0] is not None or b[1] is not None]
+    assert len(bands) == 4, bands
+    bands.sort(key=lambda b: b[0])
+    assert bands[0][0] == 0
+    for (_, (hi, op)), (nlo, _) in zip(bands, bands[1:]):
+        assert op == "<" and hi == nlo
+    assert [b[0] for b in bands] == [0, 20, 55, 80]
+    assert bands[-1][1] == (100.0, "<=")
+
+
+def test_union_denmark_war():
+    monthly = _sweden_monthly()
+    branches = [v for k, _, v in monthly if k in ("if", "else_if")]
+    first = branches[0]
+    assert ("has_country_flag", "=", "nwc_union_denmark") in _get(first, "limit")
+    assert any(("country_event", "=", "nwc_sweden.6") in b for b in _blocks(first))
+    assert monthly.index(("if", "=", first)) < monthly.index(next(e for e in monthly if e[0] == "else_if"))
+    ev = _sweden_event("nwc_sweden.6")
+    targets = {_get(v, "target") for b in _blocks(ev) for k, _, v in b if k == "declare_war_on"}
+    assert targets == {"NOR", "DEN"}
+    assert not any(k == "puppet" for b in _blocks(ev) for k, _, _ in b)
+    assert not any(v == "nwc_game_over_sweden" for b in _blocks(ev) for _, _, v in b)
+
+
+def _fires(block, eid):
+    return any(("country_event", "=", eid) in b for b in _blocks(block))
+
+
+def test_displeased_needs_two_months():
+    gates = [v for b in _blocks(_sweden_monthly()) for k, _, v in b
+             if k in ("if", "else_if") and ("country_event", "=", "nwc_sweden.4") in v]
+    assert gates
+    for g in gates:
+        assert ("nwc_swe_low_months", ">=", "2") in (_get(_get(g, "limit"), "check_variable") or [])
+
+
+def test_puppet_effects_in_order():
+    opt = _get(_sweden_event("nwc_sweden.4"), "option")
+    keys = [k for k, _, _ in opt]
+    i_p, i_f, i_n = keys.index("SWE"), keys.index("set_global_flag"), keys.index("news_event")
+    assert i_p < i_f < i_n
+    assert ("puppet", "=", "NOR") in opt[i_p][2]
+    assert opt[i_f][2] == "nwc_game_over_sweden"
+    assert _get(opt[i_n][2], "id") == "nwc_news.20"
+
+
+@pytest.mark.xfail(strict=True, reason="NOR focus tree lands in Task 5")
+def test_puppet_is_game_over():
+    tree = _all_parsed()
+    focuses = [f for rel, t in tree.items() if "national_focus" in rel
+               for b in _blocks(t) for k, _, f in b if k == "focus" and isinstance(f, list)
+               and str(_get(f, "id") or "").startswith("nwc_nor_")]
+    assert focuses
+    for f in focuses:
+        assert ("nwc_gov_alive", "=", "yes") in (_get(f, "available") or []), _get(f, "id")
+    cats = _parsed("common/decisions/categories/nwc_categories.txt")
+    for name, _, body in cats:
+        if ("original_tag", "=", "NOR") in (_get(body, "allowed") or []):
+            assert ("nwc_gov_alive", "=", "yes") in (_get(body, "visible") or []), name
+
+
+def test_swedish_bills_scaled():
+    effects = _parsed("common/scripted_effects/nwc_sweden_effects.txt")
+    for bill in ("nwc_bill_swe_trade", "nwc_bill_swe_border", "nwc_bill_swe_defence"):
+        body = _get(effects, bill + "_effect")
+        assert body is not None, bill
+        deltas = [_get(b, "set_temp_variable") for b in _blocks(body) if _get(b, "set_temp_variable")]
+        assert [d[0] for d in deltas] == [("nwc_swe_delta", "=", "10"), ("nwc_swe_delta", "=", "5"),
+                                          ("nwc_swe_delta", "=", "2.5")]
+        assert ("nwc_swe_opinion_add", "=", "yes") in body
