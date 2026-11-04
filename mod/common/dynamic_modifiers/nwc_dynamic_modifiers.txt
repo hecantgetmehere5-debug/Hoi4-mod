@@ -6,7 +6,6 @@ nwc_fortress_oslo = {
 	army_core_defence_factor = nwc_fort_def
 	army_org_factor = nwc_fort_org
 	max_dig_in = nwc_fort_dig
-	army_attack_factor = nwc_fort_terrain
 	# Fixed siege-state bonuses: a besieged city lives off its stores.
 	supply_consumption_factor = -0.5
 	no_supply_grace = 240

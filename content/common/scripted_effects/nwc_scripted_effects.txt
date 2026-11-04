@@ -12,7 +12,7 @@ nwc_update_fortress = {
 			set_variable = { nwc_fort_dig = nwc_fortress }
 			multiply_variable = { nwc_fort_dig = 0.5 }	# 100 -> +50 dig-in
 			set_variable = { nwc_fort_terrain = nwc_fortress }
-			multiply_variable = { nwc_fort_terrain = 0.01 }	# 100 -> +100% attack/defence in fortified terrain
+			multiply_variable = { nwc_fort_terrain = 0.01 }	# 100 -> 1.0 (no longer applied as an attack bonus)
 			force_update_dynamic_modifier = yes
 		}
 	}
@@ -61,19 +61,35 @@ nwc_fortify_oslo = {
 
 # Anarchist insurgency: fresh cells and supplies every month. Call in ANA scope.
 nwc_ana_insurgency = {
+	# Runs every month while ANA exists. If every ANA state is occupied the
+	# insurgency keeps going: cells respawn behind enemy lines in an ANA core.
 	if = {
-		limit = { exists = yes num_of_controlled_states > 0 }
+		limit = { exists = yes }
 		add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 400 }
 		add_manpower = 3000
 		if = {
 			limit = { num_divisions < 36 }
-			random_controlled_state = {
-				limit = { is_owned_and_controlled_by = ANA }
-				create_unit = {
-					division = "name = \"Anarchist Cell\" division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 1.0"
-					owner = ANA
-					allow_spawning_on_enemy_provs = no
-					count = 2
+			if = {
+				limit = { num_of_controlled_states > 0 }
+				random_controlled_state = {
+					limit = { is_owned_and_controlled_by = ANA }
+					create_unit = {
+						division = "name = \"Anarchist Cell\" division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 1.0"
+						owner = ANA
+						allow_spawning_on_enemy_provs = no
+						count = 2
+					}
+				}
+			}
+			else = {
+				random_state = {
+					limit = { is_core_of = ANA }
+					create_unit = {
+						division = "name = \"Anarchist Cell\" division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 1.0"
+						owner = ANA
+						allow_spawning_on_enemy_provs = yes
+						count = 2
+					}
 				}
 			}
 		}
