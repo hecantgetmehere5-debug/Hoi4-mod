@@ -9,11 +9,11 @@ set_politics = {
 	elections_allowed = no
 }
 set_popularities = {
-	neutrality = 60
-	democratic = 20
+	neutrality = 85
 	communism = 10
-	fascism = 10
+	democratic = 5
 }
+recruit_character = SOV_leader
 oob = "SOV_2030"
 set_convoys = 10
 add_ideas = {

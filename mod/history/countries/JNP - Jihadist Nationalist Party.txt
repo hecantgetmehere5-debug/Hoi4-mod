@@ -3,17 +3,16 @@ set_research_slots = 3
 set_stability = 0.4
 set_war_support = 0.6
 set_politics = {
-	ruling_party = neutrality
+	ruling_party = theocracy
 	last_election = "2029.9.9"
 	election_frequency = 48
 	elections_allowed = no
 }
 set_popularities = {
-	neutrality = 60
-	democratic = 20
-	communism = 10
-	fascism = 10
+	theocracy = 80
+	neutrality = 20
 }
+recruit_character = JNP_leader
 oob = "JNP_2030"
 set_convoys = 10
 add_ideas = {

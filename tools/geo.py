@@ -62,6 +62,9 @@ class Faction:
     background: bool = False
     spawn: bool = False  # Owns no states at start; released by events.
     cantons: tuple[str, ...] = ()  # NCL states this tag receives when released.
+    popularities: tuple[tuple[str, int], ...] = ()  # (group, %) pairs; empty means the default split.
+    leader: str | None = None  # Starting leader's display name, title included.
+    parties: tuple[tuple[str, str, str], ...] = ()  # (group, short name, long name) overrides.
 
 
 def _yaml(name):
@@ -90,7 +93,14 @@ def load_states() -> list[State]:
 def load_factions() -> dict[str, Faction]:
     return {t: Faction(t, v["name"], v["adjective"], tuple(v["colour"]), v["ideology"],
                        v["capital"], v.get("puppet_of"), v.get("background", False),
-                       v.get("spawn", False), tuple(v.get("cantons", ()))) for t, v in _yaml("factions.yaml").items()}
+                       v.get("spawn", False), tuple(v.get("cantons", ())),
+                       tuple(v.get("popularities", {}).items()), v.get("leader"),
+                       tuple((g, s, l) for g, (s, l) in v.get("parties", {}).items()))
+            for t, v in _yaml("factions.yaml").items()}
+
+
+def load_ideologies() -> dict[str, dict]:
+    return _yaml("ideologies.yaml")
 
 
 def kommune_owner(code: str) -> str:

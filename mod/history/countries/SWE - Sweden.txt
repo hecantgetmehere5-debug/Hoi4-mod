@@ -10,10 +10,10 @@ set_politics = {
 }
 set_popularities = {
 	democratic = 60
-	neutrality = 20
-	communism = 10
-	fascism = 10
+	conservative = 30
+	national_socialism = 10
 }
+recruit_character = SWE_leader
 oob = "SWE_2030"
 set_convoys = 10
 add_ideas = {

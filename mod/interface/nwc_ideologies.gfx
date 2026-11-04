@@ -1,0 +1,74 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_ideology_left_communism_group"
+		texturefile = "gfx/interface/ideologies/communism_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_anarchist_group"
+		texturefile = "gfx/interface/ideologies/anarchism.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_mutualism_group"
+		texturefile = "gfx/interface/ideologies/anarchism.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_egoism_group"
+		texturefile = "gfx/interface/ideologies/anarchism.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_democratic_socialism_group"
+		texturefile = "gfx/interface/ideologies/communism_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_technocracy_group"
+		texturefile = "gfx/interface/ideologies/democratic_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_green_agrarianism_group"
+		texturefile = "gfx/interface/ideologies/democratic_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_libertarianism_group"
+		texturefile = "gfx/interface/ideologies/democratic_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_conservative_group"
+		texturefile = "gfx/interface/ideologies/democratic_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_monarchism_group"
+		texturefile = "gfx/interface/ideologies/neutrality_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_theocracy_group"
+		texturefile = "gfx/interface/ideologies/neutrality_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_oligarchy_group"
+		texturefile = "gfx/interface/ideologies/neutrality_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_national_socialism_group"
+		texturefile = "gfx/interface/ideologies/fascism_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_ingsoc_group"
+		texturefile = "gfx/interface/ideologies/fascism_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_neo_paganism_group"
+		texturefile = "gfx/interface/ideologies/fascism_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_indigenous_nationalism_group"
+		texturefile = "gfx/interface/ideologies/neutrality_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_animal_rule_group"
+		texturefile = "gfx/interface/ideologies/neutrality_group.dds"
+	}
+	spriteType = {
+		name = "GFX_ideology_military_council_group"
+		texturefile = "gfx/interface/ideologies/neutrality_group.dds"
+	}
+}
