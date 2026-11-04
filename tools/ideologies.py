@@ -152,6 +152,10 @@ def gfx_file() -> str:
     return f"spriteTypes = {{\n{sprites}}}\n"
 
 
+# Tags the spec dropped (RDN Reindeer Nation easter egg; tag is to be reused for the WFR breakaway).
+DROPPED_TAGS = {"RDN"}
+
+
 def leader_id(tag: str) -> str:
     return f"{tag}_leader"
 
@@ -186,6 +190,8 @@ def localisation() -> str:
                  f' {gid}_drift:0 "Daily {q(g["name"])} Support"',
                  f' {gid}_acceptance:0 "Acceptance of {q(g["adjective"])} Diplomacy"']
     for tag, f in geo.load_factions().items():
+        if tag in DROPPED_TAGS:
+            continue
         over = {g: (s, l) for g, s, l in f.parties}
         for gid, g in ideos.items():
             s, l = over.get(gid, (g["name"], f"{f.adjective} {g['name']}"))

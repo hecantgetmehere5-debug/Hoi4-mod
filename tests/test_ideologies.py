@@ -72,7 +72,7 @@ def test_starting_ideologies_exist_and_popularities_total_100():
 
 def test_party_names_for_every_tag_and_group():
     loc = _loc()
-    for tag in geo.load_factions():
+    for tag in set(geo.load_factions()) - ideologies.DROPPED_TAGS:
         for gid in geo.load_ideologies():
             assert loc.get(f"{tag}_{gid}_party") and loc.get(f"{tag}_{gid}_party_long")
     assert loc["NOR_democratic_party"] == "Ap" and loc["SOV_neutrality_party"] == "United Russia"
@@ -98,3 +98,7 @@ def test_leaders_use_declared_types_and_are_recruited():
             assert f"ideology = {ideologies.subtype(f.ideology)}" in text
             assert f"\t{ideologies.leader_id(tag)} = {{" in text
             assert f"recruit_character = {ideologies.leader_id(tag)}" in history.country_history(f, [])
+
+
+def test_dropped_tags_have_no_localisation():
+    assert not [k for k in _loc() if k.startswith("RDN_")]
