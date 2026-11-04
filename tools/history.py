@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from tools import geo, mapfiles, raster, terrain
+from tools import geo, ideologies, mapfiles, raster, terrain
 
 START_DATE = "2030.1.1.12"
 END_DATE = "2080.1.1.1"
@@ -166,12 +166,8 @@ def _state_text(sid, manpower, category, history, provs, impassable) -> str:
             f"\n\t}}\n\tprovinces = {{\n\t\t{' '.join(map(str, provs))}\n\t}}\n\tlocal_supplies = 0.0\n}}\n")
 
 
-IDEOLOGY_SPLITS = {
-    "democratic": {"democratic": 60, "neutrality": 20, "communism": 10, "fascism": 10},
-    "communism": {"communism": 60, "democratic": 20, "neutrality": 15, "fascism": 5},
-    "fascism": {"fascism": 65, "neutrality": 20, "democratic": 10, "communism": 5},
-    "neutrality": {"neutrality": 60, "democratic": 20, "communism": 10, "fascism": 10},
-}
+# Groups whose countries hold elections.
+ELECTORAL = ("democratic", "conservative", "democratic_socialism")
 
 
 def country_history(f: geo.Faction, puppets: list[str]) -> str:
@@ -179,13 +175,15 @@ def country_history(f: geo.Faction, puppets: list[str]) -> str:
     if f.spawn:
         # Released mid-game by an event, which sets its government; it starts with no land or army.
         return f"capital = {sid[f.capital]}\n" + "set_technology = {\n" + "".join(f"\t{t} = 1\n" for t in STARTING_TECH) + "}\n"
-    pops = IDEOLOGY_SPLITS[f.ideology]
+    pops = ideologies.popularities(f)
     lines = [f"capital = {sid[f.capital]}", "set_research_slots = 3",
              "set_stability = 0.4", "set_war_support = 0.6",
              "set_politics = {", f"\truling_party = {f.ideology}", '\tlast_election = "2029.9.9"',
-             "\telection_frequency = 48", f"\telections_allowed = {'yes' if f.ideology == 'democratic' else 'no'}",
+             "\telection_frequency = 48", f"\telections_allowed = {'yes' if f.ideology in ELECTORAL else 'no'}",
              "}", "set_popularities = {"]
     lines += [f"\t{k} = {v}" for k, v in pops.items()] + ["}"]
+    if f.leader:
+        lines.append(f"recruit_character = {ideologies.leader_id(f.tag)}")
     for p in puppets:
         lines.append(f"set_autonomy = {{ target = {p} autonomous_state = autonomy_puppet }}")
     # Every vanilla country starts with laws, base technologies, convoys and an order of battle.
@@ -372,4 +370,5 @@ def write_all(mod: Path) -> None:
     write_bookmark_and_defines(mod)
     write_localisation(mod)
     write_flags(mod)
+    ideologies.write_all(mod)
     (mod / "descriptor.mod").write_text(descriptor(), encoding="utf-8")

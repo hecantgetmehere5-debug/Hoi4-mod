@@ -32,9 +32,9 @@ def test_state_ids_match_registry(mod):
         assert f"id = {num}\n" in p.read_text()
 
 
-def test_wfr_is_puppet_of_nor(mod):
+def test_wfr_is_independent(mod):
     nor = next((mod / "history" / "countries").glob("NOR - *.txt")).read_text()
-    assert "set_autonomy = { target = WFR autonomous_state = autonomy_puppet }" in nor
+    assert "target = WFR" not in nor
 
 
 def test_ana_owns_every_pocket_state():
@@ -99,7 +99,7 @@ def test_tutorial_has_no_vanilla_map_ids(mod):
 
 
 EXPECTED_DIVISIONS = {"NOR": 24, "WFR": 20, "FRP": 22, "KRF": 13, "SOC": 13, "NRM": 13, "SAP": 13, "ABI": 13,
-                      "NCL": 8, "BRG": 0, "JNP": 5, "SWE": 0, "FIN": 0, "SOV": 0, "DEN": 0}
+                      "NCL": 8, "BRG": 0, "JNP": 15, "SWE": 0, "FIN": 0, "SOV": 0, "DEN": 0}
 
 
 def _units(mod, tag):
@@ -115,7 +115,7 @@ def test_division_counts_per_tag(mod):
         assert len(_locations(_units(mod, tag))) == n, tag
 
 
-def test_ana_has_three_per_pocket_at_low_equipment(mod):
+def test_ana_has_three_per_pocket_at_full_equipment(mod):
     text = _units(mod, "ANA")
     sp = mapfiles.state_provinces()
     pockets = [s.key for s in geo.load_states() if geo.state_owner(s) == "ANA"]
@@ -123,7 +123,7 @@ def test_ana_has_three_per_pocket_at_low_equipment(mod):
     assert len(locs) == 3 * len(pockets)
     for k in pockets:
         assert sum(p in sp[k] for p in locs) == 3, k
-    assert set(re.findall(r"start_equipment_factor = ([\d.]+)", text)) == {"0.2"}
+    assert set(re.findall(r"start_equipment_factor = ([\d.]+)", text)) == {"1.0"}
 
 
 def test_division_locations_are_owned_land_not_wasteland(mod):

@@ -16,6 +16,24 @@ country_event = {
 			set_country_flag = nwc_bill_emergency_budget_passed
 			nwc_bill_emergency_budget_effect = yes
 		}
+		if = {
+			limit = { has_country_flag = nwc_bill_swe_trade_pending }
+			clr_country_flag = nwc_bill_swe_trade_pending
+			set_country_flag = nwc_bill_swe_trade_passed
+			nwc_bill_swe_trade_effect = yes
+		}
+		if = {
+			limit = { has_country_flag = nwc_bill_swe_border_pending }
+			clr_country_flag = nwc_bill_swe_border_pending
+			set_country_flag = nwc_bill_swe_border_passed
+			nwc_bill_swe_border_effect = yes
+		}
+		if = {
+			limit = { has_country_flag = nwc_bill_swe_defence_pending }
+			clr_country_flag = nwc_bill_swe_defence_pending
+			set_country_flag = nwc_bill_swe_defence_passed
+			nwc_bill_swe_defence_effect = yes
+		}
 	}
 }
 
@@ -30,5 +48,8 @@ country_event = {
 	option = {
 		name = nwc_storting.3.a
 		clr_country_flag = nwc_bill_emergency_budget_pending
+		clr_country_flag = nwc_bill_swe_trade_pending
+		clr_country_flag = nwc_bill_swe_border_pending
+		clr_country_flag = nwc_bill_swe_defence_pending
 	}
 }

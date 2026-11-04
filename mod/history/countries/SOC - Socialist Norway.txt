@@ -3,17 +3,18 @@ set_research_slots = 3
 set_stability = 0.4
 set_war_support = 0.6
 set_politics = {
-	ruling_party = communism
+	ruling_party = democratic_socialism
 	last_election = "2029.9.9"
 	election_frequency = 48
-	elections_allowed = no
+	elections_allowed = yes
 }
 set_popularities = {
-	communism = 60
-	democratic = 20
-	neutrality = 15
-	fascism = 5
+	democratic_socialism = 65
+	communism = 15
+	left_communism = 10
+	democratic = 10
 }
+recruit_character = SOC_leader
 oob = "SOC_2030"
 set_convoys = 10
 add_ideas = {

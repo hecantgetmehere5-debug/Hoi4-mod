@@ -1,40 +1,99 @@
 # Recompute Fortress Oslo strength. Call in any scope.
+# Strength runs 100 (full) down to a floor of 25: even a broken fortress is costly to storm.
 nwc_update_fortress = {
 	if = {
 		limit = { JNP = { exists = yes } }
 		JNP = {
-			clamp_variable = { var = nwc_fortress min = 0 max = 100 }
+			clamp_variable = { var = nwc_fortress min = 25 max = 100 }
 			set_variable = { nwc_fort_def = nwc_fortress }
-			multiply_variable = { nwc_fort_def = 0.04 }	# 100 -> +400%
+			multiply_variable = { nwc_fort_def = 0.05 }	# 100 -> +500%, 25 -> +125%
 			set_variable = { nwc_fort_org = nwc_fortress }
 			multiply_variable = { nwc_fort_org = 0.02 }	# 100 -> +200%
 			set_variable = { nwc_fort_dig = nwc_fortress }
 			multiply_variable = { nwc_fort_dig = 0.5 }	# 100 -> +50 dig-in
+			set_variable = { nwc_fort_terrain = nwc_fortress }
+			multiply_variable = { nwc_fort_terrain = 0.01 }	# 100 -> 1.0 (no longer applied as an attack bonus)
 			force_update_dynamic_modifier = yes
 		}
 	}
 }
 
-# Lower the fortress by a random amount. Call in any scope.
+# Lower the fortress by a random amount. Call in any scope. Tooltip shows the range.
 nwc_fortress_small = {
-	if = { limit = { JNP = { exists = yes } }
-		random_list = {
-			40 = { JNP = { add_to_variable = { nwc_fortress = -10 } } }
-			40 = { JNP = { add_to_variable = { nwc_fortress = -15 } } }
-			20 = { JNP = { add_to_variable = { nwc_fortress = -20 } } }
+	custom_effect_tooltip = nwc_fortress_small_tt
+	hidden_effect = {
+		if = { limit = { JNP = { exists = yes } }
+			random_list = {
+				40 = { JNP = { add_to_variable = { nwc_fortress = -5 } } }
+				40 = { JNP = { add_to_variable = { nwc_fortress = -8 } } }
+				20 = { JNP = { add_to_variable = { nwc_fortress = -10 } } }
+			}
 		}
+		nwc_update_fortress = yes
 	}
-	nwc_update_fortress = yes
 }
 nwc_fortress_large = {
-	if = { limit = { JNP = { exists = yes } }
-		random_list = {
-			20 = { JNP = { add_to_variable = { nwc_fortress = -10 } } }
-			40 = { JNP = { add_to_variable = { nwc_fortress = -25 } } }
-			40 = { JNP = { add_to_variable = { nwc_fortress = -35 } } }
+	custom_effect_tooltip = nwc_fortress_large_tt
+	hidden_effect = {
+		if = { limit = { JNP = { exists = yes } }
+			random_list = {
+				20 = { JNP = { add_to_variable = { nwc_fortress = -10 } } }
+				40 = { JNP = { add_to_variable = { nwc_fortress = -15 } } }
+				40 = { JNP = { add_to_variable = { nwc_fortress = -20 } } }
+			}
+		}
+		nwc_update_fortress = yes
+	}
+}
+
+# Physical fortifications and stockpiles for Oslo. Runs once at game start.
+nwc_fortify_oslo = {
+	@STATE:oslo@ = {
+		add_building_construction = { type = bunker level = 10 instant_build = yes province = { all_provinces = yes } }
+		add_building_construction = { type = coastal_bunker level = 10 instant_build = yes province = { all_provinces = yes limit_to_coastal = yes } }
+	}
+	JNP = {
+		add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 3000 }
+		add_equipment_to_stockpile = { type = support_equipment_1 amount = 500 }
+		add_manpower = 20000
+	}
+}
+
+# Anarchist insurgency: fresh cells and supplies every month. Call in ANA scope.
+nwc_ana_insurgency = {
+	# Runs every month while ANA exists. If every ANA state is occupied the
+	# insurgency keeps going: cells respawn behind enemy lines in an ANA core.
+	if = {
+		limit = { exists = yes }
+		add_equipment_to_stockpile = { type = infantry_equipment_1 amount = 400 }
+		add_manpower = 3000
+		if = {
+			limit = { num_divisions < 36 }
+			if = {
+				limit = { num_of_controlled_states > 0 }
+				random_controlled_state = {
+					limit = { is_owned_and_controlled_by = ANA }
+					create_unit = {
+						division = "name = \"Anarchist Cell\" division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 1.0"
+						owner = ANA
+						allow_spawning_on_enemy_provs = no
+						count = 2
+					}
+				}
+			}
+			else = {
+				random_state = {
+					limit = { is_core_of = ANA }
+					create_unit = {
+						division = "name = \"Anarchist Cell\" division_template = \"Infantry Division\" start_experience_factor = 0.3 start_equipment_factor = 1.0"
+						owner = ANA
+						allow_spawning_on_enemy_provs = yes
+						count = 2
+					}
+				}
+			}
 		}
 	}
-	nwc_update_fortress = yes
 }
 
 
@@ -49,11 +108,12 @@ nwc_game_start = {
 			add_dynamic_modifier = { modifier = nwc_fortress_oslo }
 		}
 		nwc_update_fortress = yes
+		nwc_fortify_oslo = yes
 		ANA = { add_ideas = nwc_ana_guerrilla }
 		NOR = { nwc_storting_init = yes }
 		NOR = { nwc_sweden_init = yes }
 		NOR = { declare_war_on = { target = JNP type = annex_everything } }
-		WFR = { add_to_war = { targeted_alliance = NOR enemy = JNP hostility_reason = asked_to_join } }
+		WFR = { declare_war_on = { target = JNP type = annex_everything } }
 		ANA = {
 			every_country = {
 				limit = {
@@ -79,11 +139,9 @@ nwc_outbreak = {
 		}
 		if = { limit = { WFR = { exists = yes } ABI = { exists = yes } WFR = { NOT = { has_war_with = ABI } } }
 			ABI = { declare_war_on = { target = WFR type = annex_everything } }
-			if = { limit = { NOR = { has_war_with = ABI } } NOR = { white_peace = ABI } }
 		}
 		if = { limit = { WFR = { exists = yes } NRM = { exists = yes } WFR = { NOT = { has_war_with = NRM } } }
 			NRM = { declare_war_on = { target = WFR type = annex_everything } }
-			if = { limit = { NOR = { has_war_with = NRM } } NOR = { white_peace = NRM } }
 		}
 		if = { limit = { ABI = { exists = yes } NRM = { exists = yes } ABI = { NOT = { has_war_with = NRM } } }
 			NRM = { declare_war_on = { target = ABI type = annex_everything } }

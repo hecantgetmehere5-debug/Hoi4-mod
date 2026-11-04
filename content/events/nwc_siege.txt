@@ -12,6 +12,7 @@ country_event = {
 		name = nwc_siege.1.a
 		ai_chance = { base = 40 }
 		nwc_fortress_small = yes
+		add_political_power = -15
 		country_event = { id = nwc_siege.2 days = 14 }
 	}
 	option = {
@@ -48,6 +49,7 @@ country_event = {
 		name = nwc_siege.2.b
 		ai_chance = { base = 40 }
 		nwc_fortress_small = yes
+		add_political_power = 20
 		country_event = { id = nwc_siege.3 days = 14 }
 	}
 	option = {
@@ -70,6 +72,7 @@ country_event = {
 		name = nwc_siege.3.a
 		ai_chance = { base = 50 }
 		nwc_fortress_small = yes
+		add_political_power = -10
 		country_event = { id = nwc_siege.4 days = 14 }
 	}
 	option = {
@@ -114,7 +117,9 @@ country_event = {
 	option = {
 		name = nwc_siege.5.a
 		ai_chance = { base = 1 }
-		country_event = { id = nwc_siege.6 days = 14 }
+		custom_effect_tooltip = nwc_siege_deadline_tt
+		add_war_support = 0.05
+		country_event = { id = nwc_siege.6 days = 60 }
 	}
 }
 

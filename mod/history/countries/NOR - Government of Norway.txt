@@ -9,12 +9,13 @@ set_politics = {
 	elections_allowed = yes
 }
 set_popularities = {
-	democratic = 60
-	neutrality = 20
-	communism = 10
-	fascism = 10
+	democratic = 45
+	conservative = 40
+	democratic_socialism = 5
+	libertarianism = 5
+	green_agrarianism = 5
 }
-set_autonomy = { target = WFR autonomous_state = autonomy_puppet }
+recruit_character = NOR_leader
 oob = "NOR_2030"
 set_convoys = 10
 add_ideas = {

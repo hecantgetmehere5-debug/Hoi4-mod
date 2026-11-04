@@ -7,7 +7,7 @@ state = {
 		owner = ABI
 		add_core_of = ABI
 		add_core_of = NOR
-		victory_points = { 525 1 }
+		victory_points = { 530 1 }
 		buildings = {
 			infrastructure = 2
 			525 = { naval_base = 1 }

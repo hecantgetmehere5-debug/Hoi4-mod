@@ -1,0 +1,44 @@
+# Swedish bills, proposed through the Storting (Task 3 bill pattern).
+nwc_storting_category = {
+	nwc_propose_swe_trade = {
+		icon = generic_industry
+		cost = 25
+		visible = { NOT = { has_country_flag = nwc_bill_swe_trade_passed } }
+		available = { NOT = { nwc_storting_bill_pending = yes } }
+		complete_effect = {
+			set_country_flag = nwc_bill_swe_trade_pending
+			set_temp_variable = { nwc_bill_ap_base = -5 }
+			set_temp_variable = { nwc_bill_h_base = 5 }
+			nwc_propose_bill = yes
+		}
+		ai_will_do = { base = 1 }
+	}
+
+	nwc_propose_swe_border = {
+		icon = generic_political_discourse
+		cost = 25
+		visible = { NOT = { has_country_flag = nwc_bill_swe_border_passed } }
+		available = { NOT = { nwc_storting_bill_pending = yes } }
+		complete_effect = {
+			set_country_flag = nwc_bill_swe_border_pending
+			set_temp_variable = { nwc_bill_ap_base = 5 }
+			set_temp_variable = { nwc_bill_h_base = -5 }
+			nwc_propose_bill = yes
+		}
+		ai_will_do = { base = 1 }
+	}
+
+	nwc_propose_swe_defence = {
+		icon = generic_political_discourse
+		cost = 25
+		visible = { NOT = { has_country_flag = nwc_bill_swe_defence_passed } }
+		available = { NOT = { nwc_storting_bill_pending = yes } }
+		complete_effect = {
+			set_country_flag = nwc_bill_swe_defence_pending
+			set_temp_variable = { nwc_bill_ap_base = 0 }
+			set_temp_variable = { nwc_bill_h_base = 0 }
+			nwc_propose_bill = yes
+		}
+		ai_will_do = { base = 1 }
+	}
+}

@@ -3,17 +3,17 @@ set_research_slots = 3
 set_stability = 0.4
 set_war_support = 0.6
 set_politics = {
-	ruling_party = democratic
+	ruling_party = libertarianism
 	last_election = "2029.9.9"
 	election_frequency = 48
-	elections_allowed = yes
+	elections_allowed = no
 }
 set_popularities = {
-	democratic = 60
-	neutrality = 20
-	communism = 10
-	fascism = 10
+	libertarianism = 70
+	fascism = 15
+	conservative = 15
 }
+recruit_character = FRP_leader
 oob = "FRP_2030"
 set_convoys = 10
 add_ideas = {

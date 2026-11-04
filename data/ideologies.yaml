@@ -1,0 +1,76 @@
+# The 22 ideology groups that replace vanilla's four (Kaiserredux-style).
+# The four vanilla group ids (democratic, communism, fascism, neutrality) are kept with new
+# meanings, so every vanilla trigger and effect that names them stays valid. Each keeps its
+# vanilla types as hidden legacy types, so vanilla characters keep a valid ideology.
+# template: the vanilla group whose rules, modifiers and AI flag the group copies.
+# icon: vanilla texture in gfx/interface/ideologies/.
+democratic:
+  {name: Social Democracy, adjective: Social Democratic, desc: "Welfare state, unions and the Nordic model.",
+   colour: [230, 60, 80], template: democratic, icon: democratic_group,
+   legacy: [conservatism, liberalism, socialism, populism]}
+communism:
+  {name: Marxist-Leninism, adjective: Marxist-Leninist, desc: "A vanguard party and a planned economy.",
+   colour: [180, 0, 0], template: communism, icon: communism_group,
+   legacy: [marxism, leninism, stalinism, anti_revisionism, anarchist_communism, buddhist_socialism]}
+fascism:
+  {name: Fascism, adjective: Fascist, desc: "The nation above all, the state above the nation.",
+   colour: [60, 40, 20], template: fascism, icon: fascism_group,
+   legacy: [nazism, gen_nazism, fascism_ideology, falangism, rexism, emperor_fascism]}
+neutrality:
+  {name: Autocracy, adjective: Autocratic, desc: "One man, one party, managed elections.",
+   colour: [110, 110, 110], template: neutrality, icon: neutrality_group,
+   legacy: [despotism, oligarchism, anarchism, moderatism, centrism, japan_militarism_ideology]}
+left_communism:
+  {name: Left Communism, adjective: Left Communist, desc: "Workers' councils, not party bureaucrats.",
+   colour: [230, 30, 30], template: communism, icon: communism_group}
+anarchist:
+  {name: Anarchism, adjective: Anarchist, desc: "No state, no masters, only the assembly.",
+   colour: [25, 25, 25], template: communism, icon: anarchism}
+mutualism:
+  {name: Mutualism, adjective: Mutualist, desc: "Free exchange between free producers.",
+   colour: [120, 30, 60], template: neutrality, icon: anarchism}
+egoism:
+  {name: Egoism, adjective: Egoist, desc: "A union of egoists, owing nothing to anyone.",
+   colour: [90, 0, 120], template: neutrality, icon: anarchism}
+democratic_socialism:
+  {name: Democratic Socialism, adjective: Democratic Socialist, desc: "Socialism won at the ballot box.",
+   colour: [250, 110, 110], template: democratic, icon: communism_group}
+technocracy:
+  {name: Technocracy, adjective: Technocratic, desc: "Government by experts, and by the machine.",
+   colour: [0, 200, 200], template: neutrality, icon: democratic_group}
+green_agrarianism:
+  {name: Green Agrarianism, adjective: Green Agrarian, desc: "The farms, the forests and the districts first.",
+   colour: [60, 170, 60], template: democratic, icon: democratic_group}
+libertarianism:
+  {name: Libertarianism, adjective: Libertarian, desc: "Low taxes, free trade, a small state.",
+   colour: [240, 200, 0], template: democratic, icon: democratic_group}
+conservative:
+  {name: Conservatism, adjective: Conservative, desc: "Order, property and tradition.",
+   colour: [40, 90, 220], template: democratic, icon: democratic_group}
+monarchism:
+  {name: Monarchism, adjective: Monarchist, desc: "The Crown restored to real power.",
+   colour: [130, 60, 170], template: neutrality, icon: neutrality_group}
+theocracy:
+  {name: Theocracy, adjective: Theocratic, desc: "God's law as the law of the land.",
+   colour: [240, 230, 200], template: neutrality, icon: neutrality_group}
+oligarchy:
+  {name: Oligarchy, adjective: Oligarchic, desc: "Rule by the boards of the great companies.",
+   colour: [200, 160, 60], template: neutrality, icon: neutrality_group}
+national_socialism:
+  {name: National Socialism, adjective: National Socialist, desc: "Blood, soil and the racial state.",
+   colour: [100, 60, 20], template: fascism, icon: fascism_group}
+ingsoc:
+  {name: Totalitarianism (Ingsoc), adjective: Ingsoc, desc: "War is peace. Freedom is slavery.",
+   colour: [70, 70, 90], template: fascism, icon: fascism_group}
+neo_paganism:
+  {name: Neo-Paganism, adjective: Neo-Pagan, desc: "The old gods of the North return.",
+   colour: [150, 110, 70], template: fascism, icon: fascism_group}
+indigenous_nationalism:
+  {name: Indigenous Nationalism, adjective: Indigenous Nationalist, desc: "Self-rule for the native people of the land.",
+   colour: [150, 100, 220], template: neutrality, icon: neutrality_group}
+animal_rule:
+  {name: Animal Rule, adjective: Animal, desc: "The beasts of the forest have taken charge.",
+   colour: [140, 100, 60], template: neutrality, icon: neutrality_group}
+military_council:
+  {name: Military Council, adjective: Military, desc: "The officers govern until the war is won.",
+   colour: [90, 110, 70], template: neutrality, icon: neutrality_group}

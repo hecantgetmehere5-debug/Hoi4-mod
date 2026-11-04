@@ -3,17 +3,17 @@ set_research_slots = 3
 set_stability = 0.4
 set_war_support = 0.6
 set_politics = {
-	ruling_party = fascism
+	ruling_party = national_socialism
 	last_election = "2029.9.9"
 	election_frequency = 48
 	elections_allowed = no
 }
 set_popularities = {
-	fascism = 65
-	neutrality = 20
-	democratic = 10
-	communism = 5
+	national_socialism = 75
+	fascism = 15
+	neo_paganism = 10
 }
+recruit_character = NRM_leader
 oob = "NRM_2030"
 set_convoys = 10
 add_ideas = {

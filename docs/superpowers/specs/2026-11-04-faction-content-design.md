@@ -16,11 +16,11 @@ The Oslo siege outcome is the big fork:
 
 Claude's guesses (not yet confirmed): shared focuses before the fork (army, economy, siege); the branch unlocks by event after the assassination/resignation.
 
-## Western Forces (WFR — Government puppet in the west)
+## Western Forces (WFR — independent Government ally in the west; no longer a puppet, so it fights its own wars)
 
 - Mainly a **military tree**, plus events showing dependence on the Government, e.g. "Supply Package from Oslo", "Volunteers from the East".
 - Default ending: merges back into the Government after the war (decided earlier).
-- **Easter egg:** if the Government takes the Elk path, the Western Forces can break away as the **Reindeer Nation** and fight an animal civil war against the Elk government.
+- **Anti-fascist breakaway:** if the Government goes **Fascism** (Høyre path), the Western Forces can break away as an **anti-fascist** state and fight the fascist Government. (Replaces the old Reindeer Nation easter egg, which is dropped.) Ruled by a **military council** (new ideology); if they defeat the fascist Government they become **Social Democracy**.
 
 ## Jihadist Nationalist Party (JNP — holds Oslo)
 
@@ -66,7 +66,7 @@ Choose who to side with:
 ## Sápmi (SAP — Sámi Parliament, the north)
 
 - *Sámi nationalism*.
-- *Sentient reindeer* path. (Claude's note: could tie in with the Western Forces' Reindeer Nation easter egg.)
+- *Sentient reindeer* path.
 - *Portal* path — a portal to another world opens; the other world is planned later.
 
 ## Neutral Coalition (NCL — Sp + MDG, Innlandet)
@@ -139,9 +139,72 @@ Choose who to side with:
 - Swedish-sponsored people = vanilla advisors/ideas, offered by events.
 - Støre resigns by event ~30 days after Oslo is taken.
 - FrP offers the union by focus; NRM can accept from any path; the FrP tag survives the merge.
-- Reindeer Nation: WFR decision once the Government is on the Elk path; new tag; Sápmi's sentient reindeer can ally with it.
+- Anti-fascist breakaway: WFR decision once the Government is on the Fascism path; reuses a spawn tag (replaces the Reindeer Nation tag built in Task 2).
 - Høyre/Monarchy re-besiege Oslo by focus, breaking the JNP white peace.
 - Bergen–ABI puppet needs ABI to accept by event; Denmark trade deals still allowed.
 - Union with Denmark = personal union with Danish control; Union with Sweden sets Swedish opinion to max.
 - Neutral Coalition mini-states and the Great Muslim Oslo Republic reuse spare vanilla tags.
 - Sápmi portal path is in the tree with a stub ending.
+
+## Custom ideologies (draft — Kaiserredux-style, replaces the vanilla four)
+
+| Ideology | Used by |
+|---|---|
+| Marxist-Leninism | SOC hardline |
+| Left Communism | SOC left-com |
+| Anarchism | ABI anarcho-communism/syndicalism, ANA |
+| Mutualism | ABI Georgist-mutualist |
+| Egoism | ABI egoist |
+| Democratic Socialism | Rødt/SV, Ap socialist |
+| Social Democracy | Ap, SWE, DEN, FIN |
+| Technocracy | Ap AI technocracy |
+| Green Agrarianism | NCL |
+| Libertarianism | FrP libertarian, BRG merchant |
+| Conservatism | Høyre |
+| Monarchism | The Crown |
+| Theocracy | KrF churches (incl. Abyzov's AI theocracy), Great Muslim Oslo Republic |
+| Oligarchy | Høyre oligarchy |
+| Fascism | Høyre fascism, FrP–NRM union |
+| National Socialism | NRM neo-Nazi |
+| Totalitarianism (Ingsoc) | NRM Ingsoc |
+| Neo-Paganism | NRM Viking, NCL paganism |
+| Indigenous Nationalism | SAP |
+| Animal Rule | The Elk, SAP sentient reindeer |
+| Military Council | Anti-fascist WFR (until it defeats the fascist Government, then Social Democracy) |
+| Autocracy | SOV and leftovers |
+
+### Leader titles (user-chosen)
+
+- Marxist-Leninism: General Secretary
+- Left Communism: General Secretary
+- Anarchism: no leader (HOI4 needs one, so the "leader" is a collective, e.g. "The Assembly", with no title)
+- Mutualism: Community Council
+- Egoism: leader is **Max Stirner** himself (joke); title "The Unique One" (Claude's call)
+- Democratic Socialism: President
+- Social Democracy: Prime Minister
+- Technocracy: leader **AbyzovGPT**, title "The AI"
+- Green Agrarianism: Farmers' Union
+- Libertarianism: President
+- Conservatism: Prime Minister
+- Monarchism: King / Queen (by the monarch's sex)
+- Theocracy (per path, Claude's call):
+  - KrF Abyzov AI theocracy: Patriarch of the Machine
+  - KrF Monastery: Abbot
+  - KrF Non-denominational: Pastor
+  - KrF Martin Luther: Bishop of the Reformation
+  - KrF Crusade: Grand Master
+  - KrF Papacy: Pope
+  - Great Muslim Oslo Republic: Emir
+- Oligarchy: League of Corporations
+- Fascism: Duce
+- National Socialism: Führer
+- Totalitarianism (Ingsoc): Big Brother
+- Neo-Paganism:
+  - NRM Viking: Jarl
+  - NCL paganism: Odin (chief Norse god)
+- Indigenous Nationalism: Shaman (Sámi: Noaidi)
+- Animal Rule (Claude's call):
+  - The Elk: leader **Jens Stoltenelg** — the elk disguised as "Jens Stoltenberg"; title Prime Minister to keep the disguise (Claude's call)
+  - Sápmi sentient reindeer: Herd Chief
+- Military Council: Chief Commander
+- Autocracy: President (modern Russia, led by Putin)

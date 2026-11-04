@@ -1,0 +1,114 @@
+characters = {
+	NOR_leader = {
+		name = NOR_leader
+		country_leader = {
+			ideology = democratic_subtype
+			expire = "2100.1.1"
+		}
+	}
+	WFR_leader = {
+		name = WFR_leader
+		country_leader = {
+			ideology = democratic_subtype
+			expire = "2100.1.1"
+		}
+	}
+	JNP_leader = {
+		name = JNP_leader
+		country_leader = {
+			ideology = theocracy_subtype
+			expire = "2100.1.1"
+		}
+	}
+	KRF_leader = {
+		name = KRF_leader
+		country_leader = {
+			ideology = theocracy_subtype
+			expire = "2100.1.1"
+		}
+	}
+	SOC_leader = {
+		name = SOC_leader
+		country_leader = {
+			ideology = democratic_socialism_subtype
+			expire = "2100.1.1"
+		}
+	}
+	FRP_leader = {
+		name = FRP_leader
+		country_leader = {
+			ideology = libertarianism_subtype
+			expire = "2100.1.1"
+		}
+	}
+	NRM_leader = {
+		name = NRM_leader
+		country_leader = {
+			ideology = national_socialism_subtype
+			expire = "2100.1.1"
+		}
+	}
+	SAP_leader = {
+		name = SAP_leader
+		country_leader = {
+			ideology = indigenous_nationalism_subtype
+			expire = "2100.1.1"
+		}
+	}
+	NCL_leader = {
+		name = NCL_leader
+		country_leader = {
+			ideology = green_agrarianism_subtype
+			expire = "2100.1.1"
+		}
+	}
+	ABI_leader = {
+		name = ABI_leader
+		country_leader = {
+			ideology = anarchist_subtype
+			expire = "2100.1.1"
+		}
+	}
+	BRG_leader = {
+		name = BRG_leader
+		country_leader = {
+			ideology = libertarianism_subtype
+			expire = "2100.1.1"
+		}
+	}
+	ANA_leader = {
+		name = ANA_leader
+		country_leader = {
+			ideology = anarchist_subtype
+			expire = "2100.1.1"
+		}
+	}
+	SWE_leader = {
+		name = SWE_leader
+		country_leader = {
+			ideology = democratic_subtype
+			expire = "2100.1.1"
+		}
+	}
+	FIN_leader = {
+		name = FIN_leader
+		country_leader = {
+			ideology = democratic_subtype
+			expire = "2100.1.1"
+		}
+	}
+	SOV_leader = {
+		name = SOV_leader
+		country_leader = {
+			ideology = neutrality_subtype
+			expire = "2100.1.1"
+		}
+	}
+	DEN_leader = {
+		name = DEN_leader
+		country_leader = {
+			ideology = democratic_subtype
+			expire = "2100.1.1"
+		}
+	}
+}
