@@ -1,0 +1,20 @@
+# Starting armies: plain infantry using the "Infantry Division" template.
+# divisions: total for the tag; per_state: divisions in every state the tag owns (overrides divisions).
+# equipment: start_equipment_factor (1.0 = full equipment).
+# economy_idea: extra idea added at game start.
+NOR: {divisions: 24, equipment: 1.0}
+WFR: {divisions: 20, equipment: 1.0}
+FRP: {divisions: 22, equipment: 1.0}
+KRF: {divisions: 13, equipment: 1.0}
+SOC: {divisions: 13, equipment: 1.0}
+NRM: {divisions: 13, equipment: 1.0}
+SAP: {divisions: 13, equipment: 1.0}
+ABI: {divisions: 13, equipment: 1.0}
+NCL: {divisions: 8, equipment: 1.0, economy_idea: nwc_civilian_boom}
+BRG: {divisions: 0, equipment: 1.0, economy_idea: nwc_civilian_boom}
+JNP: {divisions: 5, equipment: 1.0}
+ANA: {per_state: 3, equipment: 0.2}
+SWE: {divisions: 0, equipment: 1.0}
+FIN: {divisions: 0, equipment: 1.0}
+SOV: {divisions: 0, equipment: 1.0}
+DEN: {divisions: 0, equipment: 1.0}

@@ -1,0 +1,131 @@
+add_namespace = nwc_sweden
+
+# Aid begins
+country_event = {
+	id = nwc_sweden.1
+	immediate = { log = "NWC event nwc_sweden.1 fired" }
+	title = nwc_sweden.1.t
+	desc = nwc_sweden.1.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_sweden.1.a
+	}
+}
+
+# Sweden intervenes for the Government
+country_event = {
+	id = nwc_sweden.2
+	immediate = { log = "NWC event nwc_sweden.2 fired" }
+	title = nwc_sweden.2.t
+	desc = nwc_sweden.2.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_sweden.2.a
+		SWE = {
+			every_country = {
+				limit = { has_war_with = NOR }
+				SWE = { add_to_war = { targeted_alliance = NOR enemy = PREV hostility_reason = asked_to_join } }
+			}
+		}
+	}
+}
+
+# Sweden warns
+country_event = {
+	id = nwc_sweden.3
+	immediate = { log = "NWC event nwc_sweden.3 fired" }
+	title = nwc_sweden.3.t
+	desc = nwc_sweden.3.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_sweden.3.a
+	}
+}
+
+# Swedish puppet takeover: game over for the Government
+country_event = {
+	id = nwc_sweden.4
+	immediate = { log = "NWC event nwc_sweden.4 fired" }
+	title = nwc_sweden.4.t
+	desc = nwc_sweden.4.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_sweden.4.a
+		SWE = { puppet = NOR }
+		set_global_flag = nwc_game_over_sweden
+		news_event = { id = nwc_news.20 }
+		clr_global_flag = nwc_swe_stance_neutral
+		clr_global_flag = nwc_swe_stance_aid
+		clr_global_flag = nwc_swe_stance_intervene
+		set_global_flag = nwc_swe_stance_puppet
+	}
+}
+
+# Swedish-sponsored person offered
+country_event = {
+	id = nwc_sweden.5
+	immediate = { log = "NWC event nwc_sweden.5 fired" }
+	title = nwc_sweden.5.t
+	desc = nwc_sweden.5.d
+	picture = GFX_report_event_generic_read_write
+	trigger = {
+		tag = NOR
+		check_variable = { global.nwc_swe_opinion >= 40 }
+		nwc_gov_alive = yes
+		nwc_swe_advisor_slots_left = yes
+	}
+	mean_time_to_happen = { days = 180 }
+	option = {
+		name = nwc_sweden.5.a
+		if = {
+			limit = { NOT = { has_idea = nwc_swe_advisor_1 } }
+			add_ideas = nwc_swe_advisor_1
+		}
+		else_if = {
+			limit = { NOT = { has_idea = nwc_swe_advisor_2 } }
+			add_ideas = nwc_swe_advisor_2
+		}
+		else = { add_ideas = nwc_swe_advisor_3 }
+		set_temp_variable = { nwc_swe_delta = 8 }
+		nwc_swe_opinion_add = yes
+	}
+	option = {
+		name = nwc_sweden.5.b
+		set_temp_variable = { nwc_swe_delta = -3 }
+		nwc_swe_opinion_add = yes
+	}
+}
+
+# Sweden opposes the Danish union (not a game over)
+country_event = {
+	id = nwc_sweden.6
+	immediate = { log = "NWC event nwc_sweden.6 fired" }
+	title = nwc_sweden.6.t
+	desc = nwc_sweden.6.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_sweden.6.a
+		SWE = {
+			declare_war_on = { target = NOR type = annex_everything }
+			declare_war_on = { target = DEN type = topple_government }
+		}
+	}
+}
+
+# Norway falls under Swedish rule
+news_event = {
+	id = nwc_news.20
+	immediate = { log = "NWC event nwc_news.20 fired" }
+	title = nwc_news.20.t
+	desc = nwc_news.20.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_news.20.a
+	}
+}

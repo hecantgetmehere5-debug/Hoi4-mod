@@ -2,7 +2,7 @@ PY := .venv/bin/python
 HOI4 ?= $(HOME)/Library/Application Support/Steam/steamapps/common/Hearts of Iron IV
 MODDIR ?= $(HOME)/Documents/Paradox Interactive/Hearts of Iron IV/mod
 
-.PHONY: setup fetch build test install
+.PHONY: setup fetch build test install lint
 
 setup:
 	python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
@@ -18,3 +18,6 @@ test:
 
 install:
 	$(PY) -m tools.build install --moddir "$(MODDIR)"
+
+lint:
+	$(PY) -m tools.lint_content

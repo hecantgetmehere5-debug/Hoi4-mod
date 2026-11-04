@@ -1,0 +1,22 @@
+focus_tree = {
+	id = nwc_x_tree
+	country = { factor = 0 modifier = { add = 10 tag = NOR } }
+	focus = {
+		id = nwc_x_focus
+		x = 0 y = 0 cost = 10
+		mutually_exclusive = { focus = nwc_y_focus }
+		completion_reward = { set_country_flag = nwc_cflag nwc_x_effect = yes add_ideas = nwc_q_idea }
+	}
+	focus = {
+		id = nwc_y_focus
+		x = 2 y = 0 cost = 10
+		mutually_exclusive = { focus = nwc_x_focus }
+		available = { nwc_x_trigger = yes has_country_flag = nwc_cflag }
+	}
+	focus = {
+		id = nwc_z_focus
+		x = 0 y = 1 cost = 10
+		prerequisite = { focus = nwc_x_focus }
+		completion_reward = { country_event = { id = nwc_x.1 days = 3 } }
+	}
+}

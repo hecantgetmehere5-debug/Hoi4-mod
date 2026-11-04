@@ -1,0 +1,19 @@
+ideas = {
+	country = {
+		nwc_swe_advisor_1 = {
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = { stability_factor = 0.03 }
+		}
+		nwc_swe_advisor_2 = {
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = { political_power_gain = 0.1 }
+		}
+		nwc_swe_advisor_3 = {
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = { war_support_factor = 0.03 }
+		}
+	}
+}

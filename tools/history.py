@@ -10,7 +10,8 @@ START_DATE = "2030.1.1.12"
 END_DATE = "2080.1.1.1"
 MOD_NAME = "Norwegian Civil War 2030"
 # Tags this mod shares with vanilla, and vanilla's country file for each (common/country_tags/00_countries.txt).
-VANILLA_COUNTRY_FILES = {"NOR": "Norway", "SWE": "Sweden", "FIN": "Finland", "SOV": "Soviet Union", "DEN": "Denmark"}
+VANILLA_COUNTRY_FILES = {"NOR": "Norway", "SWE": "Sweden", "FIN": "Finland", "SOV": "Soviet Union", "DEN": "Denmark",
+                         "EST": "Estonia", "LAT": "Latvia", "LIT": "Lithuania", "ICE": "Iceland", "SCO": "Scotland"}
 SUPPORTED_VERSION = "1.19.*"
 STARTING_TECH = ("infantry_weapons", "infantry_weapons1", "tech_support", "tech_engineers", "tech_recon",
                  "gw_artillery", "interwar_antiair")
@@ -121,6 +122,43 @@ def state_files() -> dict[str, str]:
     return out
 
 
+def load_armies() -> dict[str, dict]:
+    return geo._yaml("armies.yaml")
+
+
+def division_locations(tag: str) -> list[int]:
+    """Land provinces for the tag's starting divisions: VP provinces first, spread over its states."""
+    army = load_armies().get(tag, {})
+    sp = mapfiles.state_provinces()
+    vps = mapfiles.victory_points()
+    states = [s.key for s in geo.load_states() if geo.state_owner(s) == tag and not mapfiles.is_wasteland(s.key)]
+    if not states:
+        return []
+    capital = geo.load_factions()[tag].capital
+    states.sort(key=lambda k: k != capital)
+    # Per state: VP province first, then the rest in order.
+    queues = {k: [vps[k]] + [p for p in sp[k] if p != vps[k]] for k in states}
+    if "per_state" in army:
+        return [queues[k][i % len(queues[k])] for k in states for i in range(army["per_state"])]
+    n = army.get("divisions", 0)
+    out = []
+    for i in range(n):
+        k = states[i % len(states)]
+        q = queues[k]
+        out.append(q[(i // len(states)) % len(q)])
+    return out
+
+
+def units_text(tag: str) -> str:
+    factor = load_armies().get(tag, {}).get("equipment", 1.0)
+    divs = [f"\tdivision = {{\n\t\tdivision_name = {{ is_name_ordered = yes name_order = {i} }}\n"
+            f"\t\tlocation = {p}\n\t\tdivision_template = \"Infantry Division\"\n"
+            f"\t\tstart_experience_factor = 0.2\n\t\tstart_equipment_factor = {factor}\n\t}}"
+            for i, p in enumerate(division_locations(tag), 1)]
+    body = "units = {\n" + "\n".join(divs) + "\n}\n" if divs else ""
+    return DIVISION_TEMPLATE + body
+
+
 def _state_text(sid, manpower, category, history, provs, impassable) -> str:
     extra = "\timpassable = yes\n" if impassable else ""
     return (f"state = {{\n\tid = {sid}\n\tname = \"NWC_STATE_{sid}\"\n\tmanpower = {manpower}\n"
@@ -138,6 +176,9 @@ IDEOLOGY_SPLITS = {
 
 def country_history(f: geo.Faction, puppets: list[str]) -> str:
     sid = mapfiles.state_ids()
+    if f.spawn:
+        # Released mid-game by an event, which sets its government; it starts with no land or army.
+        return f"capital = {sid[f.capital]}\n" + "set_technology = {\n" + "".join(f"\t{t} = 1\n" for t in STARTING_TECH) + "}\n"
     pops = IDEOLOGY_SPLITS[f.ideology]
     lines = [f"capital = {sid[f.capital]}", "set_research_slots = 3",
              "set_stability = 0.4", "set_war_support = 0.6",
@@ -149,7 +190,10 @@ def country_history(f: geo.Faction, puppets: list[str]) -> str:
         lines.append(f"set_autonomy = {{ target = {p} autonomous_state = autonomy_puppet }}")
     # Every vanilla country starts with laws, base technologies, convoys and an order of battle.
     lines += [f'oob = "{f.tag}_2030"', "set_convoys = 10",
-              "add_ideas = {", "\tvolunteer_only", "\tcivilian_economy", "\texport_focus", "}",
+              "add_ideas = {", "\tvolunteer_only", "\tcivilian_economy", "\texport_focus"]
+    if idea := load_armies().get(f.tag, {}).get("economy_idea"):
+        lines.append(f"\t{idea}")
+    lines += ["}",
               "set_technology = {"] + [f"\t{t} = 1" for t in STARTING_TECH] + ["}"]
     return "\n".join(lines) + "\n"
 
@@ -184,10 +228,11 @@ def write_countries(mod: Path) -> None:
             f"graphical_culture = western_european_gfx\ngraphical_culture_2d = western_european_2d\n"
             f"color = rgb {{ {r} {g} {b} }}\n", encoding="utf-8")
         puppets = [t for t, o in factions.items() if o.puppet_of == tag]
-        (hist / f"{tag} - {name}.txt").write_text(country_history(f, puppets), encoding="utf-8")
-        (units / f"{tag}_2030.txt").write_text(
-            "# Divisions come with the military project; vanilla always defines a template.\n" + DIVISION_TEMPLATE,
-            encoding="utf-8")
+        # A reused spawn tag takes vanilla's exact history file name, so it replaces vanilla's file.
+        hist_name = VANILLA_COUNTRY_FILES[tag] if f.spawn and tag in VANILLA_COUNTRY_FILES else name
+        (hist / f"{tag} - {hist_name}.txt").write_text(country_history(f, puppets), encoding="utf-8")
+        if not f.spawn:
+            (units / f"{tag}_2030.txt").write_text(units_text(tag), encoding="utf-8")
     # Vanilla countries this map leaves out still need a history file; they start with no states.
     # Vanilla gives even countries that start without land a capital; a game won't start without one.
     absent_capital = mapfiles.state_ids()[factions["FIN"].capital]
@@ -240,7 +285,7 @@ def write_bookmark_and_defines(mod: Path) -> None:
     factions = geo.load_factions()
     d = mod / "common" / "bookmarks"
     d.mkdir(parents=True, exist_ok=True)
-    playable = [t for t, f in factions.items() if not f.background and t != "SWE"]
+    playable = [t for t, f in factions.items() if not f.background and not f.spawn and t != "SWE"]
     countries = "\n".join(f"\t\t{t} = {{ }}" for t in playable)
     (d / "nwc_2030.txt").write_text(
         "bookmarks = {\n\tbookmark = {\n\t\tname = \"NWC_BOOKMARK\"\n\t\tdesc = \"NWC_BOOKMARK_DESC\"\n"

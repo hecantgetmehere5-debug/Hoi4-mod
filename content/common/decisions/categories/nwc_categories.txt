@@ -1,0 +1,5 @@
+nwc_storting_category = {
+	icon = generic_political_discourse
+	allowed = { original_tag = NOR }
+	visible = { nwc_storting_active = yes nwc_gov_alive = yes }
+}

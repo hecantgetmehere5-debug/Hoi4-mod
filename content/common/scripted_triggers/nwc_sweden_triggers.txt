@@ -1,0 +1,12 @@
+# False once Sweden has taken over Norway; locks every NOR focus and decision category.
+nwc_gov_alive = {
+	NOT = { has_global_flag = nwc_game_over_sweden }
+}
+
+nwc_swe_advisor_slots_left = {
+	NOT = {
+		has_idea = nwc_swe_advisor_1
+		has_idea = nwc_swe_advisor_2
+		has_idea = nwc_swe_advisor_3
+	}
+}

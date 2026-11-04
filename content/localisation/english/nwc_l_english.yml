@@ -42,3 +42,5 @@
  nwc_news.4.t:0 "The Great Norwegian War"
  nwc_news.4.d:0 "Every faction in Norway now takes up arms."
  nwc_news.4.a:0 "War."
+ nwc_civilian_boom:0 "Civilian Boom"
+ nwc_civilian_boom_desc:0 "Kept out of the fighting, our economy grows."

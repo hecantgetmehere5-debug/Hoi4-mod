@@ -1,4 +1,3 @@
-# Divisions come with the military project; vanilla always defines a template.
 division_template = {
 	name = "Infantry Division"
 	regiments = {

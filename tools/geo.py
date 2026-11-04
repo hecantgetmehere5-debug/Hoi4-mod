@@ -60,6 +60,8 @@ class Faction:
     capital: str
     puppet_of: str | None = None
     background: bool = False
+    spawn: bool = False  # Owns no states at start; released by events.
+    cantons: tuple[str, ...] = ()  # NCL states this tag receives when released.
 
 
 def _yaml(name):
@@ -87,7 +89,8 @@ def load_states() -> list[State]:
 
 def load_factions() -> dict[str, Faction]:
     return {t: Faction(t, v["name"], v["adjective"], tuple(v["colour"]), v["ideology"],
-                       v["capital"], v.get("puppet_of"), v.get("background", False)) for t, v in _yaml("factions.yaml").items()}
+                       v["capital"], v.get("puppet_of"), v.get("background", False),
+                       v.get("spawn", False), tuple(v.get("cantons", ()))) for t, v in _yaml("factions.yaml").items()}
 
 
 def kommune_owner(code: str) -> str:

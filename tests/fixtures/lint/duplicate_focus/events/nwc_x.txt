@@ -1,0 +1,15 @@
+add_namespace = nwc_x
+country_event = {
+	id = nwc_x.1
+	title = nwc_x.1.t
+	desc = nwc_x.1.d
+	is_triggered_only = yes
+	option = { name = nwc_x.1.a @STATE:oslo@ = { add_core_of = NOR } }
+}
+news_event = {
+	id = nwc_x.2
+	title = nwc_x.2.t
+	desc = nwc_x.2.d
+	is_triggered_only = yes
+	option = { name = nwc_x.2.a }
+}

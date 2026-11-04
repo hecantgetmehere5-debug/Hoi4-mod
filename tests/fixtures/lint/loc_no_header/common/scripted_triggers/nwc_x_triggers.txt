@@ -1,0 +1,3 @@
+nwc_x_trigger = {
+	always = yes
+}

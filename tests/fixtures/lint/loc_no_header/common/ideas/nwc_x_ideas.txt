@@ -1,0 +1,5 @@
+ideas = {
+	country = {
+		nwc_x_idea = { modifier = { stability_factor = 0.1 } }
+	}
+}

@@ -5,4 +5,7 @@ on_actions = {
 			NOR = { nwc_game_start = yes }
 		}
 	}
+	on_monthly_NOR = {
+		effect = { nwc_sweden_monthly = yes }
+	}
 }

@@ -50,6 +50,8 @@ nwc_game_start = {
 		}
 		nwc_update_fortress = yes
 		ANA = { add_ideas = nwc_ana_guerrilla }
+		NOR = { nwc_storting_init = yes }
+		NOR = { nwc_sweden_init = yes }
 		NOR = { declare_war_on = { target = JNP type = annex_everything } }
 		WFR = { add_to_war = { targeted_alliance = NOR enemy = JNP hostility_reason = asked_to_join } }
 		ANA = {
