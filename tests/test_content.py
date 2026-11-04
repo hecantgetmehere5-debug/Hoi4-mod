@@ -290,14 +290,13 @@ def test_puppet_is_game_over():
 
 def test_swedish_bills_scaled():
     effects = _parsed("common/scripted_effects/nwc_sweden_effects.txt")
-    body = _get(effects, "nwc_bill_swe_opinion_effect")
-    assert body is not None
-    deltas = [_get(b, "set_temp_variable") for b in _blocks(body) if _get(b, "set_temp_variable")]
-    assert [d[0] for d in deltas] == [("nwc_swe_delta", "=", "10"), ("nwc_swe_delta", "=", "5"),
-                                      ("nwc_swe_delta", "=", "2.5")]
-    assert ("nwc_swe_opinion_add", "=", "yes") in body
     for bill in ("nwc_bill_swe_trade", "nwc_bill_swe_border", "nwc_bill_swe_defence"):
-        assert _get(effects, bill + "_effect") == [("nwc_bill_swe_opinion_effect", "=", "yes")], bill
+        body = _get(effects, bill + "_effect")
+        assert body is not None, bill
+        deltas = [_get(b, "set_temp_variable") for b in _blocks(body) if _get(b, "set_temp_variable")]
+        assert [d[0] for d in deltas] == [("nwc_swe_delta", "=", "10"), ("nwc_swe_delta", "=", "5"),
+                                          ("nwc_swe_delta", "=", "3")], bill
+        assert ("nwc_swe_opinion_add", "=", "yes") in body, bill
 
 
 def test_swedish_displeased_band_clears_stance():

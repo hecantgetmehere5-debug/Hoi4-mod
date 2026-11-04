@@ -194,9 +194,24 @@ def _regions():
     sea = (states == 0) & ~lakes
     # Water cut off from the open ocean (inner fjord basins) is a lake in HOI4, not sea.
     sea_lab, _ = ndimage.label(sea)
-    ocean = {int(np.bincount(sea_lab[sea_lab > 0]).argmax())}
-    # Water that leaves the map (the Baltic past the bottom edge) is open sea too.
-    ocean |= set(np.unique(np.concatenate([sea_lab[0], sea_lab[-1], sea_lab[:, 0], sea_lab[:, -1]])).tolist())
+    # The map wraps east-west, so water on the left and right edges joins across the seam
+    # (that is how the Baltic reaches the ocean). Top and bottom edges do not wrap.
+    join = {}
+
+    def root(a):
+        while join.get(a, a) != a:
+            a = join[a]
+        return a
+
+    for a, b in zip(sea_lab[:, 0].tolist(), sea_lab[:, -1].tolist()):
+        if a and b and root(a) != root(b):
+            join[root(a)] = root(b)
+    sizes = np.bincount(sea_lab.ravel())
+    total = {}
+    for l in range(1, len(sizes)):
+        total[root(l)] = total.get(root(l), 0) + int(sizes[l])
+    big = max(total, key=total.get)
+    ocean = {l for l in range(1, len(sizes)) if root(l) == big}
     enclosed = sea & ~np.isin(sea_lab, sorted(ocean - {0}))
     lakes = lakes | enclosed
     code[sea & ~enclosed] = sea_code
@@ -273,28 +288,35 @@ def build_provinces(registry: list[dict] | None = None) -> ProvinceMap:
     old = [tuple(r["seed"]) for r in old_by_region.get(SEA, []) if sea[r["seed"][0], r["seed"][1]]]
     pts = _ensure_component_seeds(sea, _sample(sea, sp, SEA, old), SEA)
     seeds += [(SEA, "sea", p, sea_c) for p in pts]
-    # Lakes: one province per lake, seeded where the old seed was if still a lake.
+    # Lakes: one province per lake (more if its box is too wide), keeping old seeds still in it.
     old_lakes = [tuple(r["seed"]) for r in old_by_region.get("lake", [])]
     for c, (key, kind, _, _) in meta.items():
         if kind != "lake":
             continue
         mask = code == c
-        keep = [s for s in old_lakes if mask[s]]
+        keep = sorted({s for s in old_lakes if mask[s]})
         if keep:
-            seeds.append(("lake", "lake", keep[0], c))
+            seeds += [("lake", "lake", s, c) for s in keep]
         else:
             ys, xs = np.nonzero(mask)
             seeds.append(("lake", "lake", (int(ys[len(ys) // 2]), int(xs[len(xs) // 2])), c))
 
     # Nearest seed of the same region, then repair any piece cut off from its seed.
-    tmp = _voronoi(code, seeds)
-    tmp = _merge_small(tmp, code)
-    for _ in range(6):
-        extra = _split_seeds(tmp, seeds)
-        if not extra:
-            break
-        seeds = seeds + extra
+    # Split boxes that are too wide and drop seeds whose province was merged away, until the
+    # map is exactly what its own surviving seeds give. Those seeds go into the registry, so a
+    # rebuild from the registry reproduces this map. A fixed seed order keeps Voronoi ties stable.
+    seeds = sorted(set(seeds), key=lambda s: (s[3], s[2]))
+    for _ in range(40):
         tmp = _merge_small(_voronoi(code, seeds), code)
+        extra = _split_seeds(tmp, seeds)
+        if extra:
+            seeds = sorted(set(seeds) | set(extra), key=lambda s: (s[3], s[2]))
+            continue
+        alive = np.unique(tmp)
+        alive = alive[alive > 0]
+        if len(alive) == len(seeds):
+            break
+        seeds = [seeds[i - 1] for i in alive]
     tmp = _remove_x_crossings(tmp, code)
     alive = np.unique(tmp)
     alive = alive[alive > 0]

@@ -528,7 +528,7 @@
 527;46;225;12;land;false;hills;1
 528;145;252;157;land;true;hills;1
 529;150;204;11;land;true;hills;1
-530;81;69;238;land;true;plains;1
+530;81;69;238;land;true;forest;1
 531;86;117;120;land;true;forest;1
 532;95;36;194;land;true;forest;1
 533;88;20;84;land;true;plains;1
@@ -923,7 +923,7 @@
 922;94;236;231;land;false;hills;1
 923;89;220;113;land;false;hills;1
 924;61;73;210;land;false;hills;1
-925;58;121;68;land;true;hills;1
+925;58;121;68;land;true;forest;1
 926;51;40;254;land;true;forest;1
 927;52;24;104;land;false;mountain;1
 928;139;5;249;land;false;hills;1
@@ -1154,7 +1154,7 @@
 1153;194;167;221;land;true;hills;1
 1154;166;50;126;land;false;mountain;1
 1155;161;2;232;land;false;mountain;1
-1156;168;83;82;land;true;hills;1
+1156;168;83;82;land;true;mountain;1
 1157;175;99;196;land;true;forest;1
 1158;16;126;85;land;false;mountain;1
 1159;23;78;195;land;true;hills;1
@@ -1178,7 +1178,7 @@
 1177;153;1;70;land;false;hills;1
 1178;38;28;215;land;false;mountain;1
 1179;33;44;65;land;true;hills;1
-1180;101;136;42;land;true;mountain;1
+1180;101;136;42;land;true;hills;1
 1181;98;184;188;land;true;hills;1
 1182;107;233;6;land;true;hills;1
 1183;108;217;144;land;true;hills;1
@@ -2402,7 +2402,7 @@
 2401;197;95;177;sea;true;ocean;0
 2402;204;14;11;sea;true;ocean;0
 2403;203;62;157;land;false;forest;1
-2404;175;171;62;land;true;plains;1
+2404;175;171;62;land;false;plains;1
 2405;168;155;168;sea;true;ocean;0
 2406;161;202;18;sea;true;ocean;0
 2407;166;250;132;sea;true;ocean;0
@@ -2862,7 +2862,7 @@
 2861;133;1;83;land;false;plains;1
 2862;140;80;233;land;false;plains;1
 2863;139;96;127;land;false;plains;1
-2864;239;245;220;land;true;plains;1
+2864;239;245;220;land;false;plains;1
 2865;232;197;74;land;false;plains;1
 2866;225;148;240;land;false;plains;1
 2867;230;164;102;land;false;forest;1
@@ -3838,8 +3838,8 @@
 3837;45;55;70;sea;false;ocean;0
 3838;146;42;215;sea;true;ocean;0
 3839;149;26;65;sea;true;ocean;0
-3840;8;52;34;sea;true;ocean;0
-3841;15;4;180;sea;true;ocean;0
+3840;8;52;34;lake;false;lakes;0
+3841;15;4;180;lake;false;lakes;0
 3842;6;85;14;sea;false;ocean;0
 3843;1;101;152;sea;false;ocean;0
 3844;101;240;59;sea;false;ocean;0

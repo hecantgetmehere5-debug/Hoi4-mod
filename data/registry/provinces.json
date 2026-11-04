@@ -53748,8 +53748,8 @@
 },
 {
 "id": 3840,
-"region": "sea",
-"kind": "sea",
+"region": "lake",
+"kind": "lake",
 "seed": [
 4095,
 1456
@@ -53762,8 +53762,8 @@
 },
 {
 "id": 3841,
-"region": "sea",
-"kind": "sea",
+"region": "lake",
+"kind": "lake",
 "seed": [
 4095,
 1538

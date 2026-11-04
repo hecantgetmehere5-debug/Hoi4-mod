@@ -108,8 +108,8 @@ nwc_sweden_monthly = {
 	}
 }
 
-# Swedish bills: +10 opinion, halved per amendment. Shared by every Swedish bill.
-nwc_bill_swe_opinion_effect = {
+# Swedish bills: +10 / 5 / 3 opinion by amendment tier.
+nwc_bill_swe_trade_effect = {
 	if = {
 		limit = { check_variable = { nwc_bill_amend = 0 } }
 		set_temp_variable = { nwc_swe_delta = 10 }
@@ -119,11 +119,37 @@ nwc_bill_swe_opinion_effect = {
 		set_temp_variable = { nwc_swe_delta = 5 }
 	}
 	else = {
-		set_temp_variable = { nwc_swe_delta = 2.5 }
+		set_temp_variable = { nwc_swe_delta = 3 }
 	}
 	nwc_swe_opinion_add = yes
 }
 
-nwc_bill_swe_trade_effect = { nwc_bill_swe_opinion_effect = yes }
-nwc_bill_swe_border_effect = { nwc_bill_swe_opinion_effect = yes }
-nwc_bill_swe_defence_effect = { nwc_bill_swe_opinion_effect = yes }
+nwc_bill_swe_border_effect = {
+	if = {
+		limit = { check_variable = { nwc_bill_amend = 0 } }
+		set_temp_variable = { nwc_swe_delta = 10 }
+	}
+	else_if = {
+		limit = { check_variable = { nwc_bill_amend = 1 } }
+		set_temp_variable = { nwc_swe_delta = 5 }
+	}
+	else = {
+		set_temp_variable = { nwc_swe_delta = 3 }
+	}
+	nwc_swe_opinion_add = yes
+}
+
+nwc_bill_swe_defence_effect = {
+	if = {
+		limit = { check_variable = { nwc_bill_amend = 0 } }
+		set_temp_variable = { nwc_swe_delta = 10 }
+	}
+	else_if = {
+		limit = { check_variable = { nwc_bill_amend = 1 } }
+		set_temp_variable = { nwc_swe_delta = 5 }
+	}
+	else = {
+		set_temp_variable = { nwc_swe_delta = 3 }
+	}
+	nwc_swe_opinion_add = yes
+}
