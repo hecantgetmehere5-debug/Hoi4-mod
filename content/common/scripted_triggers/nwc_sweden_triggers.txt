@@ -4,5 +4,9 @@ nwc_gov_alive = {
 }
 
 nwc_swe_advisor_slots_left = {
-	NOT = { has_idea = nwc_swe_advisor_3 }
+	NOT = {
+		has_idea = nwc_swe_advisor_1
+		has_idea = nwc_swe_advisor_2
+		has_idea = nwc_swe_advisor_3
+	}
 }

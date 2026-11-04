@@ -290,10 +290,22 @@ def test_puppet_is_game_over():
 
 def test_swedish_bills_scaled():
     effects = _parsed("common/scripted_effects/nwc_sweden_effects.txt")
+    body = _get(effects, "nwc_bill_swe_opinion_effect")
+    assert body is not None
+    deltas = [_get(b, "set_temp_variable") for b in _blocks(body) if _get(b, "set_temp_variable")]
+    assert [d[0] for d in deltas] == [("nwc_swe_delta", "=", "10"), ("nwc_swe_delta", "=", "5"),
+                                      ("nwc_swe_delta", "=", "2.5")]
+    assert ("nwc_swe_opinion_add", "=", "yes") in body
     for bill in ("nwc_bill_swe_trade", "nwc_bill_swe_border", "nwc_bill_swe_defence"):
-        body = _get(effects, bill + "_effect")
-        assert body is not None, bill
-        deltas = [_get(b, "set_temp_variable") for b in _blocks(body) if _get(b, "set_temp_variable")]
-        assert [d[0] for d in deltas] == [("nwc_swe_delta", "=", "10"), ("nwc_swe_delta", "=", "5"),
-                                          ("nwc_swe_delta", "=", "2.5")]
-        assert ("nwc_swe_opinion_add", "=", "yes") in body
+        assert _get(effects, bill + "_effect") == [("nwc_bill_swe_opinion_effect", "=", "yes")], bill
+
+
+def test_swedish_displeased_band_clears_stance():
+    effects = _parsed("common/scripted_effects/nwc_sweden_effects.txt")
+    gov = _get(_get(effects, "nwc_sweden_monthly"), "else_if")
+    displeased = _get(gov, "if")
+    assert ("check_variable", "=", [("global.nwc_swe_opinion", "<", "20")]) in _get(displeased, "limit") \
+        or any("20" in str(x) for x in _get(displeased, "limit"))
+    for flag in ("nwc_swe_stance_aid", "nwc_swe_stance_intervene"):
+        assert ("clr_global_flag", "=", flag) in displeased
+    assert ("set_global_flag", "=", "nwc_swe_stance_neutral") in displeased
