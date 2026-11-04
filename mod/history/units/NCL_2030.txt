@@ -1,4 +1,3 @@
-# Divisions come with the military project; vanilla always defines a template.
 division_template = {
 	name = "Infantry Division"
 	regiments = {
@@ -6,5 +5,63 @@ division_template = {
 		infantry = { x = 0 y = 1 }
 		infantry = { x = 1 y = 0 }
 		infantry = { x = 1 y = 1 }
+	}
+}
+units = {
+	division = {
+		division_name = { is_name_ordered = yes name_order = 1 }
+		location = 115
+		division_template = "Infantry Division"
+		start_experience_factor = 0.2
+		start_equipment_factor = 1.0
+	}
+	division = {
+		division_name = { is_name_ordered = yes name_order = 2 }
+		location = 120
+		division_template = "Infantry Division"
+		start_experience_factor = 0.2
+		start_equipment_factor = 1.0
+	}
+	division = {
+		division_name = { is_name_ordered = yes name_order = 3 }
+		location = 131
+		division_template = "Infantry Division"
+		start_experience_factor = 0.2
+		start_equipment_factor = 1.0
+	}
+	division = {
+		division_name = { is_name_ordered = yes name_order = 4 }
+		location = 137
+		division_template = "Infantry Division"
+		start_experience_factor = 0.2
+		start_equipment_factor = 1.0
+	}
+	division = {
+		division_name = { is_name_ordered = yes name_order = 5 }
+		location = 141
+		division_template = "Infantry Division"
+		start_experience_factor = 0.2
+		start_equipment_factor = 1.0
+	}
+	division = {
+		division_name = { is_name_ordered = yes name_order = 6 }
+		location = 162
+		division_template = "Infantry Division"
+		start_experience_factor = 0.2
+		start_equipment_factor = 1.0
+	}
+	division = {
+		division_name = { is_name_ordered = yes name_order = 7 }
+		location = 165
+		division_template = "Infantry Division"
+		start_experience_factor = 0.2
+		start_equipment_factor = 1.0
+	}
+	division = {
+		division_name = { is_name_ordered = yes name_order = 8 }
+		location = 171
+		division_template = "Infantry Division"
+		start_experience_factor = 0.2
+		start_equipment_factor = 1.0
 	}
 }

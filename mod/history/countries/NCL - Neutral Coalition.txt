@@ -20,6 +20,7 @@ add_ideas = {
 	volunteer_only
 	civilian_economy
 	export_focus
+	nwc_civilian_boom
 }
 set_technology = {
 	infantry_weapons = 1

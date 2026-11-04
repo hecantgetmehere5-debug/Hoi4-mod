@@ -121,6 +121,43 @@ def state_files() -> dict[str, str]:
     return out
 
 
+def load_armies() -> dict[str, dict]:
+    return geo._yaml("armies.yaml")
+
+
+def division_locations(tag: str) -> list[int]:
+    """Land provinces for the tag's starting divisions: VP provinces first, spread over its states."""
+    army = load_armies().get(tag, {})
+    sp = mapfiles.state_provinces()
+    vps = mapfiles.victory_points()
+    states = [s.key for s in geo.load_states() if geo.state_owner(s) == tag and not mapfiles.is_wasteland(s.key)]
+    if not states:
+        return []
+    capital = geo.load_factions()[tag].capital
+    states.sort(key=lambda k: k != capital)
+    # Per state: VP province first, then the rest in order.
+    queues = {k: [vps[k]] + [p for p in sp[k] if p != vps[k]] for k in states}
+    if "per_state" in army:
+        return [queues[k][i % len(queues[k])] for k in states for i in range(army["per_state"])]
+    n = army.get("divisions", 0)
+    out = []
+    for i in range(n):
+        k = states[i % len(states)]
+        q = queues[k]
+        out.append(q[(i // len(states)) % len(q)])
+    return out
+
+
+def units_text(tag: str) -> str:
+    factor = load_armies().get(tag, {}).get("equipment", 1.0)
+    divs = [f"\tdivision = {{\n\t\tdivision_name = {{ is_name_ordered = yes name_order = {i} }}\n"
+            f"\t\tlocation = {p}\n\t\tdivision_template = \"Infantry Division\"\n"
+            f"\t\tstart_experience_factor = 0.2\n\t\tstart_equipment_factor = {factor}\n\t}}"
+            for i, p in enumerate(division_locations(tag), 1)]
+    body = "units = {\n" + "\n".join(divs) + "\n}\n" if divs else ""
+    return DIVISION_TEMPLATE + body
+
+
 def _state_text(sid, manpower, category, history, provs, impassable) -> str:
     extra = "\timpassable = yes\n" if impassable else ""
     return (f"state = {{\n\tid = {sid}\n\tname = \"NWC_STATE_{sid}\"\n\tmanpower = {manpower}\n"
@@ -149,7 +186,10 @@ def country_history(f: geo.Faction, puppets: list[str]) -> str:
         lines.append(f"set_autonomy = {{ target = {p} autonomous_state = autonomy_puppet }}")
     # Every vanilla country starts with laws, base technologies, convoys and an order of battle.
     lines += [f'oob = "{f.tag}_2030"', "set_convoys = 10",
-              "add_ideas = {", "\tvolunteer_only", "\tcivilian_economy", "\texport_focus", "}",
+              "add_ideas = {", "\tvolunteer_only", "\tcivilian_economy", "\texport_focus"]
+    if idea := load_armies().get(f.tag, {}).get("economy_idea"):
+        lines.append(f"\t{idea}")
+    lines += ["}",
               "set_technology = {"] + [f"\t{t} = 1" for t in STARTING_TECH] + ["}"]
     return "\n".join(lines) + "\n"
 
@@ -186,7 +226,7 @@ def write_countries(mod: Path) -> None:
         puppets = [t for t, o in factions.items() if o.puppet_of == tag]
         (hist / f"{tag} - {name}.txt").write_text(country_history(f, puppets), encoding="utf-8")
         (units / f"{tag}_2030.txt").write_text(
-            "# Divisions come with the military project; vanilla always defines a template.\n" + DIVISION_TEMPLATE,
+            units_text(tag),
             encoding="utf-8")
     # Vanilla countries this map leaves out still need a history file; they start with no states.
     # Vanilla gives even countries that start without land a capital; a game won't start without one.

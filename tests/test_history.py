@@ -96,3 +96,47 @@ def test_tutorial_has_no_vanilla_map_ids(mod):
     """Vanilla's tutorial moves the camera to vanilla state 550; any state/province id there crashes game start."""
     text = (mod / "tutorial" / "tutorial.txt").read_text()
     assert not re.search(r"\b(state|target|direction_pointer|highlight_\w+)\s*=", text)
+
+
+EXPECTED_DIVISIONS = {"NOR": 24, "WFR": 20, "FRP": 22, "KRF": 13, "SOC": 13, "NRM": 13, "SAP": 13, "ABI": 13,
+                      "NCL": 8, "BRG": 0, "JNP": 5, "SWE": 0, "FIN": 0, "SOV": 0, "DEN": 0}
+
+
+def _units(mod, tag):
+    return (mod / "history" / "units" / f"{tag}_2030.txt").read_text()
+
+
+def _locations(text):
+    return [int(x) for x in re.findall(r"location = (\d+)", text)]
+
+
+def test_division_counts_per_tag(mod):
+    for tag, n in EXPECTED_DIVISIONS.items():
+        assert len(_locations(_units(mod, tag))) == n, tag
+
+
+def test_ana_has_three_per_pocket_at_low_equipment(mod):
+    text = _units(mod, "ANA")
+    sp = mapfiles.state_provinces()
+    pockets = [s.key for s in geo.load_states() if geo.state_owner(s) == "ANA"]
+    locs = _locations(text)
+    assert len(locs) == 3 * len(pockets)
+    for k in pockets:
+        assert sum(p in sp[k] for p in locs) == 3, k
+    assert set(re.findall(r"start_equipment_factor = ([\d.]+)", text)) == {"0.2"}
+
+
+def test_division_locations_are_owned_land_not_wasteland(mod):
+    sp = mapfiles.state_provinces()
+    owner_of = {p: geo.state_owner(s) for s in geo.load_states() for p in sp[s.key]}
+    waste = {p for k, v in sp.items() if mapfiles.is_wasteland(k) for p in v}
+    for tag in geo.load_factions():
+        for p in _locations(_units(mod, tag)):
+            assert owner_of.get(p) == tag, (tag, p)
+            assert p not in waste
+
+
+def test_ncl_and_brg_get_economy_idea(mod):
+    for tag in ("NCL", "BRG"):
+        text = next((mod / "history" / "countries").glob(f"{tag} - *.txt")).read_text()
+        assert "\tnwc_civilian_boom" in text
