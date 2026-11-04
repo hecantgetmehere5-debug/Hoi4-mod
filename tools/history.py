@@ -250,7 +250,9 @@ def write_bookmark_and_defines(mod: Path) -> None:
     dd = mod / "common" / "defines"
     dd.mkdir(parents=True, exist_ok=True)
     (dd / "00_nwc_defines.lua").write_text(
-        f'NDefines.NGame.START_DATE = "{START_DATE}"\nNDefines.NGame.END_DATE = "{END_DATE}"\n', encoding="utf-8")
+        f'NDefines.NGame.START_DATE = "{START_DATE}"\nNDefines.NGame.END_DATE = "{END_DATE}"\n'
+        '-- Country the game plays as when launched with -hands_off (used by tools/launch_check.sh).\n'
+        'NDefines.NGame.HANDS_OFF_START_TAG = "NOR"\n', encoding="utf-8")
 
 
 def localisation() -> str:

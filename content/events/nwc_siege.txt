@@ -1,0 +1,238 @@
+add_namespace = nwc_siege
+add_namespace = nwc_news
+
+country_event = {
+	id = nwc_siege.1
+	immediate = { log = "NWC event nwc_siege.1 fired" }
+	title = nwc_siege.1.t
+	desc = nwc_siege.1.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_siege.1.a
+		ai_chance = { base = 40 }
+		nwc_fortress_small = yes
+		country_event = { id = nwc_siege.2 days = 14 }
+	}
+	option = {
+		name = nwc_siege.1.b
+		ai_chance = { base = 30 }
+		nwc_fortress_large = yes
+		add_war_support = -0.05
+		country_event = { id = nwc_siege.2 days = 14 }
+	}
+	option = {
+		name = nwc_siege.1.c
+		ai_chance = { base = 30 }
+		nwc_fortress_small = yes
+		add_stability = 0.03
+		country_event = { id = nwc_siege.2 days = 14 }
+	}
+}
+
+country_event = {
+	id = nwc_siege.2
+	immediate = { log = "NWC event nwc_siege.2 fired" }
+	title = nwc_siege.2.t
+	desc = nwc_siege.2.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_siege.2.a
+		ai_chance = { base = 40 }
+		nwc_fortress_large = yes
+		add_manpower = -2000
+		country_event = { id = nwc_siege.3 days = 14 }
+	}
+	option = {
+		name = nwc_siege.2.b
+		ai_chance = { base = 40 }
+		nwc_fortress_small = yes
+		country_event = { id = nwc_siege.3 days = 14 }
+	}
+	option = {
+		name = nwc_siege.2.c
+		ai_chance = { base = 20 }
+		nwc_fortress_large = yes
+		add_stability = -0.05
+		country_event = { id = nwc_siege.3 days = 14 }
+	}
+}
+
+country_event = {
+	id = nwc_siege.3
+	immediate = { log = "NWC event nwc_siege.3 fired" }
+	title = nwc_siege.3.t
+	desc = nwc_siege.3.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_siege.3.a
+		ai_chance = { base = 50 }
+		nwc_fortress_small = yes
+		country_event = { id = nwc_siege.4 days = 14 }
+	}
+	option = {
+		name = nwc_siege.3.b
+		ai_chance = { base = 50 }
+		nwc_fortress_large = yes
+		add_stability = -0.05
+		country_event = { id = nwc_siege.4 days = 14 }
+	}
+}
+
+country_event = {
+	id = nwc_siege.4
+	immediate = { log = "NWC event nwc_siege.4 fired" }
+	title = nwc_siege.4.t
+	desc = nwc_siege.4.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_siege.4.a
+		ai_chance = { base = 50 }
+		nwc_fortress_large = yes
+		add_war_support = -0.05
+		country_event = { id = nwc_siege.5 days = 1 }
+	}
+	option = {
+		name = nwc_siege.4.b
+		ai_chance = { base = 50 }
+		nwc_fortress_small = yes
+		add_stability = 0.02
+		country_event = { id = nwc_siege.5 days = 1 }
+	}
+}
+
+country_event = {
+	id = nwc_siege.5
+	immediate = { log = "NWC event nwc_siege.5 fired" }
+	title = nwc_siege.5.t
+	desc = nwc_siege.5.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_siege.5.a
+		ai_chance = { base = 1 }
+		country_event = { id = nwc_siege.6 days = 14 }
+	}
+}
+
+country_event = {
+	id = nwc_siege.6
+	hidden = yes
+	is_triggered_only = yes
+	immediate = {
+		log = "NWC event nwc_siege.6 fired"
+		if = {
+			limit = { OR = { JNP = { exists = no } @STATE:oslo@ = { OR = { is_controlled_by = NOR is_controlled_by = WFR } } } }
+			country_event = { id = nwc_siege.7 }
+		}
+		else = {
+			news_event = { id = nwc_news.3 }
+			kill_country_leader = yes
+			nwc_outbreak = yes
+			news_event = { id = nwc_news.4 days = 2 }
+		}
+	}
+}
+
+country_event = {
+	id = nwc_siege.7
+	immediate = { log = "NWC event nwc_siege.7 fired" }
+	title = nwc_siege.7.t
+	desc = nwc_siege.7.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_siege.7.a
+		ai_chance = { base = 30 }
+		news_event = { id = nwc_news.1 }
+		add_war_support = 0.1
+		add_stability = -0.1
+		if = { limit = { JNP = { exists = yes } } annex_country = { target = JNP transfer_troops = no } }
+		nwc_outbreak = yes
+		country_event = { id = nwc_siege.10 days = 60 random_days = 60 }
+	}
+	option = {
+		name = nwc_siege.7.b
+		ai_chance = { base = 70 }
+		news_event = { id = nwc_news.2 }
+		add_stability = 0.05
+		if = { limit = { JNP = { exists = yes } } annex_country = { target = JNP transfer_troops = no } }
+		nwc_outbreak = yes
+		country_event = { id = nwc_siege.10 days = 60 random_days = 60 }
+	}
+}
+
+country_event = {
+	id = nwc_siege.10
+	immediate = { log = "NWC event nwc_siege.10 fired" }
+	title = nwc_siege.10.t
+	desc = nwc_siege.10.d
+	picture = GFX_report_event_generic_read_write
+	is_triggered_only = yes
+	option = {
+		name = nwc_siege.10.a
+		ai_chance = { base = 1 }
+		retire_country_leader = yes
+		add_stability = -0.05
+	}
+}
+
+news_event = {
+	id = nwc_news.1
+	immediate = { log = "NWC event nwc_news.1 fired" }
+	title = nwc_news.1.t
+	desc = nwc_news.1.d
+	picture = GFX_news_event_generic_read_write
+	is_triggered_only = yes
+	major = yes
+	option = {
+		name = nwc_news.1.a
+		ai_chance = { base = 1 }
+	}
+}
+
+news_event = {
+	id = nwc_news.2
+	immediate = { log = "NWC event nwc_news.2 fired" }
+	title = nwc_news.2.t
+	desc = nwc_news.2.d
+	picture = GFX_news_event_generic_read_write
+	is_triggered_only = yes
+	major = yes
+	option = {
+		name = nwc_news.2.a
+		ai_chance = { base = 1 }
+	}
+}
+
+news_event = {
+	id = nwc_news.3
+	immediate = { log = "NWC event nwc_news.3 fired" }
+	title = nwc_news.3.t
+	desc = nwc_news.3.d
+	picture = GFX_news_event_generic_read_write
+	is_triggered_only = yes
+	major = yes
+	option = {
+		name = nwc_news.3.a
+		ai_chance = { base = 1 }
+	}
+}
+
+news_event = {
+	id = nwc_news.4
+	immediate = { log = "NWC event nwc_news.4 fired" }
+	title = nwc_news.4.t
+	desc = nwc_news.4.d
+	picture = GFX_news_event_generic_read_write
+	is_triggered_only = yes
+	major = yes
+	option = {
+		name = nwc_news.4.a
+		ai_chance = { base = 1 }
+	}
+}
+

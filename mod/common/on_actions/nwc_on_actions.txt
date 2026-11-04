@@ -1,0 +1,8 @@
+on_actions = {
+	on_startup = {
+		effect = {
+			# on_startup has no scope of its own; the effect names every country it touches explicitly.
+			NOR = { nwc_game_start = yes }
+		}
+	}
+}

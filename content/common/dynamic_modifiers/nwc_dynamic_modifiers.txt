@@ -1,0 +1,8 @@
+# Fortress Oslo: strength comes from JNP variables set by nwc_update_fortress.
+nwc_fortress_oslo = {
+	enable = { always = yes }
+	army_defence_factor = nwc_fort_def
+	army_core_defence_factor = nwc_fort_def
+	army_org_factor = nwc_fort_org
+	max_dig_in = nwc_fort_dig
+}

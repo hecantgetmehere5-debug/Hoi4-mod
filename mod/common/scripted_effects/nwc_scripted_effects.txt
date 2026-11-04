@@ -1,0 +1,93 @@
+# Recompute Fortress Oslo strength. Call in any scope.
+nwc_update_fortress = {
+	if = {
+		limit = { JNP = { exists = yes } }
+		JNP = {
+			clamp_variable = { var = nwc_fortress min = 0 max = 100 }
+			set_variable = { nwc_fort_def = nwc_fortress }
+			multiply_variable = { nwc_fort_def = 0.04 }	# 100 -> +400%
+			set_variable = { nwc_fort_org = nwc_fortress }
+			multiply_variable = { nwc_fort_org = 0.02 }	# 100 -> +200%
+			set_variable = { nwc_fort_dig = nwc_fortress }
+			multiply_variable = { nwc_fort_dig = 0.5 }	# 100 -> +50 dig-in
+			force_update_dynamic_modifier = yes
+		}
+	}
+}
+
+# Lower the fortress by a random amount. Call in any scope.
+nwc_fortress_small = {
+	if = { limit = { JNP = { exists = yes } }
+		random_list = {
+			40 = { JNP = { add_to_variable = { nwc_fortress = -10 } } }
+			40 = { JNP = { add_to_variable = { nwc_fortress = -15 } } }
+			20 = { JNP = { add_to_variable = { nwc_fortress = -20 } } }
+		}
+	}
+	nwc_update_fortress = yes
+}
+nwc_fortress_large = {
+	if = { limit = { JNP = { exists = yes } }
+		random_list = {
+			20 = { JNP = { add_to_variable = { nwc_fortress = -10 } } }
+			40 = { JNP = { add_to_variable = { nwc_fortress = -25 } } }
+			40 = { JNP = { add_to_variable = { nwc_fortress = -35 } } }
+		}
+	}
+	nwc_update_fortress = yes
+}
+
+
+# Game start wars. Runs once.
+nwc_game_start = {
+	log = "NWC game start effect ran"
+	if = {
+		limit = { NOT = { has_global_flag = nwc_started } }
+		set_global_flag = nwc_started
+		JNP = {
+			set_variable = { nwc_fortress = 100 }
+			add_dynamic_modifier = { modifier = nwc_fortress_oslo }
+		}
+		nwc_update_fortress = yes
+		ANA = { add_ideas = nwc_ana_guerrilla }
+		NOR = { declare_war_on = { target = JNP type = annex_everything } }
+		WFR = { add_to_war = { targeted_alliance = NOR enemy = JNP hostility_reason = asked_to_join } }
+		ANA = {
+			every_country = {
+				limit = {
+					OR = { tag = NOR tag = WFR tag = JNP tag = KRF tag = SOC tag = FRP tag = NRM tag = SAP tag = NCL tag = ABI tag = BRG }
+					exists = yes
+					NOT = { has_war_with = ANA }
+				}
+				ANA = { declare_war_on = { target = PREV type = annex_everything } }
+			}
+		}
+		NOR = { country_event = { id = nwc_siege.1 days = 14 } }
+	}
+}
+
+# The general outbreak. Runs once.
+nwc_outbreak = {
+	log = "NWC war outbreak effect ran"
+	if = {
+		limit = { NOT = { has_global_flag = nwc_outbreak } }
+		set_global_flag = nwc_outbreak
+		if = { limit = { KRF = { exists = yes } SOC = { exists = yes } KRF = { NOT = { has_war_with = SOC } } }
+			KRF = { declare_war_on = { target = SOC type = annex_everything } }
+		}
+		if = { limit = { WFR = { exists = yes } ABI = { exists = yes } WFR = { NOT = { has_war_with = ABI } } }
+			ABI = { declare_war_on = { target = WFR type = annex_everything } }
+			if = { limit = { NOR = { has_war_with = ABI } } NOR = { white_peace = ABI } }
+		}
+		if = { limit = { WFR = { exists = yes } NRM = { exists = yes } WFR = { NOT = { has_war_with = NRM } } }
+			NRM = { declare_war_on = { target = WFR type = annex_everything } }
+			if = { limit = { NOR = { has_war_with = NRM } } NOR = { white_peace = NRM } }
+		}
+		if = { limit = { ABI = { exists = yes } NRM = { exists = yes } ABI = { NOT = { has_war_with = NRM } } }
+			NRM = { declare_war_on = { target = ABI type = annex_everything } }
+		}
+		if = { limit = { NOR = { exists = yes } FRP = { exists = yes } NOR = { NOT = { has_war_with = FRP } } }
+			FRP = { declare_war_on = { target = NOR type = annex_everything } }
+		}
+	}
+}
