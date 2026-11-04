@@ -27,5 +27,26 @@ ideas = {
 				industrial_capacity_factory = 0.1
 			}
 		}
+		nwc_bill_emergency_budget_full = {
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				industrial_capacity_factory = 0.1
+			}
+		}
+		nwc_bill_emergency_budget_amended1 = {
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				industrial_capacity_factory = 0.05
+			}
+		}
+		nwc_bill_emergency_budget_amended2 = {
+			allowed = { always = no }
+			removal_cost = -1
+			modifier = {
+				industrial_capacity_factory = 0.025
+			}
+		}
 	}
 }

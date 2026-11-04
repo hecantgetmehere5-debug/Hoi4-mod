@@ -1,0 +1,62 @@
+# Storting mechanic. All effects run in NOR scope.
+
+nwc_storting_init = {
+	set_variable = { nwc_ap_support = 40 }
+	set_variable = { nwc_h_support = 40 }
+	set_variable = { nwc_bill_amend = 0 }
+}
+
+nwc_storting_clamp = {
+	clamp_variable = { var = nwc_ap_support min = 0 max = 100 }
+	clamp_variable = { var = nwc_h_support min = 0 max = 100 }
+}
+
+# Reserved for the Fascism path: ends the Storting for good.
+nwc_storting_suspend = {
+	set_country_flag = nwc_storting_suspended
+}
+
+# Caller sets temp vars nwc_bill_ap_base / nwc_bill_h_base and the bill's _pending flag.
+nwc_propose_bill = {
+	set_variable = { nwc_bill_amend = 0 }
+	add_to_variable = { var = nwc_ap_support value = nwc_bill_ap_base }
+	add_to_variable = { var = nwc_h_support value = nwc_bill_h_base }
+	nwc_storting_clamp = yes
+}
+
+# Yes share = average of both blocs. 70 or below always fails; above 70 a roll decides.
+nwc_storting_vote = {
+	set_temp_variable = { nwc_vote_share = nwc_ap_support }
+	add_to_temp_variable = { nwc_vote_share = nwc_h_support }
+	divide_temp_variable = { nwc_vote_share = 2 }
+	if = {
+		limit = { check_variable = { nwc_vote_share > 70 } }
+		set_temp_variable_to_random = { var = nwc_vote_roll min = 0 max = 100 }
+		set_temp_variable = { nwc_vote_chance = nwc_vote_share }
+		subtract_from_temp_variable = { nwc_vote_chance = 70 }
+		multiply_temp_variable = { nwc_vote_chance = 2 }
+		add_to_temp_variable = { nwc_vote_chance = 60 }
+		clamp_temp_variable = { var = nwc_vote_chance min = 0 max = 100 }
+		if = {
+			limit = { check_variable = { nwc_vote_roll < nwc_vote_chance } }
+			country_event = nwc_storting.2
+		}
+		else = { country_event = nwc_storting.3 }
+	}
+	else = { country_event = nwc_storting.3 }
+}
+
+# Test bill: Emergency Budget. Payoff tier depends on amendments.
+nwc_bill_emergency_budget_effect = {
+	if = {
+		limit = { check_variable = { nwc_bill_amend = 0 } }
+		add_timed_idea = { idea = nwc_bill_emergency_budget_full days = 180 }
+	}
+	else_if = {
+		limit = { check_variable = { nwc_bill_amend = 1 } }
+		add_timed_idea = { idea = nwc_bill_emergency_budget_amended1 days = 180 }
+	}
+	else = {
+		add_timed_idea = { idea = nwc_bill_emergency_budget_amended2 days = 180 }
+	}
+}

@@ -92,3 +92,99 @@ def test_collect_index():
     assert "nwc_cflag" in idx.country_flags_set and "nwc_gflag" in idx.global_flags_checked
     assert "nwc_v" in idx.vars_set and "nwc_v" in idx.vars_checked
     assert "NOR" in idx.tags_referenced and "nwc_x_focus_desc" in idx.loc_keys
+
+
+# --- Storting mechanic -------------------------------------------------------
+
+CONTENT = ROOT / "content"
+STORTING_FILES = [
+    "common/scripted_effects/nwc_storting_effects.txt",
+    "common/scripted_triggers/nwc_storting_triggers.txt",
+    "common/decisions/nwc_storting.txt",
+    "common/decisions/categories/nwc_categories.txt",
+    "events/nwc_storting.txt",
+    "localisation/english/nwc_storting_l_english.yml",
+]
+SUPPORT_VARS = {"nwc_ap_support", "nwc_h_support"}
+
+
+def _parsed(rel):
+    from tools.pdx import parse
+    return parse((CONTENT / rel).read_text(encoding="utf-8-sig"))
+
+
+def _all_parsed():
+    from tools.pdx import parse
+    return {f.relative_to(CONTENT).as_posix(): parse(f.read_text(encoding="utf-8-sig"))
+            for f in sorted(CONTENT.rglob("*.txt"))}
+
+
+def _blocks(tree):
+    """Yield every block (list of entries) in a parsed tree, outermost first."""
+    yield tree
+    for _, _, v in tree:
+        if isinstance(v, list):
+            yield from _blocks(v)
+
+
+def _get(block, key):
+    return next((v for k, _, v in block if k == key), None)
+
+
+def _targets(val):
+    if not isinstance(val, list):
+        return set()
+    return {v if k == "var" else k for k, _, v in val if k not in ("value", "tooltip")}
+
+
+def test_storting_files_exist_and_lint():
+    from tools.lint_content import lint
+    for rel in STORTING_FILES:
+        assert (CONTENT / rel).is_file(), rel
+    assert lint(CONTENT) == []
+
+
+def test_storting_support_clamped():
+    found = 0
+    for rel, tree in _all_parsed().items():
+        for block in _blocks(tree):
+            adds = [v for k, _, v in block if k == "add_to_variable" and _targets(v) & SUPPORT_VARS]
+            if adds:
+                found += len(adds)
+                assert ("nwc_storting_clamp", "=", "yes") in block, (rel, adds)
+    assert found >= 5  # propose (2), concessions (2), amend
+
+
+def test_storting_threshold():
+    vote = _get(_parsed("common/scripted_effects/nwc_storting_effects.txt"), "nwc_storting_vote")
+    assert vote is not None
+    gate = next(v for k, _, v in vote if k == "if"
+                and ("nwc_vote_share", ">", "70") in (_get(_get(v, "limit") or [], "check_variable") or []))
+    rolls = [b for b in _blocks(gate) if any(k == "set_temp_variable_to_random" for k, _, _ in b)]
+    assert rolls, "roll must sit inside the > 70 gate"
+    idx = vote.index(("if", "=", gate))
+    assert vote[idx + 1][0] == "else"
+    fail = vote[idx + 1][2]
+    assert ("country_event", "=", "nwc_storting.3") in fail
+    assert not any(k == "set_temp_variable_to_random" for b in _blocks(fail) for k, _, _ in b)
+    assert not any(k == "set_temp_variable_to_random" for k, _, _ in vote)
+
+
+def test_amend_limited():
+    decs = _parsed("common/decisions/nwc_storting.txt")
+    amend = next(_get(cat, "nwc_amend_bill") for _, _, cat in decs if _get(cat, "nwc_amend_bill"))
+    assert ("nwc_bill_amend", "<", "2") in _get(_get(amend, "available"), "check_variable")
+    effects = [(k, v) for _, tree in _all_parsed().items() for k, _, v in tree
+               if k.startswith("nwc_bill_") and k.endswith("_effect") and isinstance(v, list)]
+    assert effects
+    for name, body in effects:
+        checks = [_get(_get(v, "limit") or [], "check_variable") or [] for k, _, v in body
+                  if k in ("if", "else_if")]
+        assert any(c and c[0][0] == "nwc_bill_amend" for c in checks), name
+
+
+@pytest.mark.xfail(strict=True, reason="Fascism focus lands in Task 5")
+def test_fascism_suspends_storting():
+    focus_dir = CONTENT / "common" / "national_focus"
+    text = "".join(f.read_text(encoding="utf-8-sig") for f in focus_dir.rglob("*.txt")) if focus_dir.exists() else ""
+    assert "set_country_flag = nwc_storting_suspended" in text or "nwc_storting_suspend = yes" in text

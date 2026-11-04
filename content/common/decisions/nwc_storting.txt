@@ -1,0 +1,60 @@
+nwc_storting_category = {
+	nwc_propose_emergency_budget = {
+		icon = generic_industry
+		cost = 25
+		visible = { NOT = { has_country_flag = nwc_bill_emergency_budget_passed } }
+		available = { NOT = { nwc_storting_bill_pending = yes } }
+		complete_effect = {
+			set_country_flag = nwc_bill_emergency_budget_pending
+			set_temp_variable = { nwc_bill_ap_base = 5 }
+			set_temp_variable = { nwc_bill_h_base = -5 }
+			nwc_propose_bill = yes
+		}
+		ai_will_do = { base = 1 }
+	}
+
+	nwc_concede_to_ap = {
+		icon = generic_political_discourse
+		cost = 25
+		visible = { nwc_storting_bill_pending = yes }
+		complete_effect = {
+			add_to_variable = { nwc_ap_support = 15 }
+			add_to_variable = { nwc_h_support = -5 }
+			nwc_storting_clamp = yes
+		}
+		ai_will_do = { base = 1 }
+	}
+
+	nwc_concede_to_h = {
+		icon = generic_political_discourse
+		cost = 25
+		visible = { nwc_storting_bill_pending = yes }
+		complete_effect = {
+			add_to_variable = { nwc_h_support = 15 }
+			add_to_variable = { nwc_ap_support = -5 }
+			nwc_storting_clamp = yes
+		}
+		ai_will_do = { base = 1 }
+	}
+
+	nwc_amend_bill = {
+		icon = generic_political_discourse
+		cost = 10
+		visible = { nwc_storting_bill_pending = yes }
+		available = { check_variable = { nwc_bill_amend < 2 } }
+		complete_effect = {
+			add_to_variable = { nwc_bill_amend = 1 }
+			add_to_variable = { nwc_ap_support = 5 }
+			add_to_variable = { nwc_h_support = 5 }
+			nwc_storting_clamp = yes
+		}
+		ai_will_do = { base = 1 }
+	}
+
+	nwc_storting_hold_vote = {
+		icon = generic_political_discourse
+		visible = { nwc_storting_bill_pending = yes }
+		complete_effect = { nwc_storting_vote = yes }
+		ai_will_do = { base = 1 }
+	}
+}
