@@ -222,3 +222,39 @@ Choose who to side with:
 - BRG: concept D (data/flags/concepts/BRG.png) — white field, off-centre red Nordic cross, Bergen city seal at the crossing (simplified castle at small sizes).
 - ANA (Norwegian Black Army): user-supplied red/black anarchist diagonal with "NED MED STATEN / NED MED KAPITALISME" (data/flags/ANA.png).
 - KRF: Norwegian flag with three interlaced gold rings (Trinity) centred on the cross (blue discs with white eye-in-triangle, dove and lamb) and a gold Chi-Rho in the top-left canton (data/flags/KRF.png; based on the user's design; "use this for now").
+
+## Decisions (planning in progress)
+
+### Government (NOR)
+- Make the Storting decisions look better.
+- **Storting panel:** a visual pop-up (scripted GUI) showing all 169 seats as a hemicycle (Ap left, Høyre right; filled = yes, hollow = no), a support bar with the 70% line, clickable concessions that move support, and a "call the vote" button with luck. Mockup shown in chat 2026-11-05 (user moved on without objections).
+- **Cyber warfare system** with FrP — they share no border, so they fight online. Attack effects on the target:
+  - lower troop coordination (army debuffs, e.g. organisation/coordination)
+  - lower construction speed
+  - higher consumer goods share
+  - defector recruitment (target loses manpower, attacker gains it)
+  - more to be added ("and other stuff")
+  - Played from the decisions tab, **turn-based** ("like turn based warfare").
+  - Turn structure (Claude's proposal, user: "not really a lot" wrong): the two sides alternate turns (~2 weeks); on your turn you pick ONE cyber action from the decisions tab (an attack or a defence such as firewall / trace the hacker); both sides share the same menu; AI plays FrP when not the player.
+  - Success chance = attacker cyber strength vs target defences; a failed attack can expose you (enemy gets a free hit).
+  - Hits apply temporary debuffs (e.g. a few months).
+  - Cyber strength grows via decisions, later via focuses.
+
+### Western Forces (WFR)
+- **Request aid from the Government:** equipment, manpower, and temporary army buffs.
+  - The Government gets an event to accept or refuse. Accepting costs the Government a temporary rise in consumer goods (more industry tied up), but it does NOT lose the equipment or manpower it sends — WFR simply receives them.
+
+### JNP (Oslo)
+- **Persecution decision** (user idea, "executing Christians"): +war support, slight +army attack; −stability, −army defence.
+- **Repair the walls:** spend manpower/equipment to restore some Fortress Oslo strength.
+- **Smuggle through the fjord:** chance of equipment by sea; the Government navy can intercept.
+- **Call for foreign fighters:** manpower or a division; angers Sweden and the Government.
+- **Tunnel raids:** short attack buff or a debuff on the besiegers next to Oslo.
+- **Ration the city:** more manpower, fewer consumer goods; stability drains monthly while active.
+- **Propaganda broadcasts:** +own war support, −Government war support.
+- **Seek a ceasefire:** step toward white peace / Great Muslim Oslo Republic; only once Oslo has held long enough.
+
+### Implementation leads (from research, not decisions)
+- **Storting panel:** base game ships a US Congress scripted-GUI window (`interface/usa_congress_scripted_gui*`, `usa_congress_decision_ui`) — use it as the template for the seat panel. Still to check: whether it depends on a DLC.
+- **Cyber war "lower troop coordination":** the `coordination_bonus` modifier exists and fits this attack.
+- **Western Forces aid cost:** the Government's cost is a temporary `consumer_goods_factor` increase (no equipment or manpower lost).
