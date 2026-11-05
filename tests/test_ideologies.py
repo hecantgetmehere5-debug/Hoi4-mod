@@ -100,8 +100,9 @@ def test_leaders_use_declared_types_and_are_recruited():
             assert f"recruit_character = {ideologies.leader_id(tag)}" in history.country_history(f, [])
 
 
-def test_dropped_tags_have_no_localisation():
-    assert not [k for k in _loc() if k.startswith("RDN_")]
+def test_rdn_is_the_anti_fascist_breakaway():
+    f = geo.load_factions()["RDN"]
+    assert f.name == "Western Military Council" and f.ideology == "military_council"
 
 
 def test_leader_portraits_exist_at_156x210():

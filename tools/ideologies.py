@@ -152,8 +152,8 @@ def gfx_file() -> str:
     return f"spriteTypes = {{\n{sprites}}}\n"
 
 
-# Tags the spec dropped (RDN Reindeer Nation easter egg; tag is to be reused for the WFR breakaway).
-DROPPED_TAGS = {"RDN"}
+# Tags with no localisation of their own (none now: RDN is the anti-fascist WFR breakaway).
+DROPPED_TAGS: set[str] = set()
 
 
 def leader_id(tag: str) -> str:

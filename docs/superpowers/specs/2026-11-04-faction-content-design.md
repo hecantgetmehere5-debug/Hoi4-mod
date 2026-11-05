@@ -139,7 +139,7 @@ Choose who to side with:
 - Swedish-sponsored people = vanilla advisors/ideas, offered by events.
 - Støre resigns by event ~30 days after Oslo is taken.
 - FrP offers the union by focus; NRM can accept from any path; the FrP tag survives the merge.
-- Anti-fascist breakaway: WFR decision once the Government is on the Fascism path; reuses a spawn tag (replaces the Reindeer Nation tag built in Task 2).
+- Anti-fascist breakaway: WFR decision once the Government is on the Fascism path; uses spawn tag RDN, now named "Western Military Council" (military_council ideology, WFR flag).
 - Høyre/Monarchy re-besiege Oslo by focus, breaking the JNP white peace.
 - Bergen–ABI puppet needs ABI to accept by event; Denmark trade deals still allowed.
 - Union with Denmark = personal union with Danish control; Union with Sweden sets Swedish opinion to max.

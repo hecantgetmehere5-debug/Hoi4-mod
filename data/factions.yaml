@@ -18,7 +18,7 @@ ANA: {name: Anarchist Cells, adjective: Anarchist, colour: [20, 8, 8], ideology:
 SWE: {name: Sweden, adjective: Swedish, colour: [176, 160, 116], ideology: democratic, capital: ostersund, popularities: {democratic: 60, conservative: 30, national_socialism: 10}, leader: Prime Minister Magdalena Andersson, portrait: magdalena_andersson, parties: {democratic: [S, Socialdemokraterna], conservative: [M, Moderaterna]}}
 
 # Spawnable countries: own no states at start, released by events.
-RDN: {name: Reindeer Nation, adjective: Reindeer, colour: [160, 120, 70], ideology: animal_rule, capital: voss, spawn: true}
+RDN: {name: Western Military Council, adjective: Western, colour: [74, 99, 201], ideology: military_council, capital: voss, spawn: true}
 GMO: {name: Great Muslim Oslo Republic, adjective: Oslo, colour: [20, 110, 60], ideology: theocracy, capital: oslo, spawn: true}
 # Neutral Coalition cantons reuse vanilla tags; cantons lists the NCL states each receives (first is the capital).
 EST: {name: Hedmarken Canton, adjective: Hedmark, colour: [70, 150, 60], ideology: green_agrarianism, capital: hamar, spawn: true, cantons: [hamar, ringsaker]}
