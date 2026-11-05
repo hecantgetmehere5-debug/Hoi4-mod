@@ -221,3 +221,4 @@ Choose who to side with:
 - NRM: user-supplied flag (data/flags/concepts/NRM.png) — war-ensign style with the Norwegian flag in the canton and the NRM Tyr-rune emblem.
 - BRG: concept D (data/flags/concepts/BRG.png) — white field, off-centre red Nordic cross, Bergen city seal at the crossing (simplified castle at small sizes).
 - ANA (Norwegian Black Army): user-supplied red/black anarchist diagonal with "NED MED STATEN / NED MED KAPITALISME" (data/flags/ANA.png).
+- KRF: Norwegian flag with three interlaced gold rings (Trinity) centred on the cross (blue discs with white eye-in-triangle, dove and lamb) and a gold Chi-Rho in the top-left canton (data/flags/KRF.png; based on the user's design; "use this for now").
