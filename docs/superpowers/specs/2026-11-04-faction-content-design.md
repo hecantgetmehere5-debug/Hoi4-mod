@@ -220,3 +220,4 @@ Choose who to side with:
 - ABI: user-supplied flag (data/flags/concepts/ABI.png) — orange/black anarcho-distributist diagonal with the distributist workers-and-Christ emblem.
 - NRM: user-supplied flag (data/flags/concepts/NRM.png) — war-ensign style with the Norwegian flag in the canton and the NRM Tyr-rune emblem.
 - BRG: concept D (data/flags/concepts/BRG.png) — white field, off-centre red Nordic cross, Bergen city seal at the crossing (simplified castle at small sizes).
+- ANA (Norwegian Black Army): user-supplied red/black anarchist diagonal with "NED MED STATEN / NED MED KAPITALISME" (data/flags/ANA.png).
