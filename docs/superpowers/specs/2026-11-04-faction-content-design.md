@@ -213,7 +213,7 @@ Choose who to side with:
 
 - SAP (Sápmi): the real Sámi flag.
 - NOR (Government): the normal Norwegian flag.
-- WFR (Western Forces): Norwegian flag with the Norwegian Armed Forces (Forsvaret) emblem on it.
+- WFR (Western Forces): Norwegian flag with the Norwegian Armed Forces (Forsvaret) emblem placed over the centre of the cross.
 - JNP: concept A (data/flags/concepts/JNP.png) — green #008543, white crescent with the Norwegian lion holding an upright sword; Arabic text underneath: النرويج للأمة ("Norway belongs to the Ummah").
 - FRP: Norwegian flag with a torch of liberty on it.
 - NCL: concept C (data/flags/concepts/NCL.png) — Norwegian flag, gold wheat wreath around a green leaf (gold-outlined) in the top hoist canton.

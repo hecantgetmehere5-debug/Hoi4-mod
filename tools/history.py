@@ -350,7 +350,10 @@ def write_flags(mod: Path) -> None:
         d.mkdir(parents=True, exist_ok=True)
         for tag, f in geo.load_factions().items():
             # A real flag image in data/flags/<TAG>.png overrides the generated placeholder.
-            src = Path(__file__).resolve().parents[1] / "data" / "flags" / f"{tag}.png"
+            # A hand-tuned data/flags/<TAG>_<w>.png small version wins over downscaling the master.
+            flags = Path(__file__).resolve().parents[1] / "data" / "flags"
+            sized = flags / f"{tag}_{size[0]}.png"
+            src = sized if sized.exists() else flags / f"{tag}.png"
             img = Image.open(src).convert("RGBA").resize(size, Image.LANCZOS) if src.exists() else flag(f.colour, size)
             img.save(d / f"{tag}.tga")
 
