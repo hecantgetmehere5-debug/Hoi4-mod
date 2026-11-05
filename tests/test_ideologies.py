@@ -102,3 +102,19 @@ def test_leaders_use_declared_types_and_are_recruited():
 
 def test_dropped_tags_have_no_localisation():
     assert not [k for k in _loc() if k.startswith("RDN_")]
+
+
+def test_leader_portraits_exist_at_156x210():
+    from PIL import Image
+    root = geo.DATA.parent / "content"
+    found = 0
+    for tag, f in geo.load_factions().items():
+        if not f.portrait:
+            continue
+        found += 1
+        png = root / ideologies.portrait_path(f.portrait)
+        assert png.is_file(), f"{tag}: missing {png}"
+        with Image.open(png) as im:
+            assert im.size == (156, 210), f"{tag}: {png.name} is {im.size}"
+        assert f'large = "{ideologies.portrait_path(f.portrait)}"' in ideologies.characters_file()
+    assert found

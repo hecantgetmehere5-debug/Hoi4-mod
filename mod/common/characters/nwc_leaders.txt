@@ -1,6 +1,11 @@
 characters = {
 	NOR_leader = {
 		name = NOR_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/jonas_gahr_store.png"
+			}
+		}
 		country_leader = {
 			ideology = democratic_subtype
 			expire = "2100.1.1"
@@ -22,6 +27,11 @@ characters = {
 	}
 	KRF_leader = {
 		name = KRF_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/dag_inge_ulstein.png"
+			}
+		}
 		country_leader = {
 			ideology = theocracy_subtype
 			expire = "2100.1.1"
@@ -29,6 +39,11 @@ characters = {
 	}
 	SOC_leader = {
 		name = SOC_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/marie_sneve_martinussen.png"
+			}
+		}
 		country_leader = {
 			ideology = democratic_socialism_subtype
 			expire = "2100.1.1"
@@ -36,6 +51,11 @@ characters = {
 	}
 	FRP_leader = {
 		name = FRP_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/sylvi_listhaug.png"
+			}
+		}
 		country_leader = {
 			ideology = libertarianism_subtype
 			expire = "2100.1.1"
@@ -50,6 +70,11 @@ characters = {
 	}
 	SAP_leader = {
 		name = SAP_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/silje_karine_muotka.png"
+			}
+		}
 		country_leader = {
 			ideology = indigenous_nationalism_subtype
 			expire = "2100.1.1"
@@ -57,6 +82,11 @@ characters = {
 	}
 	NCL_leader = {
 		name = NCL_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/trygve_slagsvold_vedum.png"
+			}
+		}
 		country_leader = {
 			ideology = green_agrarianism_subtype
 			expire = "2100.1.1"
@@ -85,6 +115,11 @@ characters = {
 	}
 	SWE_leader = {
 		name = SWE_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/magdalena_andersson.png"
+			}
+		}
 		country_leader = {
 			ideology = democratic_subtype
 			expire = "2100.1.1"
@@ -92,6 +127,11 @@ characters = {
 	}
 	FIN_leader = {
 		name = FIN_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/petteri_orpo.png"
+			}
+		}
 		country_leader = {
 			ideology = democratic_subtype
 			expire = "2100.1.1"
@@ -99,6 +139,11 @@ characters = {
 	}
 	SOV_leader = {
 		name = SOV_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/vladimir_putin.png"
+			}
+		}
 		country_leader = {
 			ideology = neutrality_subtype
 			expire = "2100.1.1"
@@ -106,6 +151,11 @@ characters = {
 	}
 	DEN_leader = {
 		name = DEN_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/mette_frederiksen.png"
+			}
+		}
 		country_leader = {
 			ideology = democratic_subtype
 			expire = "2100.1.1"

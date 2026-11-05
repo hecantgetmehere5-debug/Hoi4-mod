@@ -65,6 +65,7 @@ class Faction:
     popularities: tuple[tuple[str, int], ...] = ()  # (group, %) pairs; empty means the default split.
     leader: str | None = None  # Starting leader's display name, title included.
     parties: tuple[tuple[str, str, str], ...] = ()  # (group, short name, long name) overrides.
+    portrait: str | None = None  # Slug of content/gfx/leaders/nwc/<slug>.png.
 
 
 def _yaml(name):
@@ -95,7 +96,8 @@ def load_factions() -> dict[str, Faction]:
                        v["capital"], v.get("puppet_of"), v.get("background", False),
                        v.get("spawn", False), tuple(v.get("cantons", ())),
                        tuple(v.get("popularities", {}).items()), v.get("leader"),
-                       tuple((g, s, l) for g, (s, l) in v.get("parties", {}).items()))
+                       tuple((g, s, l) for g, (s, l) in v.get("parties", {}).items()),
+                       v.get("portrait"))
             for t, v in _yaml("factions.yaml").items()}
 
 

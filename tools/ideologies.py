@@ -160,11 +160,17 @@ def leader_id(tag: str) -> str:
     return f"{tag}_leader"
 
 
+def portrait_path(slug: str) -> str:
+    return f"gfx/leaders/nwc/{slug}.png"
+
+
 def characters_file() -> str:
     out = ["characters = {"]
     for tag, f in geo.load_factions().items():
         if f.leader:
-            out.append(f"\t{leader_id(tag)} = {{\n\t\tname = {leader_id(tag)}\n\t\tcountry_leader = {{\n"
+            pic = (f"\t\tportraits = {{\n\t\t\tcivilian = {{\n\t\t\t\tlarge = \"{portrait_path(f.portrait)}\"\n"
+                   f"\t\t\t}}\n\t\t}}\n" if f.portrait else "")
+            out.append(f"\t{leader_id(tag)} = {{\n\t\tname = {leader_id(tag)}\n{pic}\t\tcountry_leader = {{\n"
                        f"\t\t\tideology = {subtype(f.ideology)}\n\t\t\texpire = \"2100.1.1\"\n\t\t}}\n\t}}")
     out.append("}")
     return "\n".join(out) + "\n"
