@@ -20,3 +20,6 @@ Those derived from CC BY-SA images are shared under the same license.
 | vladimir_putin | [Vladimir_Putin_(2026_02_23)_(cropped).jpg](https://commons.wikimedia.org/wiki/File:Vladimir_Putin_(2026_02_23)_(cropped).jpg) | Kremlin.ru | CC BY 4.0 |
 
 ine_eriksen_soreide (Høyre) and kirsti_bergsto (SV) are prepared but not yet used by any character.
+
+- the_assembly.png — supplied by the mod author (ABI leader "The Assembly").
+- anarchist_cells.png — supplied by the mod author (ANA leader "The Assembly").
