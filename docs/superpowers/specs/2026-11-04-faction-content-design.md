@@ -208,3 +208,15 @@ Choose who to side with:
   - Sápmi sentient reindeer: Herd Chief
 - Military Council: Chief Commander
 - Autocracy: President (modern Russia, led by Putin)
+
+## Flags
+
+- SAP (Sápmi): the real Sámi flag.
+- NOR (Government): the normal Norwegian flag.
+- WFR (Western Forces): Norwegian flag with the Norwegian Armed Forces (Forsvaret) emblem on it.
+- JNP: concept A (data/flags/concepts/JNP.png) — green #008543, white crescent with the Norwegian lion holding an upright sword; Arabic text underneath: النرويج للأمة ("Norway belongs to the Ummah").
+- FRP: Norwegian flag with a torch of liberty on it.
+- NCL: concept C (data/flags/concepts/NCL.png) — Norwegian flag, gold wheat wreath around a green leaf (gold-outlined) in the top hoist canton.
+- ABI: user-supplied flag (data/flags/concepts/ABI.png) — orange/black anarcho-distributist diagonal with the distributist workers-and-Christ emblem.
+- NRM: user-supplied flag (data/flags/concepts/NRM.png) — war-ensign style with the Norwegian flag in the canton and the NRM Tyr-rune emblem.
+- BRG: concept D (data/flags/concepts/BRG.png) — white field, off-centre red Nordic cross, Bergen city seal at the crossing (simplified castle at small sizes).
