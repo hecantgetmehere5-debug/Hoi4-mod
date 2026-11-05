@@ -23,3 +23,4 @@ ine_eriksen_soreide (Høyre) and kirsti_bergsto (SV) are prepared but not yet us
 
 - the_assembly.png — supplied by the mod author (ABI leader "The Assembly").
 - anarchist_cells.png — supplied by the mod author (ANA leader "The Assembly").
+- nrm_leader.png — supplied by the mod author (NRM leader).

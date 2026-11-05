@@ -63,6 +63,11 @@ characters = {
 	}
 	NRM_leader = {
 		name = NRM_leader
+		portraits = {
+			civilian = {
+				large = "gfx/leaders/nwc/nrm_leader.png"
+			}
+		}
 		country_leader = {
 			ideology = national_socialism_subtype
 			expire = "2100.1.1"
