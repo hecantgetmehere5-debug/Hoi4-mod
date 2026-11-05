@@ -13,7 +13,7 @@ SAP: {name: Sápmi, adjective: Sámi, colour: [148, 102, 214], ideology: indigen
 NCL: {name: Neutral Coalition, adjective: Coalition, colour: [46, 125, 31], ideology: green_agrarianism, capital: hamar, popularities: {green_agrarianism: 70, democratic: 20, neo_paganism: 10}, leader: Farmers' Union, parties: {green_agrarianism: [Sp–MDG, Senterpartiet og Miljøpartiet De Grønne]}}
 ABI: {name: Askøy-Bømlo Insurgency, adjective: Insurgent, colour: [139, 15, 26], ideology: anarchist, capital: askoy, popularities: {anarchist: 70, mutualism: 15, egoism: 15}, leader: The Assembly}
 BRG: {name: Free City of Bergen, adjective: Bergenser, colour: [212, 178, 10], ideology: libertarianism, capital: bergen, popularities: {libertarianism: 65, oligarchy: 20, conservative: 15}, leader: President Henrik Mowinckel}
-ANA: {name: Anarchist Cells, adjective: Anarchist, colour: [20, 8, 8], ideology: anarchist, capital: sel, popularities: {anarchist: 90, left_communism: 10}, leader: The Assembly}
+ANA: {name: Norwegian Black Army, adjective: Anarchist, colour: [20, 8, 8], ideology: anarchist, capital: sel, popularities: {anarchist: 90, left_communism: 10}, leader: The Assembly}
 SWE: {name: Sweden, adjective: Swedish, colour: [176, 160, 116], ideology: democratic, capital: ostersund, popularities: {democratic: 60, conservative: 30, national_socialism: 10}, leader: Prime Minister Magdalena Andersson, parties: {democratic: [S, Socialdemokraterna], conservative: [M, Moderaterna]}}
 
 # Spawnable countries: own no states at start, released by events.
