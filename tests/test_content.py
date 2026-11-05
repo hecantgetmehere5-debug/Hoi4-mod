@@ -208,12 +208,23 @@ def _sweden_event(eid):
     raise AssertionError(f"event {eid} missing")
 
 
+_CMP = {"greater_than_or_equals": ">=", "less_than_or_equals": "<=", "greater_than": ">",
+        "less_than": "<", "equals": "="}
+
+
+def _cv(v):
+    """check_variable contents as (var, op, value) triples, for both the short and the var/value/compare form."""
+    if _get(v, "var") is not None:
+        return [(_get(v, "var"), _CMP.get(_get(v, "compare") or "equals", "="), _get(v, "value"))]
+    return list(v)
+
+
 def _band_bounds(limit):
     lo = hi = None
     for k, _, v in limit:
         if k != "check_variable":
             continue
-        for var, op, val in v:
+        for var, op, val in _cv(v):
             if var != SWE_OPINION:
                 continue
             if op == ">=":
@@ -260,7 +271,7 @@ def test_displeased_needs_two_months():
              if k in ("if", "else_if") and ("country_event", "=", "nwc_sweden.4") in v]
     assert gates
     for g in gates:
-        assert ("nwc_swe_low_months", ">=", "2") in (_get(_get(g, "limit"), "check_variable") or [])
+        assert ("nwc_swe_low_months", ">=", "2") in _cv(_get(_get(g, "limit"), "check_variable") or [])
 
 
 def test_puppet_effects_in_order():

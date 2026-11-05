@@ -74,7 +74,7 @@ country_event = {
 	picture = GFX_report_event_generic_read_write
 	trigger = {
 		tag = NOR
-		check_variable = { global.nwc_swe_opinion >= 40 }
+		check_variable = { var = global.nwc_swe_opinion value = 40 compare = greater_than_or_equals }
 		nwc_gov_alive = yes
 		nwc_swe_advisor_slots_left = yes
 	}

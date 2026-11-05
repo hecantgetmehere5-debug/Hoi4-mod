@@ -48,7 +48,7 @@ These are not negotiable.
     - If the Government takes it, Støre resigns.
   - Then `nwc_outbreak` starts the general war.
 - **The Western Forces (WFR)** are independent, not a puppet. They declare war on JNP themselves, and ABI and the NRM fight them directly.
-- **The Anarchist Cells (ANA)** are a lasting insurgency. They surrender only when every pocket is occupied, and spawn new cells every month, even behind enemy lines.
+- **The Norwegian Black Army (ANA, formerly the Anarchist Cells)** is a lasting insurgency; its spirit is "Legacy of Makhno". They surrender only when every pocket is occupied, and spawn new cells every month, even behind enemy lines.
 - **Starting armies:** `data/armies.yaml`.
 - **The Storting mechanic** (plan Task 3) and **Swedish opinion** (plan Task 4) exist in `content/`.
 - **22 custom ideologies**, replacing the vanilla four, Kaiserredux-style.
