@@ -4,8 +4,8 @@ A Hearts of Iron IV total conversion: Norway in 2030, after the oil fund and
 the oil industry collapsed and the country broke apart. The map is Norway,
 scaled up, plus a strip of Sweden.
 
-This repo holds the **map** so far. Focus trees, ideologies and events come
-later. Design: `docs/superpowers/specs/2026-11-03-norway-map-design.md`.
+The map, the opening siege, ideologies, leaders and flags are built; focus trees
+come later. **Start with `docs/HANDOFF.md`** for the current state and plans.
 
 ## Build and install
 

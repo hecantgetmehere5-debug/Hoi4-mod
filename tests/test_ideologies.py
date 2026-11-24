@@ -72,7 +72,7 @@ def test_starting_ideologies_exist_and_popularities_total_100():
 
 def test_party_names_for_every_tag_and_group():
     loc = _loc()
-    for tag in geo.load_factions():
+    for tag in set(geo.load_factions()) - ideologies.DROPPED_TAGS:
         for gid in geo.load_ideologies():
             assert loc.get(f"{tag}_{gid}_party") and loc.get(f"{tag}_{gid}_party_long")
     assert loc["NOR_democratic_party"] == "Ap" and loc["SOV_neutrality_party"] == "United Russia"
@@ -98,3 +98,24 @@ def test_leaders_use_declared_types_and_are_recruited():
             assert f"ideology = {ideologies.subtype(f.ideology)}" in text
             assert f"\t{ideologies.leader_id(tag)} = {{" in text
             assert f"recruit_character = {ideologies.leader_id(tag)}" in history.country_history(f, [])
+
+
+def test_rdn_is_the_anti_fascist_breakaway():
+    f = geo.load_factions()["RDN"]
+    assert f.name == "Western Military Council" and f.ideology == "military_council"
+
+
+def test_leader_portraits_exist_at_156x210():
+    from PIL import Image
+    root = geo.DATA.parent / "content"
+    found = 0
+    for tag, f in geo.load_factions().items():
+        if not f.portrait:
+            continue
+        found += 1
+        png = root / ideologies.portrait_path(f.portrait)
+        assert png.is_file(), f"{tag}: missing {png}"
+        with Image.open(png) as im:
+            assert im.size == (156, 210), f"{tag}: {png.name} is {im.size}"
+        assert f'large = "{ideologies.portrait_path(f.portrait)}"' in ideologies.characters_file()
+    assert found

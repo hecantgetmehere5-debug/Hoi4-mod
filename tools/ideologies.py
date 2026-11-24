@@ -152,15 +152,25 @@ def gfx_file() -> str:
     return f"spriteTypes = {{\n{sprites}}}\n"
 
 
+# Tags with no localisation of their own (none now: RDN is the anti-fascist WFR breakaway).
+DROPPED_TAGS: set[str] = set()
+
+
 def leader_id(tag: str) -> str:
     return f"{tag}_leader"
+
+
+def portrait_path(slug: str) -> str:
+    return f"gfx/leaders/nwc/{slug}.png"
 
 
 def characters_file() -> str:
     out = ["characters = {"]
     for tag, f in geo.load_factions().items():
         if f.leader:
-            out.append(f"\t{leader_id(tag)} = {{\n\t\tname = {leader_id(tag)}\n\t\tcountry_leader = {{\n"
+            pic = (f"\t\tportraits = {{\n\t\t\tcivilian = {{\n\t\t\t\tlarge = \"{portrait_path(f.portrait)}\"\n"
+                   f"\t\t\t}}\n\t\t}}\n" if f.portrait else "")
+            out.append(f"\t{leader_id(tag)} = {{\n\t\tname = {leader_id(tag)}\n{pic}\t\tcountry_leader = {{\n"
                        f"\t\t\tideology = {subtype(f.ideology)}\n\t\t\texpire = \"2100.1.1\"\n\t\t}}\n\t}}")
     out.append("}")
     return "\n".join(out) + "\n"
@@ -186,6 +196,8 @@ def localisation() -> str:
                  f' {gid}_drift:0 "Daily {q(g["name"])} Support"',
                  f' {gid}_acceptance:0 "Acceptance of {q(g["adjective"])} Diplomacy"']
     for tag, f in geo.load_factions().items():
+        if tag in DROPPED_TAGS:
+            continue
         over = {g: (s, l) for g, s, l in f.parties}
         for gid, g in ideos.items():
             s, l = over.get(gid, (g["name"], f"{f.adjective} {g['name']}"))

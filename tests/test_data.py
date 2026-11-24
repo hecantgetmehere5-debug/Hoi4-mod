@@ -71,3 +71,11 @@ def test_faction_capitals_owned_by_faction():
 def test_every_owner_is_a_faction():
     tags = {t for t, f in load_factions().items() if not f.background and not f.spawn}
     assert {state_owner(s) for s in load_states()} == tags
+
+
+def test_flag_images_have_faction_tags():
+    import re
+    yaml_text = (ROOT / "data" / "factions.yaml").read_text()
+    for png in (ROOT / "data" / "flags").glob("*.png"):
+        tag = re.sub(r"_\d+$", "", png.stem)
+        assert re.search(rf"\b{tag}\b", yaml_text), f"{png.name}: tag {tag} not in factions.yaml"
